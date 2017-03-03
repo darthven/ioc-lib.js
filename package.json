@@ -1,0 +1,19 @@
+{
+  "name": "js-experimental",
+  "version": "0.0.1",
+  "description": "Experimental things with js",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc -w --outDir build",
+    "dev": "babel-node ./build/src/index.js"
+  },
+  "author": "darthven",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-preset-es2015": "^6.22.0",
+    "nodemon": "^1.11.0"
+  }
+}
