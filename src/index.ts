@@ -1,6 +1,6 @@
-import InternetOrderManagementService from "./components/services/internet/InternetOrderManagementService"
-import TvOrderManagementService from "./components/services/tv/TvOrderManagementService"
-import MobileOrderManagementService from "./components/services/mobile/MobileOrderManagementService"
+import InternetOrderManagementService from "./components/services/InternetOrderManagementService"
+import TvOrderManagementService from "./components/services/TvOrderManagementService"
+import MobileOrderManagementService from "./components/services/MobileOrderManagementService"
 import Customer from "./components/entities/Customer"
 
 
