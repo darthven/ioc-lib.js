@@ -1,6 +1,6 @@
-import OrderManagementService from '../OrderManagementService'
-import InternetOrder from '../../entities/internet/InternetOrder'
-import Customer from '../../entities/Customer'
+import OrderManagementService from './OrderManagementService'
+import InternetOrder from '../entities/InternetOrder'
+import Customer from '../entities/Customer'
 
 class InternetOrderManagementService extends OrderManagementService {
 
@@ -12,7 +12,7 @@ class InternetOrderManagementService extends OrderManagementService {
 
   deleteOrder(orderId: number): boolean {
     return true;
-  } 
+  }
 
 
   public checkOrderParameters(orderId) {

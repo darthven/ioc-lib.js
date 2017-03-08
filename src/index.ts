@@ -9,8 +9,6 @@ let tvservice = new TvOrderManagementService();
 let mservice = new MobileOrderManagementService();
 let customer = new Customer('darthven', null);
 
-
-
 let order1 = iservice.createOrder(customer, 'Order1', 2500, 54);
 let order2 = iservice.createOrder(customer, 'Order2', 2500, 54);
 let order3 = tvservice.createOrder(customer, 'Order3', 2500, ['ch1', 'ch2']);

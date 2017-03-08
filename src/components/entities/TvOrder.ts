@@ -1,5 +1,5 @@
-import Customer from '../Customer'
-import Order from '../Order'
+import Customer from './Customer'
+import Order from './Order'
 
 class TvOrder extends Order {
 

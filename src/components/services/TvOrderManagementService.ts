@@ -1,6 +1,6 @@
-import OrderManagementService from '../OrderManagementService'
-import TvOrder from '../../entities/tv/TvOrder'
-import Customer from '../../entities/Customer'
+import OrderManagementService from './OrderManagementService'
+import TvOrder from '../entities/TvOrder'
+import Customer from '../entities/Customer'
 
 class TvOrderManagementService extends OrderManagementService {
 

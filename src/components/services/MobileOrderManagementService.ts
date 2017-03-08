@@ -1,6 +1,6 @@
-import OrderManagementService from '../OrderManagementService'
-import MobileOrder from '../../entities/mobile/MobileOrder'
-import Customer from '../../entities/Customer'
+import OrderManagementService from './OrderManagementService'
+import MobileOrder from '../entities/MobileOrder'
+import Customer from '../entities/Customer'
 
 class MobileOrderManagementService extends OrderManagementService {
 
