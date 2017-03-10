@@ -33,16 +33,3 @@ There is lib directory where I have created four classes: Property, Component, C
   component in context.
 At the moment, this library has only stub-functions but it will be improved in future according to the main principles of inversion of control
 and Spring Core's container.
-
-
-
-
-
-
-
-
-
-
-
-
-So, how can it be used?
