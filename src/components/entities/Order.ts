@@ -1,7 +1,6 @@
 import Customer from './Customer'
 
-abstract class Order {
-
+class Order {
   private orderId: number;
   private name: string;
   private price: number;
