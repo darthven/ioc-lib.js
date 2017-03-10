@@ -28,5 +28,4 @@ abstract class OrderManagementService {
     }
   }
 }
-
 export default OrderManagementService;

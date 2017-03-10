@@ -11,20 +11,16 @@ class InternetOrderManagementService extends OrderManagementService {
   }
 
   deleteOrder(orderId: number): boolean {
+    //TODO add logic for deleting order
     return true;
   }
 
-
-  public checkOrderParameters(orderId) {
-
-  }
-
   public increaseTraffic(orderId: number, deltaTraffic: number) {
-
+    //TODO add logic for increasing traffic
   }
 
   public decreaseTraffic(orderId: number, deltaTraffic: number) {
-
+    //TODO add logic for decreasing traffic
   }
 }
 

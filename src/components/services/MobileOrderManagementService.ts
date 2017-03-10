@@ -11,19 +11,16 @@ class MobileOrderManagementService extends OrderManagementService {
   }
 
   deleteOrder(orderId: number): boolean {
+    //TODO add logic for deleting order
     return true;
   }
 
-  public checkOrderParameters(orderId) {
-
+  public addOperator(orderId: number, operator: string) {
+    //TODO add logic for adding operator
   }
 
-  public increaseTraffic(orderId: number, deltaTraffic: number) {
-
-  }
-
-  public decreaseTraffic(orderId: number, deltaTraffic: number) {
-
+  public removeOperator(orderId: number, operator: string) {
+    //TODO add logic for removing operator
   }
 }
 

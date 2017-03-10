@@ -11,19 +11,20 @@ class TvOrderManagementService extends OrderManagementService {
   }
 
   deleteOrder(orderId: number): boolean {
+    //TODO add logic for deleting order
     return true;
   }
 
-  public checkOrderParameters(orderId) {
-
+  public addChannel(orderId: number, deltaTraffic: number) {
+    //TODO add logic for adding channel
   }
 
-  public increaseTraffic(orderId: number, deltaTraffic: number) {
-
+  public removeChannel(orderId: number, deltaTraffic: number) {
+    //TODO add logic for removing channel
   }
 
-  public decreaseTraffic(orderId: number, deltaTraffic: number) {
-
+  public changeChannels(orderId: number, newChannels: string[]) {
+    //TODO add logic for changing current channels
   }
 }
 
