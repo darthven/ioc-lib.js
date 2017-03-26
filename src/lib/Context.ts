@@ -6,18 +6,21 @@ class Context {
 
   constructor(configs: string[]) {
     this.configs = configs;
-    this.parseContextFileContent();
+    //this.parseContextFileContent();
   }
 
-  private getObjectsFromJSON() {
-    let content = null;
-    //TODO Here should be the logic of reading config files and getting js-objects from them
-    return content;
+  public getObjectsFromJSON() {
+    let objects = [];
+    this.configs.forEach((config) => {      
+      let json = require(config).configuration;
+      objects.push({configName: config, config: json});
+    });
+    return objects;
   }
 
   private parseContextFileContent(): void {
     let components = [];
-    let content = this.getObjectsFromJSON();
+    let objects = this.getObjectsFromJSON();
     /*TODO Here should be the logic of retrieving components from content.
     Retrieving components from context will call their initMethod from their Lifecycle instance,
     the similar logic will be working after setting properties for the components and after closing current context.
@@ -29,3 +32,5 @@ class Context {
     //TODO Here should be the logic of retrieving components from context as js-objects.
   }
 }
+
+export default Context;

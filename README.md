@@ -5,7 +5,7 @@ This library's purpose is to provide context space for
 creating objects and providing management of their lifecycle.
 Took inspiration from Spring Core.
 
-Main concepts (for server-side apps):
+Main information (for server-side apps):
 
 1) Our application has classes.
 They can be at least of two types (like in this example):
@@ -28,8 +28,8 @@ in services are stub-functions so just imagine
 how it should work if system had real datasource)
 
 2) Now, when we got the two main things for building this small app -
- entities and services - we can keep on moving to the most interesting part
- of this project.
+entities and services - we may keep on moving to the most interesting part
+of this project.
 There is lib directory where I have created four classes: Property, Component, Context and Lifecycle.
   a) Context class is a prototype of sandbox where all objects defined in configuration (context.json)
   will be created.
@@ -37,8 +37,8 @@ There is lib directory where I have created four classes: Property, Component, C
   c) Property class is the property of component than can store  simple values like string,
   numbers etc or references to another components
   d) Lifecycle class is responsible for management of component's lifecycle, it can be represented
-  as initialization method that is called
-  before object's creation in context; method, that is called after setting properties to the component;
-   method, that is called after destroying component in context.
+  as initialization method that is called before object's creation in context;
+  method, that is called after setting properties to the component;
+  method, that is called after destroying component in context.
 At the moment, this 'library' has only stub-functions but it will be improved in future according
 to the main principles of inversion of control and Spring Core's container.
