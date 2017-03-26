@@ -15,6 +15,11 @@ import Context from "./lib/Context"
 // let order6 = mservice.createOrder(customer, 'Order6', 2500, ['kyivstar', 'beeline']);
 // console.log(order5);
 const configs = ["../context.json", "../context1.json", "../context2.json"];
-let context = new Context(configs)
+let context = new Context(configs);
 
-console.log(context.getObjectsFromJSON());
+let user = context.getComponent('user');
+console.log(user);
+
+//console.log(context.getObjectsFromJSON());
+
+//context.getComponentsFromConfiguration();

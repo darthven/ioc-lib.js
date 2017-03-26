@@ -5,6 +5,7 @@
         "target": "es5",
         "noImplicitAny": false,
         "sourceMap": false,
-        "typeRoots": ["node_modules/@types"]
+        "typeRoots": ["node_modules/@types"],
+        "lib":["ES2017"]
     }
 }
