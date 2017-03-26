@@ -24,15 +24,16 @@ class Context {
     const objects = this.getObjectsFromJSON();
     objects.forEach((object) => {
       object.config.components.forEach((comp) => {
+        let path = comp.classPath;
         let component = new Component(comp.id,
           comp.name, comp.classPath);
-        components.set(comp.id, component);
+        components.set(comp.id, Object.assign(component, require(path).default.prototype));
       });
     });
     this.components = components;
   }
 
-  public getComponent(componentId: string) {
+  public getComponent(componentId: string): any {
     return this.components.get(componentId);
   }
 }

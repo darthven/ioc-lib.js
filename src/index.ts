@@ -2,6 +2,7 @@ import InternetOrderManagementService from "./components/services/InternetOrderM
 import TvOrderManagementService from "./components/services/TvOrderManagementService"
 import MobileOrderManagementService from "./components/services/MobileOrderManagementService"
 import Customer from "./components/entities/Customer"
+import User from "./components/classes/User"
 import Context from "./lib/Context"
 // let iservice = new InternetOrderManagementService();
 // let tvservice = new TvOrderManagementService();
@@ -17,9 +18,10 @@ import Context from "./lib/Context"
 const configs = ["../context.json", "../context1.json", "../context2.json"];
 let context = new Context(configs);
 
-let user = context.getComponent('user');
-console.log(user);
 
+let user = context.getComponent('admin');
+console.log(user);
+user.bye();
 //console.log(context.getObjectsFromJSON());
 
 //context.getComponentsFromConfiguration();
