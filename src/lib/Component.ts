@@ -9,7 +9,10 @@ class Component {
   private properties: Property[];
   private lifecycle: Lifecycle;
 
-  constructor() {
+  constructor(id: string, name: string, classPath: string) {
+    this.id = id;
+    this.name = name;
+    this.classPath = classPath;
     this.defineLifecycle();
   }
 

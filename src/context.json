@@ -1,5 +1,5 @@
 {
-  "context": {
+  "configuration": {
     "components" : [
       {
         "id": "admin",
@@ -34,7 +34,7 @@
           "afterPropertiesWereSetMethod": "setPropertiesForUser",
           "destroyMethod": "destroyUser"
         }
-      },
+      }
     ]
   }
 }
