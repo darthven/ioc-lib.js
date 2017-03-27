@@ -19,9 +19,9 @@ const configs = ["../context.json", "../context1.json", "../context2.json"];
 let context = new Context(configs);
 
 
-let user = context.getComponent('admin');
+let user = context.getComponent('user');
 console.log(user);
-user.bye();
+user.hello();
 //console.log(context.getObjectsFromJSON());
 
 //context.getComponentsFromConfiguration();

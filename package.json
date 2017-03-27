@@ -11,8 +11,7 @@
   "author": "darthven",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^7.0.11",
-    "json-loader": "^0.5.4"
+    "@types/node": "^7.0.11"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
