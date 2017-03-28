@@ -34,6 +34,7 @@ class Context {
         comp.name, comp.classPath, this.defineComponentScope(comp));
       let properties = this.getPropertiesFromConfiguration(comp, components);
       component.setProperties(properties);
+      //TODO Here should be logic from lifecycle about init-methods
       components.set(comp.id, Object.assign(component, entity));
     });
     this.components = components;
@@ -89,10 +90,6 @@ class Context {
     return componentsFromContext.sort((comp1, comp2) => this.isSimpleComponent(comp1) > this.isSimpleComponent(comp2));
   }
 
-  private setProperties(): void {
-
-  }
-
   public getComponent(componentId: string): any {
     let component = this.components.get(componentId);
     if(component.getScope() === Scope.PROTOTYPE) {
@@ -100,14 +97,21 @@ class Context {
     }
     return component;
   }
-  public setLifecycle(lifecycle: Lifecycle): void {
-    this.lifecycle = lifecycle;
+
+  private removeComponentFromContext(componentId: string): boolean {
+    return this.components.delete(componentId);
   }
 
-  public getLifecycle(): Lifecycle {
-    return this.lifecycle;
+  public close(): void {
+    console.log('Closing current context...');
+    //TODO Here should be logic from lifecycle about destroy-methods
+    this.components.clear();
+    this.lifecycle = null;
+    this.configs = null;
   }
 
+  public registerShutdownHook(): void {
+    process.on('exit', () => this.close());
+  }
 }
-
 export default Context;

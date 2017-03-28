@@ -17,9 +17,10 @@ import Context from "./lib/Context"
 // console.log(order5);
 const configs = ["../context.json", "../context1.json", "../context2.json"];
 let context = new Context(configs);
+context.registerShutdownHook();
 
+let user = context.getComponent('user');
 
-let user = context.getComponent('admin');
 console.log(user);
 user.hello();
 //console.log(context.getObjectsFromJSON());
