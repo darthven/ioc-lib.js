@@ -16,13 +16,16 @@ import Context from "./lib/Context"
 // let order6 = mservice.createOrder(customer, 'Order6', 2500, ['kyivstar', 'beeline']);
 // console.log(order5);
 const configs = ["../context.json", "../context1.json", "../context2.json"];
-let context = new Context(configs);
-context.registerShutdownHook();
+let context1 = new Context(configs);
+context1.registerShutdownHook();
 
-let user = context.getComponent('user');
+// let context2 = new Context(["../context2.json"]);
+// context2.registerShutdownHook();
 
-console.log(user);
-user.hello();
-//console.log(context.getObjectsFromJSON());
+let user1 = context1.getComponent('addmin');
+console.log(user1);
+user1.hello();
 
-//context.getComponentsFromConfiguration();
+// let user2 = context2.getComponent('admin');
+// console.log(user2);
+// user2.hello();

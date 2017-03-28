@@ -1,6 +1,7 @@
 import {Scope, default as Component} from './Component'
 import Property from './Property'
 import Lifecycle from './Lifecycle'
+import ComponentNotFoundError from './ComponentNotFoundError'
 
 class Context {
   private components: Map<string, Component>;
@@ -92,6 +93,9 @@ class Context {
 
   public getComponent(componentId: string): any {
     let component = this.components.get(componentId);
+    if(!component) {
+      throw new ComponentNotFoundError(`Component was not found by id ${componentId}`);
+    }
     if(component.getScope() === Scope.PROTOTYPE) {
       return Object.assign({}, component);
     }
