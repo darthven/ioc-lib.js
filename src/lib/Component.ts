@@ -1,19 +1,22 @@
 import Property from './Property'
-import Lifecycle from './Lifecycle'
+
+export const enum Scope {
+  SINGLETON,
+  PROTOTYPE
+}
 
 class Component {
-
   private id: string;
   private name: string;
   private classPath: string;
+  private scope: Scope;
   private properties: Property[];
-  private lifecycle: Lifecycle;
 
-  constructor(id: string, name: string, classPath: string) {
+  constructor(id: string, name: string, classPath: string, scope: Scope) {
     this.id = id;
     this.name = name;
     this.classPath = classPath;
-    this.defineLifecycle();
+    this.scope = scope;
   }
 
   public getId() : string {
@@ -48,13 +51,13 @@ class Component {
     this.classPath = classPath;
   }
 
-  private defineLifecycle(): void {
-    this.lifecycle = new Lifecycle();
+  public getScope() : Scope {
+    return this.scope;
   }
 
-  public getLifecycle(): Lifecycle {
-    return this.lifecycle;
-  }
+  public setScope(scope: Scope) : void {
+    this.scope = scope;
+  }  
 }
 
 export default Component;
