@@ -1,6 +1,6 @@
 import Component from './Component'
 
-class Lifecycle {
+class ComponentLifecycle {
 
   private initMethod: Function;
   private afterPropertiesWereSetMethod: Function
@@ -31,4 +31,4 @@ class Lifecycle {
   }
 }
 
-export default Lifecycle;
+export default ComponentLifecycle;

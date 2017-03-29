@@ -1,11 +1,9 @@
 import {Scope, default as Component} from './Component'
 import Property from './Property'
-import Lifecycle from './Lifecycle'
 import ComponentNotFoundError from './ComponentNotFoundError'
 
 class Context {
   private components: Map<string, Component>;
-  private lifecycle: Lifecycle;
   private configs: string[];
 
   constructor(configs: string[]) {
@@ -62,7 +60,7 @@ class Context {
     } else if(componentFromContext.scope === 'prototype') {
       return Scope.PROTOTYPE;
     }
-    return null;
+    return Scope.SINGLETON;
   }
 
 
@@ -94,7 +92,7 @@ class Context {
   public getComponent(componentId: string): any {
     let component = this.components.get(componentId);
     if(!component) {
-      throw new ComponentNotFoundError(`Component was not found by id ${componentId}`);
+      throw new ComponentNotFoundError(`Component was not found by id "${componentId}"`);
     }
     if(component.getScope() === Scope.PROTOTYPE) {
       return Object.assign({}, component);
@@ -106,11 +104,10 @@ class Context {
     return this.components.delete(componentId);
   }
 
-  public close(): void {
+  private close(): void {
     console.log('Closing current context...');
     //TODO Here should be logic from lifecycle about destroy-methods
     this.components.clear();
-    this.lifecycle = null;
     this.configs = null;
   }
 

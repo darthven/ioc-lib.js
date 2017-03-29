@@ -15,17 +15,31 @@ import Context from "./lib/Context"
 // let order5 = mservice.createOrder(customer, 'Order5', 2500, ['vodafone', 'life']);
 // let order6 = mservice.createOrder(customer, 'Order6', 2500, ['kyivstar', 'beeline']);
 // console.log(order5);
-const configs = ["../context.json", "../context1.json", "../context2.json"];
-let context1 = new Context(configs);
-context1.registerShutdownHook();
 
 // let context2 = new Context(["../context2.json"]);
 // context2.registerShutdownHook();
+const http = require('http');
+const configs = ["../context.json", "../context1.json", "../context2.json"];
 
-let user1 = context1.getComponent('addmin');
-console.log(user1);
-user1.hello();
+http.createServer((req, res) => {
+  let context = new Context(configs);
+  context.registerShutdownHook();
+  let admin = context.getComponent('admin');
+  console.log(admin);
+  admin.hello();
+  res.writeHead(200, {"Content-Type": "application/json"});
+  res.write(JSON.stringify(admin, null, 3));
+  res.end();
+}).listen(8080);
 
-// let user2 = context2.getComponent('admin');
-// console.log(user2);
-// user2.hello();
+
+http.createServer((req, res) => {
+  let context = new Context(configs);
+  context.registerShutdownHook();
+  let user = context.getComponent('user1');
+  console.log(user);
+  user.hello();
+  res.writeHead(200, {"Content-Type": "application/json"});
+  res.write(JSON.stringify(user, null, 3));
+  res.end();
+}).listen(3000);

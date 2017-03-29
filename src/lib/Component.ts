@@ -1,4 +1,5 @@
 import Property from './Property'
+import ComponentLifecycle from './ComponentLifecycle'
 
 export const enum Scope {
   SINGLETON,
@@ -57,7 +58,7 @@ class Component {
 
   public setScope(scope: Scope) : void {
     this.scope = scope;
-  }  
+  }
 }
 
 export default Component;
