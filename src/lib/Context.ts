@@ -1,7 +1,7 @@
 import {Scope, default as Component} from './Component'
 import Property from './Property'
 import ComponentNotFoundError from './ComponentNotFoundError'
-
+const jsonfile = require('jsonfile');
 class Context {
   private components: Map<string, Component>;
   private configs: string[];
@@ -9,15 +9,26 @@ class Context {
   constructor(configs: string[]) {
     this.configs = configs;
     this.putComponentsFromConfigurationIntoContext();
+    console.log('Context was initialized');
   }
 
   private getObjectsFromJSON() {
     let objects = [];
     this.configs.forEach((config) => {
-      let json = require(config).configuration;
+      console.log(config);
+      let json = jsonfile.readFileSync(config).configuration;
+      console.log(json);
       objects.push({configName: config, config: json});
-    });
+    })
+    // objects.forEach((obj) => {
+    //   obj.config.components.for
+    //   console.log(obj.con)
+    // })
     return objects;
+  }
+
+  public updateContext(): void {
+    this.putComponentsFromConfigurationIntoContext();
   }
 
   private putComponentsFromConfigurationIntoContext(): void {
@@ -37,7 +48,7 @@ class Context {
       components.set(comp.id, Object.assign(component, entity));
     });
     this.components = components;
-    console.log(this.components.entries());
+    //console.log(this.components.entries());
   }
 
 

@@ -19,14 +19,16 @@ import Context from "./lib/Context"
 // let context2 = new Context(["../context2.json"]);
 // context2.registerShutdownHook();
 const http = require('http');
-const configs = ["../context.json", "../context1.json", "../context2.json"];
-
+const path = require('path');
+const configs = [__dirname + "/context.json", __dirname + "/context1.json", __dirname + "/context2.json"];
+let context1 = new Context(configs);
+let context2 = new Context(configs);
 http.createServer((req, res) => {
-  let context = new Context(configs);
-  context.registerShutdownHook();
-  let admin = context.getComponent('admin');
-  console.log(admin);
-  admin.hello();
+  context1.updateContext();
+  context1.registerShutdownHook();
+  let admin = context1.getComponent('admin');
+  // console.log(admin);
+  // admin.hello();
   res.writeHead(200, {"Content-Type": "application/json"});
   res.write(JSON.stringify(admin, null, 3));
   res.end();
@@ -34,11 +36,11 @@ http.createServer((req, res) => {
 
 
 http.createServer((req, res) => {
-  let context = new Context(configs);
-  context.registerShutdownHook();
-  let user = context.getComponent('user1');
-  console.log(user);
-  user.hello();
+  context2.updateContext();
+  context2.registerShutdownHook();
+  let user = context2.getComponent('user1');
+  // console.log(user);
+  // user.hello();
   res.writeHead(200, {"Content-Type": "application/json"});
   res.write(JSON.stringify(user, null, 3));
   res.end();
