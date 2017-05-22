@@ -11,13 +11,15 @@ class Component {
   private name: string;
   private classPath: string;
   private scope: Scope;
+  private lifecycle : ComponentLifecycle;
   private properties: Property[];
 
-  constructor(id: string, name: string, classPath: string, scope: Scope) {
+  constructor(id: string, name: string, classPath: string, scope: Scope, lifecycle: ComponentLifecycle) {
     this.id = id;
     this.name = name;
     this.classPath = classPath;
     this.scope = scope;
+    this.lifecycle = lifecycle;
   }
 
   public getId() : string {
@@ -58,6 +60,14 @@ class Component {
 
   public setScope(scope: Scope) : void {
     this.scope = scope;
+  }
+
+  public getLifecycle() : ComponentLifecycle {
+    return this.lifecycle;
+  }
+
+  public setLifecycle(lifecycle: ComponentLifecycle) : void {
+    this.lifecycle = lifecycle;
   }
 }
 

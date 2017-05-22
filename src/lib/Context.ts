@@ -41,14 +41,15 @@ class Context {
         entity[lifecycle.initMethod].call();
       }
       let component = new Component(comp.id,
-        comp.name, comp.classPath, this.defineComponentScope(comp));
+        comp.name, comp.classPath, this.defineComponentScope(comp), comp.lifecycle);
       let properties = this.getPropertiesFromConfiguration(comp, components);
       component.setProperties(properties);
-      //TODO Here should be logic from lifecycle about init-methods
+      if(entity[lifecycle.afterPropertiesWereSetMethod]) {
+        entity[lifecycle.afterPropertiesWereSetMethod].call();
+      }
       components.set(comp.id, Object.assign(component, entity));
     });
     this.components = components;
-    //console.log(this.components.entries());
   }
 
 
@@ -123,7 +124,20 @@ class Context {
   }
 
   public registerShutdownHook(): void {
-    process.on('exit', () => this.close());
+    //console.log(process);
+    process.on('SIGINT', () => {
+      this.components.forEach((component) => {
+        console.log(component)
+        const lifecycle = component.getLifecycle();
+        console.log(lifecycle);
+        // const destroyMethod = lifecycle.getDestroyMethod();
+        // console.log(destroyMethod);
+
+        //process.exit(0);
+      })
+      this.close();
+      console.log('Context is closed...');
+    });
   }
 }
 export default Context;

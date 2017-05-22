@@ -1,5 +1,3 @@
-import Component from './Component'
-
 class ComponentLifecycle {
 
   private initMethod: Function;
@@ -22,8 +20,11 @@ class ComponentLifecycle {
     this.afterPropertiesWereSetMethod = afterPropertiesWereSetMethod
   }
 
-  public callDestroyMethod(): void  {
-    this.destroyMethod();
+  public getDestroyMethod(): Function  {
+    if(this.destroyMethod) {
+      return this.destroyMethod;
+    }
+    return null;
   }
 
   public setDestroyMethod(destroyMethod: Function): void  {

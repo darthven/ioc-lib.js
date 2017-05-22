@@ -23,19 +23,19 @@ const path = require('path');
 const configs = [__dirname + "/context.json", __dirname + "/context1.json", __dirname + "/context2.json"];
 let context1 = new Context(configs);
 let context2 = new Context(configs);
-http.createServer((req, res) => {
+context1.registerShutdownHook();
+context2.registerShutdownHook();
+const server1 = http.createServer((req, res) => {
   context1.updateContext();
-  context1.registerShutdownHook();
   let admin = context1.getComponent('admin');
   // console.log(admin);
   // admin.hello();
   res.writeHead(200, {"Content-Type": "application/json"});
   res.write(JSON.stringify(admin, null, 3));
   res.end();
-}).listen(8080);
+});
 
-
-http.createServer((req, res) => {
+const server2 = http.createServer((req, res) => {
   context2.updateContext();
   context2.registerShutdownHook();
   let user = context2.getComponent('user1');
@@ -44,4 +44,8 @@ http.createServer((req, res) => {
   res.writeHead(200, {"Content-Type": "application/json"});
   res.write(JSON.stringify(user, null, 3));
   res.end();
-}).listen(3000);
+});
+
+
+server1.listen(8081);
+server2.listen(3001);
