@@ -26,7 +26,7 @@ let context2 = new Context(configs);
 context1.registerShutdownHook();
 context2.registerShutdownHook();
 const server1 = http.createServer((req, res) => {
-  context1.updateContext();
+  //context1.updateContext();
   let admin = context1.getComponent('admin');
   // console.log(admin);
   // admin.hello();
@@ -36,8 +36,7 @@ const server1 = http.createServer((req, res) => {
 });
 
 const server2 = http.createServer((req, res) => {
-  context2.updateContext();
-  context2.registerShutdownHook();
+  //context2.updateContext();
   let user = context2.getComponent('user1');
   // console.log(user);
   // user.hello();

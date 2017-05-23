@@ -15,9 +15,9 @@ class Context {
   private getObjectsFromJSON() {
     let objects = [];
     this.configs.forEach((config) => {
-      console.log(config);
+      //console.log(config);
       let json = jsonfile.readFileSync(config).configuration;
-      console.log(json);
+      //console.log(json);
       objects.push({configName: config, config: json});
     })
     // objects.forEach((obj) => {
@@ -34,6 +34,7 @@ class Context {
   private putComponentsFromConfigurationIntoContext(): void {
     let components = new Map<string, Component>();
     let configComponents = this.getSortedComponentsByComplexity(this.getUniqueConfigComponents());
+    //console.log(configComponents);
     configComponents.forEach((comp) => {
       const lifecycle = comp.lifecycle;
       const entity = require(comp.classPath).default.prototype;
@@ -50,6 +51,7 @@ class Context {
       components.set(comp.id, Object.assign(component, entity));
     });
     this.components = components;
+    console.log(this.components);
   }
 
 
@@ -127,12 +129,12 @@ class Context {
     //console.log(process);
     process.on('SIGINT', () => {
       this.components.forEach((component) => {
-        console.log(component)
+        //console.log('Component', component);
         const lifecycle = component.getLifecycle();
-        console.log(lifecycle);
-        // const destroyMethod = lifecycle.getDestroyMethod();
-        // console.log(destroyMethod);
-
+        //console.log(lifecycle);
+        const destroyMethod = lifecycle['destroyMethod'];
+        //console.log('Destroy', destroyMethod);
+        component[destroyMethod.toString()].call();
         //process.exit(0);
       })
       this.close();
