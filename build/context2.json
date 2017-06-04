@@ -1,0 +1,46 @@
+{
+  "configuration": {
+    "components" : [
+      {
+        "id": "admin",
+        "name": "Admin",
+        "classPath": "../components/classes/Admin",
+        "properties": [
+          {
+            "name": "referenceToUser",
+            "reference": "user"
+          },
+          {
+            "name": "name",
+            "value": "darthven"
+          },
+          {
+            "name": "age",
+            "value": 21
+          }
+        ],
+        "lifecycle" : {
+          "initMethod" : "initAdmin",
+          "afterPropertiesWereSetMethod": "setPropertiesForAdmin",
+          "destroyMethod": "destroyAdmin"
+        }
+      },
+      {
+        "id": "user",
+        "name": "User",
+        "classPath": "../components/classes/User",
+        "properties": [
+            {
+              "name": "name",
+              "value": "user"
+            }
+        ],
+        "lifecycle": {
+          "initMethod" : "initUser",
+          "afterPropertiesWereSetMethod": "setPropertiesForUser",
+          "destroyMethod": "destroyUser"
+        }
+      }
+    ]
+  }
+}
