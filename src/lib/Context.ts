@@ -1,7 +1,7 @@
 import {Scope, default as Component} from './Component'
 import Property from './Property'
 import ComponentNotFoundError from './ComponentNotFoundError'
-const jsonfile = require('jsonfile');
+import jsonfile = require('jsonfile');
 class Context {
   private components: Map<string, Component>;
   private configs: string[];
@@ -19,7 +19,7 @@ class Context {
       let json = jsonfile.readFileSync(config).configuration;
       //console.log(json);
       objects.push({configName: config, config: json});
-    })
+    });
     // objects.forEach((obj) => {
     //   obj.config.components.for
     //   console.log(obj.con)
@@ -121,24 +121,33 @@ class Context {
   private close(): void {
     console.log('Closing current context...');
     //TODO Here should be logic from lifecycle about destroy-methods
+    this.components.forEach((component) => {
+      //console.log('Component', component);
+      const lifecycle = component.getLifecycle();
+      //console.log(lifecycle);
+      const destroyMethod = lifecycle['destroyMethod'];
+      //console.log('Destroy', destroyMethod);
+      component[destroyMethod.toString()].call();
+      //process.exit(0);
+    });
+    console.log('Context is closed...');
     this.components.clear();
     this.configs = null;
   }
 
   public registerShutdownHook(): void {
     //console.log(process);
-    process.on('SIGINT', () => {
-      this.components.forEach((component) => {
-        //console.log('Component', component);
-        const lifecycle = component.getLifecycle();
-        //console.log(lifecycle);
-        const destroyMethod = lifecycle['destroyMethod'];
-        //console.log('Destroy', destroyMethod);
-        component[destroyMethod.toString()].call();
-        //process.exit(0);
-      })
+    process.on('exit', () => {
       this.close();
-      console.log('Context is closed...');
+      process.exit(0);
+    });
+    process.on('SIGINT', () => {
+      this.close();
+      process.exit(2);
+    });
+    process.on('uncaughtException', (exception) => {
+      console.error(exception.stack);
+      process.exit(99);
     });
   }
 }

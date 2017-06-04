@@ -2,7 +2,7 @@ class Property {
 
   private name: string;
   private value;
-  private reference;
+  private reference: Object;
 
   constructor(name: string) {
     this.name = name;
@@ -16,19 +16,19 @@ class Property {
     this.name = name;
   }
 
-  public getValue() : string {
+  public getValue() : any {
     return this.value;
   }
 
-  public setValue(value) : void {
+  public setValue(value: any) : void {
     this.value = value;
   }
 
-  public getReference() {
+  public getReference() : Object {
     return this.reference;
   }
 
-  public setReference(reference) : void {
+  public setReference(reference: Object) : void {
     this.reference = reference;
   }
 }

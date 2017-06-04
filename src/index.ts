@@ -25,26 +25,27 @@ let context1 = new Context(configs);
 let context2 = new Context(configs);
 context1.registerShutdownHook();
 context2.registerShutdownHook();
-const server1 = http.createServer((req, res) => {
-  //context1.updateContext();
-  let admin = context1.getComponent('admin');
-  // console.log(admin);
-  // admin.hello();
-  res.writeHead(200, {"Content-Type": "application/json"});
-  res.write(JSON.stringify(admin, null, 3));
-  res.end();
-});
 
-const server2 = http.createServer((req, res) => {
-  //context2.updateContext();
-  let user = context2.getComponent('user1');
-  // console.log(user);
-  // user.hello();
-  res.writeHead(200, {"Content-Type": "application/json"});
-  res.write(JSON.stringify(user, null, 3));
-  res.end();
-});
-
-
-server1.listen(8081);
-server2.listen(3001);
+// const server1 = http.createServer((req, res) => {
+//   //context1.updateContext();
+//   let admin = context1.getComponent('admin');
+//   // console.log(admin);
+//   // admin.hello();
+//   res.writeHead(200, {"Content-Type": "application/json"});
+//   res.write(JSON.stringify(admin, null, 3));
+//   res.end();
+// });
+//
+// const server2 = http.createServer((req, res) => {
+//   //context2.updateContext();
+//   let user = context2.getComponent('user1');
+//   // console.log(user);
+//   // user.hello();
+//   res.writeHead(200, {"Content-Type": "application/json"});
+//   res.write(JSON.stringify(user, null, 3));
+//   res.end();
+// });
+//
+//
+// server1.listen(8080);
+// server2.listen(3000);
