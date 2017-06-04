@@ -4,9 +4,8 @@
   "description": "Experimental things with js",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc -w --outDir build",
-    "dev": "node ./build/index.js"
+    "test": "node ./build/test/index.js"
   },
   "author": "darthven",
   "license": "ISC",

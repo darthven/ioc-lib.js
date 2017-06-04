@@ -3,7 +3,7 @@ import TvOrderManagementService from "./components/services/TvOrderManagementSer
 import MobileOrderManagementService from "./components/services/MobileOrderManagementService"
 import Customer from "./components/entities/Customer"
 import User from "./components/classes/User"
-import Context from "./lib/Context"
+import Context from "../lib/Context"
 // let iservice = new InternetOrderManagementService();
 // let tvservice = new TvOrderManagementService();
 // let mservice = new MobileOrderManagementService();

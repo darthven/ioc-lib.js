@@ -4,8 +4,7 @@
       {
         "id": "admin",
         "name": "Admin",
-        "classPath": "../components/classes/Admin",
-        "scope": "singleton",
+        "classPath": "../test/components/classes/Admin.js",
         "properties": [
           {
             "name": "referenceToUser",
@@ -29,13 +28,12 @@
       {
         "id": "user",
         "name": "User",
-        "scope": "prototype",
-        "classPath": "../components/classes/User",
+        "classPath": "../test/components/classes/User.js",
         "properties": [
-          {
-            "name": "name",
-            "value": "user"
-          }
+            {
+              "name": "name",
+              "value": "user"
+            }
         ],
         "lifecycle": {
           "initMethod" : "initUser",

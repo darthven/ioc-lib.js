@@ -4,7 +4,7 @@
       {
         "id": "admin",
         "name": "Admin",
-        "classPath": "../components/classes/Admin",
+        "classPath": "../test/components/classes/Admin.js",
         "properties": [
           {
             "name": "referenceToUser",
@@ -26,9 +26,9 @@
         }
       },
       {
-        "id": "user",
-        "name": "User",
-        "classPath": "../components/classes/User",
+        "id": "user1",
+        "name": "User1",
+        "classPath": "../test/components/classes/User.js",
         "properties": [
             {
               "name": "name",
