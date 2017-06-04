@@ -1,5 +1,6 @@
 import {Scope, default as Component} from './Component'
 import Property from './Property'
+import ComponentLifeCycle from './ComponentLifecycle'
 import ComponentNotFoundError from './ComponentNotFoundError'
 import jsonfile = require('jsonfile');
 class Context {
@@ -15,15 +16,9 @@ class Context {
   private getObjectsFromJSON() {
     let objects = [];
     this.configs.forEach((config) => {
-      //console.log(config);
-      let json = jsonfile.readFileSync(config).configuration;
-      //console.log(json);
-      objects.push({configName: config, config: json});
+      let configFile = jsonfile.readFileSync(config).configuration;
+      objects.push({configName: config, config: configFile});
     });
-    // objects.forEach((obj) => {
-    //   obj.config.components.for
-    //   console.log(obj.con)
-    // })
     return objects;
   }
 
@@ -31,27 +26,52 @@ class Context {
     this.putComponentsFromConfigurationIntoContext();
   }
 
+  private getConfigComponents() {
+      return this.getSortedComponentsByComplexity(this.getUniqueConfigComponents());
+  }
+
   private putComponentsFromConfigurationIntoContext(): void {
-    let components = new Map<string, Component>();
-    let configComponents = this.getSortedComponentsByComplexity(this.getUniqueConfigComponents());
-    //console.log(configComponents);
-    configComponents.forEach((comp) => {
-      const lifecycle = comp.lifecycle;
-      const entity = require(comp.classPath).default.prototype;
-      if(entity[lifecycle.initMethod]) {
-        entity[lifecycle.initMethod].call();
-      }
-      let component = new Component(comp.id,
-        comp.name, comp.classPath, this.defineComponentScope(comp), comp.lifecycle);
-      let properties = this.getPropertiesFromConfiguration(comp, components);
-      component.setProperties(properties);
-      if(entity[lifecycle.afterPropertiesWereSetMethod]) {
-        entity[lifecycle.afterPropertiesWereSetMethod].call();
-      }
-      components.set(comp.id, Object.assign(component, entity));
-    });
-    this.components = components;
+    let basicComponents = new Map<string, Component>();
+    let configComponents = this.getConfigComponents();
+    this.setBasicPropertiesToComponents(configComponents, basicComponents);
+    this.setReferencesToComponents(configComponents, basicComponents);
+    this.components = basicComponents;
     console.log(this.components);
+  }
+
+  private setBasicPropertiesToComponents(configComponents, basicComponents) {
+      configComponents.forEach((comp) => {
+          const lifecycle = new ComponentLifeCycle();
+          lifecycle.setComponentId(comp.id);
+          const entity = require(comp.classPath).default.prototype;
+          if(entity[comp.lifecycle.initMethod]) {
+              lifecycle.setInitMethod(entity[comp.lifecycle.initMethod]);
+              lifecycle.callInitMethod();
+          }
+          if(entity[comp.lifecycle.destroyMethod]) {
+              lifecycle.setDestroyMethod(entity[comp.lifecycle.destroyMethod]);
+          }
+          let component = new Component(comp.id,
+              comp.name, comp.classPath, this.defineComponentScope(comp), lifecycle);
+          let properties = this.getPropertyValuesFromConfiguration(comp);
+          component.setProperties(properties);
+          if(entity[comp.lifecycle.afterPropertiesWereSetMethod]) {
+              lifecycle.setAfterPropertiesWereSetMethod(entity[comp.lifecycle.afterPropertiesWereSetMethod]);
+              lifecycle.callAfterPropertiesWereSetMethod();
+          }
+          basicComponents.set(comp.id, Object.assign(component, entity));
+      });
+  }
+
+
+  private setReferencesToComponents(configComponents, basicComponents): void {
+      basicComponents.forEach((component) => {
+          configComponents.forEach((comp) => {
+              const references = this.getPropertyReferencesFromConfiguration(configComponents, comp);
+              const currentProperties = component.getProperties();
+              component.setProperties(currentProperties.concat(references));
+          });
+      });
   }
 
 
@@ -78,7 +98,7 @@ class Context {
   }
 
 
-  private getPropertiesFromConfiguration(component, components): Property[] {
+  private getPropertyValuesFromConfiguration(component): Property[] {
     let propertiesFromContext = component.properties;
     let properties = [];
     if(propertiesFromContext) {
@@ -86,13 +106,26 @@ class Context {
         let property = new Property(prop.name);
         if(prop['value']) {
           property.setValue(prop.value);
-        } else if(prop['reference']) {
-          property.setReference(components.get(prop.reference));
         }
         properties.push(property);
       });
     }
     return properties;
+  }
+
+  private getPropertyReferencesFromConfiguration(component, components): Property[] {
+      let propertiesFromContext = component.properties;
+      let properties = [];
+      if(propertiesFromContext) {
+          propertiesFromContext.forEach((prop) => {
+              let property = new Property(prop.name);
+              if(prop['reference']) {
+                  property.setReference(components.get(prop.reference));
+              }
+              properties.push(property);
+          });
+      }
+      return properties;
   }
 
   private isSimpleComponent(componentFromContext): boolean {
@@ -120,15 +153,10 @@ class Context {
 
   private close(): void {
     console.log('Closing current context...');
-    //TODO Here should be logic from lifecycle about destroy-methods
     this.components.forEach((component) => {
-      //console.log('Component', component);
       const lifecycle = component.getLifecycle();
       //console.log(lifecycle);
-      const destroyMethod = lifecycle['destroyMethod'];
-      //console.log('Destroy', destroyMethod);
-      component[destroyMethod.toString()].call();
-      //process.exit(0);
+      lifecycle.callDestroyMethod();
     });
     console.log('Context is closed...');
     this.components.clear();
@@ -139,13 +167,12 @@ class Context {
     //console.log(process);
     process.on('exit', () => {
       this.close();
-      process.exit(0);
     });
     process.on('SIGINT', () => {
       this.close();
-      process.exit(2);
     });
     process.on('uncaughtException', (exception) => {
+      this.close();
       console.error(exception.stack);
       process.exit(99);
     });

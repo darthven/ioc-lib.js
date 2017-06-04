@@ -26,15 +26,15 @@ let context2 = new Context(configs);
 context1.registerShutdownHook();
 context2.registerShutdownHook();
 
-// const server1 = http.createServer((req, res) => {
-//   //context1.updateContext();
-//   let admin = context1.getComponent('admin');
-//   // console.log(admin);
-//   // admin.hello();
-//   res.writeHead(200, {"Content-Type": "application/json"});
-//   res.write(JSON.stringify(admin, null, 3));
-//   res.end();
-// });
+http.createServer((req, res) => {
+  context1.updateContext();
+  let admin = context1.getComponent('admin');
+  // console.log(admin);
+  // admin.hello();
+  res.writeHead(200, {"Content-Type": "application/json"});
+  res.write(JSON.stringify(admin, null, 3));
+  res.end();
+}).listen(8080);
 //
 // const server2 = http.createServer((req, res) => {
 //   //context2.updateContext();
@@ -46,6 +46,4 @@ context2.registerShutdownHook();
 //   res.end();
 // });
 //
-//
-// server1.listen(8080);
-// server2.listen(3000);
+
