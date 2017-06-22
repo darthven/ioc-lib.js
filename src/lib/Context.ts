@@ -155,7 +155,6 @@ class Context {
     console.log('Closing current context...');
     this.components.forEach((component) => {
       const lifecycle = component.getLifecycle();
-      //console.log(lifecycle);
       lifecycle.callDestroyMethod();
     });
     console.log('Context is closed...');
@@ -164,7 +163,6 @@ class Context {
   }
 
   public registerShutdownHook(): void {
-    //console.log(process);
     process.on('exit', () => {
       this.close();
     });

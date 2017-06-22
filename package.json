@@ -1,5 +1,5 @@
 {
-  "name": "js-experimental",
+  "name": "ioc-lib.js",
   "version": "0.0.1",
   "description": "Experimental things with js",
   "main": "app.js",
@@ -7,7 +7,7 @@
     "tsc": "tsc -w --outDir build",
     "test": "node ./build/test/index.js"
   },
-  "author": "darthven",
+  "author": "darthvenus",
   "license": "ISC",
   "dependencies": {
     "@types/node": "^7.0.11",

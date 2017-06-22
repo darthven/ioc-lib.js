@@ -1,7 +1,7 @@
 class Property {
 
   private name: string;
-  private value;
+  private value: any;
   private reference: Object;
 
   constructor(name: string) {

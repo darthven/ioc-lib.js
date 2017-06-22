@@ -3,3 +3,7 @@ build/lib
 build/index.js
 node_modules
 npm-debug.log
+.idea/ExperimentalLib.iml
+.idea/inspectionProfiles/
+.idea/modules.xml
+.idea/workspace.xml
