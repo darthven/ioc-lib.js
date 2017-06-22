@@ -1,5 +1,4 @@
 build/components
-build/lib
 build/index.js
 node_modules
 npm-debug.log
