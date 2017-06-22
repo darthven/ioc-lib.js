@@ -1,14 +1,10 @@
 
 <h1> ioc-lib.js: Simple Inversion of Control Container for Node.js-based applications</h1>
 
----
-
 ioc-lib.js is an sim example of very simple IoC container written on Typescript that will allow you
 to build scalable and flexible applications on Node.js platform. 
 
 <h2>Full Documentation</h2>
-
----
 
 <h3>Preconditions for Usage</h3>
 
@@ -137,11 +133,7 @@ Example of the configuration file:
 
 <h3>API Documentation</h3>
 
----
-
 There are several main classes which took part in programming context process.
-
----
 
 <h4>Property Class</h4>
 
@@ -162,8 +154,6 @@ Class that can be represented by simple values like string, numbers, arrays etc 
 - getReference - returns the value of the unique identifier of another component in string format
 
 - setReference - sets the value of the unique identifier of another component in string format
-
----
 
 <h4>ComponentLifecycle Class</h4>
 
@@ -189,7 +179,6 @@ Class that responds for the lifecycle of the component during the context's acti
 
 - setDestroyMethod - sets the method to the component in Function format
 
----
 
 <h4>Context Class</h4>
 
@@ -205,7 +194,6 @@ Main class that responds for creating context, scanning and parsing configuratio
 
 - registerShutdownHook - closes programming context after finishing the main process of the application.
 
----
 
 <h3>Live Code Sample of Library's Usage</h3>
 
