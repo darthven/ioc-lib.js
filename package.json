@@ -1,8 +1,10 @@
 {
   "name": "ioc-lib.js",
   "version": "0.0.2",
-  "description": "Experimental things with js",
+  "description": "Inversion of control library written on Typescript",
   "main": "app.js",
+  "url" : "https://github.com/darthven/ExperimentalLib/issues",
+  "email" : "kostharl@gmail.com",
   "scripts": {
     "tsc": "tsc -w --outDir build",
     "test": "node ./build/test/index.js"
