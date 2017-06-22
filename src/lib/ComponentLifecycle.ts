@@ -14,7 +14,7 @@ class ComponentLifecycle {
     this.componentId = value;
   }
 
-  public callInitMethod(): void  {
+  public callInitMethod(component: Object): void  {
     this.initMethod();
     console.log(`Component with id "${this.getComponentId()}" was initialized`);
   }
@@ -23,7 +23,7 @@ class ComponentLifecycle {
     this.initMethod = initMethod;
   }
 
-  public callAfterPropertiesWereSetMethod(): void  {
+  public callAfterPropertiesWereSetMethod(component: Object): void  {
     this.afterPropertiesWereSetMethod();
     console.log(`Component with id "${this.getComponentId()}" received its properties`);
   }
@@ -32,7 +32,7 @@ class ComponentLifecycle {
     this.afterPropertiesWereSetMethod = afterPropertiesWereSetMethod
   }
 
-  public callDestroyMethod(): void  {
+  public callDestroyMethod(component: Object): void  {
     this.destroyMethod();
     console.log(`Component with id "${this.getComponentId()}" was destroyed`);
   }

@@ -46,7 +46,7 @@ class Context {
           const entity = require(comp.classPath).default.prototype;
           if(entity[comp.lifecycle.initMethod]) {
               lifecycle.setInitMethod(entity[comp.lifecycle.initMethod]);
-              lifecycle.callInitMethod();
+              lifecycle.callInitMethod(entity);
           }
           if(entity[comp.lifecycle.destroyMethod]) {
               lifecycle.setDestroyMethod(entity[comp.lifecycle.destroyMethod]);
@@ -57,7 +57,7 @@ class Context {
           component.setProperties(properties);
           if(entity[comp.lifecycle.afterPropertiesWereSetMethod]) {
               lifecycle.setAfterPropertiesWereSetMethod(entity[comp.lifecycle.afterPropertiesWereSetMethod]);
-              lifecycle.callAfterPropertiesWereSetMethod();
+              lifecycle.callAfterPropertiesWereSetMethod(entity);
           }
           basicComponents.set(comp.id, Object.assign(component, entity));
       });
@@ -155,7 +155,7 @@ class Context {
     console.log('Closing current context...');
     this.components.forEach((component) => {
       const lifecycle = component.getLifecycle();
-      lifecycle.callDestroyMethod();
+      lifecycle.callDestroyMethod(component);
     });
     console.log('Context is closed...');
     this.components.clear();
