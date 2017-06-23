@@ -67,7 +67,8 @@ class Context {
   private setReferencesToComponents(configComponents, basicComponents): void {
       basicComponents.forEach((component) => {
           configComponents.forEach((comp) => {
-              const references = this.getPropertyReferencesFromConfiguration(configComponents, comp);
+              const references = this.getPropertyReferencesFromConfiguration(comp, configComponents);
+              console.log('REFERENCES ' + references);
               const currentProperties = component.getProperties();
               component.setProperties(currentProperties.concat(references));
           });
@@ -106,8 +107,8 @@ class Context {
         let property = new Property(prop.name);
         if(prop['value']) {
           property.setValue(prop.value);
+          properties.push(property);
         }
-        properties.push(property);
       });
     }
     return properties;
@@ -120,9 +121,10 @@ class Context {
           propertiesFromContext.forEach((prop) => {
               let property = new Property(prop.name);
               if(prop['reference']) {
-                  property.setReference(components.get(prop.reference));
+                  console.log('REFERENCE ' + prop.reference);
+                  property.setReference(prop.reference);
+                  properties.push(property);
               }
-              properties.push(property);
           });
       }
       return properties;

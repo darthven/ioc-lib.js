@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Component_1 = require("./Component");
 var Property_1 = require("./Property");
+var ComponentLifecycle_1 = require("./ComponentLifecycle");
 var ComponentNotFoundError_1 = require("./ComponentNotFoundError");
 var jsonfile = require("jsonfile");
 var Context = (function () {
@@ -13,41 +14,58 @@ var Context = (function () {
     Context.prototype.getObjectsFromJSON = function () {
         var objects = [];
         this.configs.forEach(function (config) {
-            //console.log(config);
-            var json = jsonfile.readFileSync(config).configuration;
-            //console.log(json);
-            objects.push({ configName: config, config: json });
+            var configFile = jsonfile.readFileSync(config).configuration;
+            objects.push({ configName: config, config: configFile });
         });
-        // objects.forEach((obj) => {
-        //   obj.config.components.for
-        //   console.log(obj.con)
-        // })
         return objects;
     };
     Context.prototype.updateContext = function () {
         this.putComponentsFromConfigurationIntoContext();
     };
+    Context.prototype.getConfigComponents = function () {
+        return this.getSortedComponentsByComplexity(this.getUniqueConfigComponents());
+    };
     Context.prototype.putComponentsFromConfigurationIntoContext = function () {
-        var _this = this;
-        var components = new Map();
-        var configComponents = this.getSortedComponentsByComplexity(this.getUniqueConfigComponents());
-        //console.log(configComponents);
-        configComponents.forEach(function (comp) {
-            var lifecycle = comp.lifecycle;
-            var entity = require(comp.classPath).default.prototype;
-            if (entity[lifecycle.initMethod]) {
-                entity[lifecycle.initMethod].call();
-            }
-            var component = new Component_1.default(comp.id, comp.name, comp.classPath, _this.defineComponentScope(comp), comp.lifecycle);
-            var properties = _this.getPropertiesFromConfiguration(comp, components);
-            component.setProperties(properties);
-            if (entity[lifecycle.afterPropertiesWereSetMethod]) {
-                entity[lifecycle.afterPropertiesWereSetMethod].call();
-            }
-            components.set(comp.id, Object.assign(component, entity));
-        });
-        this.components = components;
+        var basicComponents = new Map();
+        var configComponents = this.getConfigComponents();
+        this.setBasicPropertiesToComponents(configComponents, basicComponents);
+        this.setReferencesToComponents(configComponents, basicComponents);
+        this.components = basicComponents;
         console.log(this.components);
+    };
+    Context.prototype.setBasicPropertiesToComponents = function (configComponents, basicComponents) {
+        var _this = this;
+        configComponents.forEach(function (comp) {
+            var lifecycle = new ComponentLifecycle_1.default();
+            lifecycle.setComponentId(comp.id);
+            var entity = require(comp.classPath).default.prototype;
+            if (entity[comp.lifecycle.initMethod]) {
+                lifecycle.setInitMethod(entity[comp.lifecycle.initMethod]);
+                lifecycle.callInitMethod(entity);
+            }
+            if (entity[comp.lifecycle.destroyMethod]) {
+                lifecycle.setDestroyMethod(entity[comp.lifecycle.destroyMethod]);
+            }
+            var component = new Component_1.default(comp.id, comp.name, comp.classPath, _this.defineComponentScope(comp), lifecycle);
+            var properties = _this.getPropertyValuesFromConfiguration(comp);
+            component.setProperties(properties);
+            if (entity[comp.lifecycle.afterPropertiesWereSetMethod]) {
+                lifecycle.setAfterPropertiesWereSetMethod(entity[comp.lifecycle.afterPropertiesWereSetMethod]);
+                lifecycle.callAfterPropertiesWereSetMethod(entity);
+            }
+            basicComponents.set(comp.id, Object.assign(component, entity));
+        });
+    };
+    Context.prototype.setReferencesToComponents = function (configComponents, basicComponents) {
+        var _this = this;
+        basicComponents.forEach(function (component) {
+            configComponents.forEach(function (comp) {
+                var references = _this.getPropertyReferencesFromConfiguration(comp, configComponents);
+                console.log('REFERENCES ' + references);
+                var currentProperties = component.getProperties();
+                component.setProperties(currentProperties.concat(references));
+            });
+        });
     };
     Context.prototype.getUniqueConfigComponents = function () {
         var configComponents = [];
@@ -70,7 +88,7 @@ var Context = (function () {
         }
         return 0 /* SINGLETON */;
     };
-    Context.prototype.getPropertiesFromConfiguration = function (component, components) {
+    Context.prototype.getPropertyValuesFromConfiguration = function (component) {
         var propertiesFromContext = component.properties;
         var properties = [];
         if (propertiesFromContext) {
@@ -78,11 +96,23 @@ var Context = (function () {
                 var property = new Property_1.default(prop.name);
                 if (prop['value']) {
                     property.setValue(prop.value);
+                    properties.push(property);
                 }
-                else if (prop['reference']) {
-                    property.setReference(components.get(prop.reference));
+            });
+        }
+        return properties;
+    };
+    Context.prototype.getPropertyReferencesFromConfiguration = function (component, components) {
+        var propertiesFromContext = component.properties;
+        var properties = [];
+        if (propertiesFromContext) {
+            propertiesFromContext.forEach(function (prop) {
+                var property = new Property_1.default(prop.name);
+                if (prop['reference']) {
+                    console.log('REFERENCE ' + prop.reference);
+                    property.setReference(prop.reference);
+                    properties.push(property);
                 }
-                properties.push(property);
             });
         }
         return properties;
@@ -109,15 +139,9 @@ var Context = (function () {
     };
     Context.prototype.close = function () {
         console.log('Closing current context...');
-        //TODO Here should be logic from lifecycle about destroy-methods
         this.components.forEach(function (component) {
-            //console.log('Component', component);
             var lifecycle = component.getLifecycle();
-            //console.log(lifecycle);
-            var destroyMethod = lifecycle['destroyMethod'];
-            //console.log('Destroy', destroyMethod);
-            component[destroyMethod.toString()].call();
-            //process.exit(0);
+            lifecycle.callDestroyMethod(component);
         });
         console.log('Context is closed...');
         this.components.clear();
@@ -125,16 +149,14 @@ var Context = (function () {
     };
     Context.prototype.registerShutdownHook = function () {
         var _this = this;
-        //console.log(process);
         process.on('exit', function () {
             _this.close();
-            process.exit(0);
         });
         process.on('SIGINT', function () {
             _this.close();
-            process.exit(2);
         });
         process.on('uncaughtException', function (exception) {
+            _this.close();
             console.error(exception.stack);
             process.exit(99);
         });
