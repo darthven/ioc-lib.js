@@ -8,7 +8,6 @@ npm-debug.log
 .idea/modules.xml
 .idea/typescript-compiler.xml
 .idea/workspace.xml
-build/lib/
 build/test/Context.spec.js
 build/test/components/
 build/test/index.js
