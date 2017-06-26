@@ -22,9 +22,9 @@ const http = require('http');
 const path = require('path');
 const configs = [__dirname + "/context.json", __dirname + "/context1.json", __dirname + "/context2.json"];
 let context1 = new Context(configs);
-let context2 = new Context(configs);
+//let context2 = new Context(configs);
 context1.registerShutdownHook();
-context2.registerShutdownHook();
+//context2.registerShutdownHook();
 
 http.createServer((req, res) => {
   context1.updateContext();

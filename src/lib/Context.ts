@@ -46,7 +46,7 @@ class Context {
           const entity = require(comp.classPath).default.prototype;
           if(entity[comp.lifecycle.initMethod]) {
               lifecycle.setInitMethod(entity[comp.lifecycle.initMethod]);
-              lifecycle.callInitMethod();
+              lifecycle.callInitMethod(entity);
           }
           if(entity[comp.lifecycle.destroyMethod]) {
               lifecycle.setDestroyMethod(entity[comp.lifecycle.destroyMethod]);
@@ -57,7 +57,7 @@ class Context {
           component.setProperties(properties);
           if(entity[comp.lifecycle.afterPropertiesWereSetMethod]) {
               lifecycle.setAfterPropertiesWereSetMethod(entity[comp.lifecycle.afterPropertiesWereSetMethod]);
-              lifecycle.callAfterPropertiesWereSetMethod();
+              lifecycle.callAfterPropertiesWereSetMethod(entity);
           }
           basicComponents.set(comp.id, Object.assign(component, entity));
       });
@@ -67,7 +67,8 @@ class Context {
   private setReferencesToComponents(configComponents, basicComponents): void {
       basicComponents.forEach((component) => {
           configComponents.forEach((comp) => {
-              const references = this.getPropertyReferencesFromConfiguration(configComponents, comp);
+              const references = this.getPropertyReferencesFromConfiguration(comp, configComponents);
+              console.log('REFERENCES ' + references);
               const currentProperties = component.getProperties();
               component.setProperties(currentProperties.concat(references));
           });
@@ -106,8 +107,8 @@ class Context {
         let property = new Property(prop.name);
         if(prop['value']) {
           property.setValue(prop.value);
+          properties.push(property);
         }
-        properties.push(property);
       });
     }
     return properties;
@@ -120,9 +121,10 @@ class Context {
           propertiesFromContext.forEach((prop) => {
               let property = new Property(prop.name);
               if(prop['reference']) {
-                  property.setReference(components.get(prop.reference));
+                  console.log('REFERENCE ' + prop.reference);
+                  property.setReference(prop.reference);
+                  properties.push(property);
               }
-              properties.push(property);
           });
       }
       return properties;
@@ -155,8 +157,7 @@ class Context {
     console.log('Closing current context...');
     this.components.forEach((component) => {
       const lifecycle = component.getLifecycle();
-      //console.log(lifecycle);
-      lifecycle.callDestroyMethod();
+      lifecycle.callDestroyMethod(component);
     });
     console.log('Context is closed...');
     this.components.clear();
@@ -164,7 +165,6 @@ class Context {
   }
 
   public registerShutdownHook(): void {
-    //console.log(process);
     process.on('exit', () => {
       this.close();
     });

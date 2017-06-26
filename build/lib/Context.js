@@ -41,7 +41,7 @@ var Context = (function () {
             var entity = require(comp.classPath).default.prototype;
             if (entity[comp.lifecycle.initMethod]) {
                 lifecycle.setInitMethod(entity[comp.lifecycle.initMethod]);
-                lifecycle.callInitMethod();
+                lifecycle.callInitMethod(entity);
             }
             if (entity[comp.lifecycle.destroyMethod]) {
                 lifecycle.setDestroyMethod(entity[comp.lifecycle.destroyMethod]);
@@ -51,7 +51,7 @@ var Context = (function () {
             component.setProperties(properties);
             if (entity[comp.lifecycle.afterPropertiesWereSetMethod]) {
                 lifecycle.setAfterPropertiesWereSetMethod(entity[comp.lifecycle.afterPropertiesWereSetMethod]);
-                lifecycle.callAfterPropertiesWereSetMethod();
+                lifecycle.callAfterPropertiesWereSetMethod(entity);
             }
             basicComponents.set(comp.id, Object.assign(component, entity));
         });
@@ -60,7 +60,8 @@ var Context = (function () {
         var _this = this;
         basicComponents.forEach(function (component) {
             configComponents.forEach(function (comp) {
-                var references = _this.getPropertyReferencesFromConfiguration(configComponents, comp);
+                var references = _this.getPropertyReferencesFromConfiguration(comp, configComponents);
+                console.log('REFERENCES ' + references);
                 var currentProperties = component.getProperties();
                 component.setProperties(currentProperties.concat(references));
             });
@@ -95,8 +96,8 @@ var Context = (function () {
                 var property = new Property_1.default(prop.name);
                 if (prop['value']) {
                     property.setValue(prop.value);
+                    properties.push(property);
                 }
-                properties.push(property);
             });
         }
         return properties;
@@ -108,9 +109,10 @@ var Context = (function () {
             propertiesFromContext.forEach(function (prop) {
                 var property = new Property_1.default(prop.name);
                 if (prop['reference']) {
-                    property.setReference(components.get(prop.reference));
+                    console.log('REFERENCE ' + prop.reference);
+                    property.setReference(prop.reference);
+                    properties.push(property);
                 }
-                properties.push(property);
             });
         }
         return properties;
@@ -139,8 +141,7 @@ var Context = (function () {
         console.log('Closing current context...');
         this.components.forEach(function (component) {
             var lifecycle = component.getLifecycle();
-            //console.log(lifecycle);
-            lifecycle.callDestroyMethod();
+            lifecycle.callDestroyMethod(component);
         });
         console.log('Context is closed...');
         this.components.clear();
@@ -148,7 +149,6 @@ var Context = (function () {
     };
     Context.prototype.registerShutdownHook = function () {
         var _this = this;
-        //console.log(process);
         process.on('exit', function () {
             _this.close();
         });

@@ -1,8 +1,10 @@
 {
-  "name": "js-experimental",
-  "version": "0.0.1",
-  "description": "Experimental things with js",
+  "name": "ioc-lib.js",
+  "version": "0.0.5",
+  "description": "Inversion of control library written on Typescript",
   "main": "app.js",
+  "url": "https://github.com/darthven/ExperimentalLib/issues",
+  "email": "kostharl@gmail.com",
   "scripts": {
     "tsc": "tsc -w --outDir build",
     "test-components": "node ./build/test/index.js",
@@ -10,7 +12,7 @@
     "watch": "mocha-typescript-watch",
     "dev-test-watch": "mocha-typescript-watch"
   },
-  "author": "darthven",
+  "author": "darthvenus",
   "license": "ISC",
   "dependencies": {
     "@types/lodash": "^4.14.65",
@@ -23,6 +25,7 @@
     "typescript": "^2.3.4"
   },
   "devDependencies": {
+    "@types/node": "^7.0.32",
     "babel-cli": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
     "ts-node": "^3.0.4"
