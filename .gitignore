@@ -2,3 +2,16 @@ build/components
 build/index.js
 node_modules
 npm-debug.log
+.idea/ExperimentalLib.iml
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/typescript-compiler.xml
+.idea/workspace.xml
+build/lib/
+build/test/Context.spec.js
+build/test/components/
+build/test/index.js
+build/test/test.js
+src/test/Context.spec.ts
+src/test/config/
