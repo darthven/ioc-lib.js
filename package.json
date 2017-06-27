@@ -1,6 +1,6 @@
 {
   "name": "ioc-lib.js",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Inversion of control library written on Typescript",
   "main": "js/index.js",
   "repository": {
