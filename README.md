@@ -1,7 +1,7 @@
 
 <h1> ioc-lib.js: Simple Inversion of Control Container for Node.js-based applications</h1>
 
-<h2>INSTALLATION IS NOT RECOMMENDED UNTIL RELEASE 0.1.5</h2>
+<h2>INSTALLATION IS NOT RECOMMENDED UNTIL RELEASE 0.2.0</h2>
 <h3>All issues and proposals are welcome.</h3>
 
 ioc-lib.js is an simple example of very simple IoC container written on Typescript that will allow you
@@ -205,9 +205,9 @@ Main class that responds for creating context, scanning and parsing configuratio
 
 - Creating programming context
 
-<pre>
+<pre>    
+    import {Context} from 'ioc-lib.js/dist'
     const path = require('path');
-    import Context from "ioc-lib.js"
     
     //Getting configuration files with metadata
     const configs = [__dirname + "/config1.json", __dirname + "/config2.json", __dirname + "/config3.json"];
