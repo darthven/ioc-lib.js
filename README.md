@@ -1,7 +1,7 @@
 
 <h1> ioc-lib.js: Simple Inversion of Control Container for Node.js-based applications</h1>
 
-<h2>INSTALLATION IS NOT RECOMMENDED UNTIL RELEASE 0.1.0</h2>
+<h2>INSTALLATION IS NOT RECOMMENDED UNTIL RELEASE 0.1.5</h2>
 
 ioc-lib.js is an simple example of very simple IoC container written on Typescript that will allow you
 to build scalable and flexible applications on Node.js platform. 
