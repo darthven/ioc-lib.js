@@ -6,6 +6,9 @@
 ioc-lib.js is an simple example of very simple IoC container written on Typescript that will allow you
 to build scalable and flexible applications on Node.js platform. 
 
+Github link: https://github.com/darthven/ExperimentalLib
+All issues and proposals are welcome.
+
 <h2>Full Documentation</h2>
 
 <h3>Preconditions for Usage</h3>
