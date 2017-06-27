@@ -3,7 +3,7 @@
 
 <h2>INSTALLATION IS NOT RECOMMENDED UNTIL RELEASE 0.1.0</h2>
 
-ioc-lib.js is an sim example of very simple IoC container written on Typescript that will allow you
+ioc-lib.js is an simple example of very simple IoC container written on Typescript that will allow you
 to build scalable and flexible applications on Node.js platform. 
 
 <h2>Full Documentation</h2>
