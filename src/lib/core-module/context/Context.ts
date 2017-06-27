@@ -1,8 +1,9 @@
 import {Scope, default as Component} from './Component'
 import Property from './Property'
 import ComponentLifeCycle from './ComponentLifecycle'
-import ComponentNotFoundError from './ComponentNotFoundError'
+import ComponentNotFoundError from '../errors/ComponentNotFoundError'
 import jsonfile = require('jsonfile');
+
 class Context {
   private components: Map<string, Component>;
   private configs: string[];
@@ -54,12 +55,17 @@ class Context {
           let component = new Component(comp.id,
               comp.name, comp.classPath, this.defineComponentScope(comp), lifecycle);
           let properties = this.getPropertyValuesFromConfiguration(comp);
-          component.setProperties(properties);
-          if(entity[comp.lifecycle.afterPropertiesWereSetMethod]) {
-              lifecycle.setAfterPropertiesWereSetMethod(entity[comp.lifecycle.afterPropertiesWereSetMethod]);
-              lifecycle.callAfterPropertiesWereSetMethod(entity);
+          let propertiesAreValid = true; //PropertyValidator.validateProperties(properties);
+          if(propertiesAreValid) {
+              component.setProperties(properties);
+              if(entity[comp.lifecycle.afterPropertiesWereSetMethod]) {
+                  lifecycle.setAfterPropertiesWereSetMethod(entity[comp.lifecycle.afterPropertiesWereSetMethod]);
+                  lifecycle.callAfterPropertiesWereSetMethod(entity);
+              }
+              basicComponents.set(comp.id, Object.assign(component, entity));
+          } else {
+              this.close();
           }
-          basicComponents.set(comp.id, Object.assign(component, entity));
       });
   }
 
@@ -68,7 +74,6 @@ class Context {
       basicComponents.forEach((component) => {
           configComponents.forEach((comp) => {
               const references = this.getPropertyReferencesFromConfiguration(comp, configComponents);
-              console.log('REFERENCES ' + references);
               const currentProperties = component.getProperties();
               component.setProperties(currentProperties.concat(references));
           });
@@ -121,7 +126,6 @@ class Context {
           propertiesFromContext.forEach((prop) => {
               let property = new Property(prop.name);
               if(prop['reference']) {
-                  console.log('REFERENCE ' + prop.reference);
                   property.setReference(prop.reference);
                   properties.push(property);
               }

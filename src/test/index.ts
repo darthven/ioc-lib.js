@@ -3,7 +3,7 @@ import TvOrderManagementService from "./components/services/TvOrderManagementSer
 import MobileOrderManagementService from "./components/services/MobileOrderManagementService"
 import Customer from "./components/entities/Customer"
 import User from "./components/classes/User"
-import Context from "../lib/Context"
+import Context from "../lib/core-module/context/Context"
 // let iservice = new InternetOrderManagementService();
 // let tvservice = new TvOrderManagementService();
 // let mservice = new MobileOrderManagementService();
@@ -20,7 +20,7 @@ import Context from "../lib/Context"
 // context2.registerShutdownHook();
 const http = require('http');
 const path = require('path');
-const configs = [__dirname + "/context.json", __dirname + "/context1.json", __dirname + "/context2.json"];
+const configs = [__dirname + "/config/context.json", __dirname + "/config/context1.json", __dirname + "/config/context2.json"];
 let context1 = new Context(configs);
 //let context2 = new Context(configs);
 context1.registerShutdownHook();

@@ -1,4 +1,4 @@
-import Component from './Component';
+import Component from '../context/Component';
 import fs = require('fs');
 import path = require('path');
 

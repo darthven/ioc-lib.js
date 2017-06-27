@@ -12,16 +12,16 @@
           },
           {
             "name": "name",
-            "value": "aaaaa"
+            "value": "darthven"
           },
           {
             "name": "age",
-            "value": 25
+            "value": 21
           }
         ],
         "lifecycle" : {
           "initMethod" : "initAdmin",
-          "afterPropertiesWereSetMethod": "setPropertiesForAdmin",
+          "afterPropertiesWereSetMe": "setPropertiesForAdmin",
           "destroyMethod": "destroyAdmin"
         }
       },
