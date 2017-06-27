@@ -6,5 +6,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by kokh0716 on 6/27/2017.
  */
-__export(require("./build/lib/core-module/core-module"));
-__export(require("./build/lib/validation-module/validation-module"));
+__export(require("./lib/core-module/core-module"));
+__export(require("./lib/validation-module/validation-module"));

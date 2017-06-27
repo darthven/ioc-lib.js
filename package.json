@@ -6,7 +6,7 @@
   "url": "https://github.com/darthven/ExperimentalLib/issues",
   "email": "kostharl@gmail.com",
   "scripts": {
-    "tsc": "tsc -w --outDir build",
+    "tsc": "tsc -w --outDir dist",
     "test-components": "node ./build/test/index.js",
     "test": "tsc && mocha",
     "watch": "mocha-typescript-watch",
