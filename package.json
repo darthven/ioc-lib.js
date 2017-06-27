@@ -3,9 +3,20 @@
   "version": "0.1.4",
   "description": "Inversion of control library written on Typescript",
   "main": "js/index.js",
-  "homepage": "https://github.com/darthven/ExperimentalLib",
-  "url": "https://github.com/darthven/ExperimentalLib/issues",
-  "email": "kostharl@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darthven/ExperimentalLib.git"
+  },
+  "bugs": {
+    "url": "https://github.com/darthven/ExperimentalLib/issues",
+    "email": "kostharl@gmail.com"
+  },
+  "keywords": [
+    "Inversion of Control",
+    "IoC Container",
+    "Dependency Injection",
+    "Dependency Lookup"
+  ],
   "scripts": {
     "tsc": "tsc -w --outDir dist",
     "test-components": "node ./build/test/index.js",
