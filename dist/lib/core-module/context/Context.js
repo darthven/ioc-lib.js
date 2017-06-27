@@ -38,7 +38,8 @@ var Context = (function () {
         configComponents.forEach(function (comp) {
             var lifecycle = new ComponentLifecycle_1.default();
             lifecycle.setComponentId(comp.id);
-            var entity = require(comp.classPath).default.prototype;
+            var classPath = "../../../../../../" + comp.classPath;
+            var entity = require(classPath).default.prototype;
             if (entity[comp.lifecycle.initMethod]) {
                 lifecycle.setInitMethod(entity[comp.lifecycle.initMethod]);
                 lifecycle.callInitMethod(entity);
