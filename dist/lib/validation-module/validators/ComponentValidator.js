@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var ComponentValidator = (function () {
-    function ComponentValidator(component) {
+    function ComponentValidator() {
     }
-    ComponentValidator.prototype.isComponent = function (object) {
+    ComponentValidator.isComponent = function (object) {
     };
-    ComponentValidator.prototype.validateComponent = function () {
+    ComponentValidator.validateComponent = function () {
     };
     return ComponentValidator;
 }());
+ComponentValidator.logger = require('log4js').getLogger();
 exports.default = ComponentValidator;

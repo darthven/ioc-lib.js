@@ -4,28 +4,17 @@
 import Component from '../../core-module/context/Component';
 
 
-
 class ComponentValidator {
 
-    constructor(component: Object) {
+    private static logger = require('log4js').getLogger();
+
+    private static isComponent(object: Object) {
 
     }
 
-    private isComponent(object: Object) {
+    public static validateComponent(): void {
 
     }
-
-    private
-
-    public validateComponent(): void {
-
-    }
-
-
-
-
-
-
 }
 
 export default ComponentValidator;

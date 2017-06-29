@@ -3,6 +3,6 @@
  */
 export {default as Property} from "./context/Property"
 export {default as ComponentLifecycle} from "./context/ComponentLifecycle"
-export {default as Component} from "./context/Component"
+export {Scope, default as Component} from "./context/Component"
 export {default as Context} from "./context/Context"
 export {default as ComponentNotFoundError} from "./errors/ComponentNotFoundError"
