@@ -5,3 +5,5 @@ npm-debug.log
 .idea/inspectionProfiles/
 .idea/modules.xml
 .idea/workspace.xml
+.idea/.name
+.idea/ioc-lib.js.iml
