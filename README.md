@@ -108,6 +108,7 @@ Example of the configuration file:
             "id": "admin",
             "name": "Admin",
             "classPath": "app/entities/Admin.js",
+            "scope": "singleton",
             "properties": [
               {
                 "name": "referenceToUser",
@@ -132,6 +133,7 @@ Example of the configuration file:
             "id": "user",
             "name": "User",
             "classPath": "app/entities/User.js",
+            "scope": "prototype",
             "properties": [
               {
                 "name": "name",
