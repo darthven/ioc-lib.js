@@ -57,7 +57,7 @@ var Component = (function () {
         return this.properties;
     };
     /**
-     * Function that set properties to the component
+     * Function that sets properties to the component
      * @param properties
      */
     Component.prototype.setProperties = function (properties) {

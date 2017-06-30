@@ -20,7 +20,7 @@ var PropertyValidationError = (function (_super) {
         var _this = this;
         var message = "Component with id \"" + componentId + "\" contains wrong property.";
         _this = _super.call(this, message) || this;
-        _this.name = 'ComponentNotFoundError';
+        _this.name = 'PropertyValidationError';
         return _this;
     }
     return PropertyValidationError;

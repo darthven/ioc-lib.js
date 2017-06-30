@@ -191,6 +191,39 @@ Class that responds for the lifecycle of the component during the context's acti
 
 - setDestroyMethod - sets the method to the component in Function format
 
+<h4>ComponentLifecycle Class</h4>
+
+---
+
+Class that represents any entity marked as class in the custom application in the application context 
+and allows you to inject other entities to itself according to Dependency Injection mechanism.
+
+<h5> List of Methods </h5>
+
+- getId - returns the value of unique identifier of the component in string format
+
+- setId - sets the value of unique identifier of the component in string format
+
+- getName - returns the name of the component in string format
+
+- setName - sets the name of the component in string format
+
+- getProperties - returns all component's properties as an array
+
+- setProperties - sets properties to the component
+
+- getClassPath - returns path to the class of component's entity in string format
+
+- setClassPath - sets the path to the class of component's entity
+
+- getScope - returns scope of the component as one of two values of enumeration (SINGLETON/ PROTOTYPE)
+
+- setScope - sets the scope to the component
+
+- getLifecycle - returns lifecycle instance of the component
+
+- getLifecycle - sets lifecycle instance to the component
+
 
 <h4>Context Class</h4>
 

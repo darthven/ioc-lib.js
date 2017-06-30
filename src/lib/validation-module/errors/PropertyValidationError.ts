@@ -6,7 +6,7 @@ class PropertyValidationError extends Error {
     constructor(componentId) {
         const message = `Component with id "${componentId}" contains wrong property.`;
         super(message);
-        this.name = 'ComponentNotFoundError';
+        this.name = 'PropertyValidationError';
     }
 }
 

@@ -106,7 +106,7 @@ class Component {
     }
 
     /**
-     * Function that set properties to the component
+     * Function that sets properties to the component
      * @param properties
      */
     public setProperties(properties: Property[]): void {
