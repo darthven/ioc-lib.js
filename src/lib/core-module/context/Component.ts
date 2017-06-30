@@ -66,15 +66,15 @@ class Component {
     }
 
     /**
-     *
-     * @returns {string}
+     * Function that returns component's unique identifier
+     * @returns {string} unique identifier
      */
     public getId(): string {
         return this.id;
     }
 
     /**
-     *
+     * Function that sets unique identifier to the component
      * @param {string} id
      */
     public setId(id: string): void {
@@ -82,15 +82,15 @@ class Component {
     }
 
     /**
-     *
-     * @returns {string}
+     * Function that returns component's name
+     * @returns {string} name of the component
      */
     public getName(): string {
         return this.name;
     }
 
     /**
-     *
+     * Function that sets name to the component
      * @param name
      */
     public setName(name: string): void {
@@ -98,15 +98,15 @@ class Component {
     }
 
     /**
-     *
-     * @returns {Property[]}
+     * Function that returns component's properties
+     * @returns {Property[]} properties of the component
      */
     public getProperties(): Property[] {
         return this.properties;
     }
 
     /**
-     *
+     * Function that set properties to the component
      * @param properties
      */
     public setProperties(properties: Property[]): void {
@@ -114,31 +114,31 @@ class Component {
     }
 
     /**
-     *
-     * @returns {string}
+     * Function that returns path to the class of component's entity
+     * @returns {string} path to the class
      */
     public getClassPath(): string {
         return this.classPath;
     }
 
     /**
-     *
-     * @param classPath
+     * Function that sets the path to the class of component's entity
+     * @param {string} classPath
      */
     public setClassPath(classPath: string): void {
         this.classPath = classPath;
     }
 
     /**
-     *
-     * @returns {Scope}
+     * Function that returns scope of the component
+     * @returns {Scope} component's scope
      */
     public getScope(): Scope {
         return this.scope;
     }
 
     /**
-     *
+     * Function that sets the scope to the component
      * @param scope
      */
     public setScope(scope: Scope): void {
@@ -146,15 +146,15 @@ class Component {
     }
 
     /**
-     *
-     * @returns {ComponentLifecycle}
+     * Function that returns lifecycle instance of the component
+     * @returns {ComponentLifecycle} lifecycle of the component
      */
     public getLifecycle(): ComponentLifecycle {
         return this.lifecycle;
     }
 
     /**
-     *
+     * Function that sets lifecycle instance to the component
      * @param lifecycle
      */
     public setLifecycle(lifecycle: ComponentLifecycle): void {

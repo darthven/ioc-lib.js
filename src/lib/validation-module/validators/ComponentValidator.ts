@@ -1,8 +1,6 @@
 /**
- * Created by kokh0716 on 6/26/2017.
+ * Class that validates component's instance
  */
-import Component from '../../core-module/context/Component';
-
 
 class ComponentValidator {
 

@@ -1,5 +1,6 @@
 /**
- * Created by kokh0716 on 6/26/2017.
+ * Class of error that describes situation
+ * when property's validation was failed
  */
 class PropertyValidationError extends Error {
     constructor(componentId) {
