@@ -197,7 +197,7 @@ Class that responds for the lifecycle of the component during the context's acti
 
 - setDestroyMethod - sets the method to the component in Function format
 
-<h4>ComponentLifecycle Class</h4>
+<h4>Component Class</h4>
 
 ---
 
