@@ -51,6 +51,12 @@ following specification:
                      will be registrated in context as the component",
                     "classPath": "component_class_path",
                     
+                    "__comment__components__scope__": "Enumeration of two possible component's scopes.
+                    It can be represented as two types of values:
+                        1) SINGLETON (component based on this object will be created once in the application context)
+                        2) PROTOTYPE (component can be created several times as the copies of the one main instance)",
+                    "scope": "component_scope",
+                    
                     "__comment__components__properties__": "The array of properties of the component",                    
                     "properties" : [                    
                         {
