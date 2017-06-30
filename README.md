@@ -228,11 +228,11 @@ Main class that responds for creating context, scanning and parsing configuratio
 - Getting the component from the context
 
 <pre>   
-     //Getting admin component by unique identifier
-     let admin = context.getComponent('admin');
+    //Getting admin component by unique identifier
+    let admin = context.getComponent('admin');
      
-     //Call custom admin's method if need
-     admin.enterSystem();
+    //Call custom admin's method if need
+    admin.enterSystem();
 </pre>
 
 - Closing context after finishing the main process of the application
