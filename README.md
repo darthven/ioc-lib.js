@@ -107,7 +107,7 @@ Example of the configuration file:
           {
             "id": "admin",
             "name": "Admin",
-            "classPath": "../entities/Admin.js",
+            "classPath": "app/entities/Admin.js",
             "properties": [
               {
                 "name": "referenceToUser",
@@ -131,7 +131,7 @@ Example of the configuration file:
           {
             "id": "user",
             "name": "User",
-            "classPath": "../entities/User.js",
+            "classPath": "app/entities/User.js",
             "properties": [
               {
                 "name": "name",
