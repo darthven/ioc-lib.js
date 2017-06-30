@@ -231,10 +231,10 @@ var Context = (function () {
             _this.close();
         });
     };
+    /**
+     * Logger for logging all important events in the application context
+     */
+    Context.logger = require('log4js').getLogger();
     return Context;
 }());
-/**
- * Logger for logging all important events in the application context
- */
-Context.logger = require('log4js').getLogger();
 exports.default = Context;

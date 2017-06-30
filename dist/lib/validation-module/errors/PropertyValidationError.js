@@ -11,7 +11,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * Created by kokh0716 on 6/26/2017.
+ * Class of error that describes situation
+ * when property's validation was failed
  */
 var PropertyValidationError = (function (_super) {
     __extends(PropertyValidationError, _super);

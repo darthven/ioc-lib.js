@@ -3,7 +3,7 @@
  * which appear during validation process
  */
 class PropertyValidationErrorHandler {
-
+    //TODO fill it as soon as possible
 }
 
 export default PropertyValidationErrorHandler;

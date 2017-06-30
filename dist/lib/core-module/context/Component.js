@@ -22,84 +22,84 @@ var Component = (function () {
         this.lifecycle = lifecycle;
     }
     /**
-     *
-     * @returns {string}
+     * Function that returns component's unique identifier
+     * @returns {string} unique identifier
      */
     Component.prototype.getId = function () {
         return this.id;
     };
     /**
-     *
+     * Function that sets unique identifier to the component
      * @param {string} id
      */
     Component.prototype.setId = function (id) {
         this.id = id;
     };
     /**
-     *
-     * @returns {string}
+     * Function that returns component's name
+     * @returns {string} name of the component
      */
     Component.prototype.getName = function () {
         return this.name;
     };
     /**
-     *
+     * Function that sets name to the component
      * @param name
      */
     Component.prototype.setName = function (name) {
         this.name = name;
     };
     /**
-     *
-     * @returns {Property[]}
+     * Function that returns component's properties
+     * @returns {Property[]} properties of the component
      */
     Component.prototype.getProperties = function () {
         return this.properties;
     };
     /**
-     *
+     * Function that set properties to the component
      * @param properties
      */
     Component.prototype.setProperties = function (properties) {
         this.properties = properties;
     };
     /**
-     *
-     * @returns {string}
+     * Function that returns path to the class of component's entity
+     * @returns {string} path to the class
      */
     Component.prototype.getClassPath = function () {
         return this.classPath;
     };
     /**
-     *
-     * @param classPath
+     * Function that sets the path to the class of component's entity
+     * @param {string} classPath
      */
     Component.prototype.setClassPath = function (classPath) {
         this.classPath = classPath;
     };
     /**
-     *
-     * @returns {Scope}
+     * Function that returns scope of the component
+     * @returns {Scope} component's scope
      */
     Component.prototype.getScope = function () {
         return this.scope;
     };
     /**
-     *
+     * Function that sets the scope to the component
      * @param scope
      */
     Component.prototype.setScope = function (scope) {
         this.scope = scope;
     };
     /**
-     *
-     * @returns {ComponentLifecycle}
+     * Function that returns lifecycle instance of the component
+     * @returns {ComponentLifecycle} lifecycle of the component
      */
     Component.prototype.getLifecycle = function () {
         return this.lifecycle;
     };
     /**
-     *
+     * Function that sets lifecycle instance to the component
      * @param lifecycle
      */
     Component.prototype.setLifecycle = function (lifecycle) {

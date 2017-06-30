@@ -1,4 +1,7 @@
 "use strict";
+/**
+ * Class that validates component's instance
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
 var ComponentValidator = (function () {
     function ComponentValidator() {
@@ -7,7 +10,8 @@ var ComponentValidator = (function () {
     };
     ComponentValidator.validateComponent = function () {
     };
+    //TODO fill it as soon as possible
+    ComponentValidator.logger = require('log4js').getLogger();
     return ComponentValidator;
 }());
-ComponentValidator.logger = require('log4js').getLogger();
 exports.default = ComponentValidator;

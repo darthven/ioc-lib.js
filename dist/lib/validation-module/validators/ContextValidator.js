@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * Created by kokh0716 on 6/26/2017.
+ * Class that validates all context's processes
+ * (initialization, component's management mechanism, close)
  */
 var ContextValidator = (function () {
     function ContextValidator() {

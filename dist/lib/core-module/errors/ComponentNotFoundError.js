@@ -1,4 +1,8 @@
 "use strict";
+/**
+ * Class of error that describes situation when the component
+ * cannot be found in application context during dependency lookup process
+ */
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
