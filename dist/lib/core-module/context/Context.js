@@ -102,8 +102,7 @@ var Context = (function () {
     Context.prototype.setBasicPropertiesToComponents = function (configComponents, basicComponents) {
         var _this = this;
         configComponents.forEach(function (comp) {
-            //const classPath = `../../../../../../${comp.classPath}`;
-            var classPath = "../../" + comp['classPath'];
+            var classPath = "../../../../../../" + comp['classPath'];
             var entity = require(classPath).default.prototype;
             var lifecycle = validation_module_1.LifecycleValidator.validateLifecycle(entity, comp);
             lifecycle.callInitMethod();
