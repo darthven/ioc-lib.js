@@ -34,7 +34,8 @@ in the programming context of the library you will need to create configuration 
 following specification:
 <pre>
    {
-        "__comment__": "Configuration object is the special object that allow the programming context to start scanning the file for the components",
+        "__comment__": "Configuration object is the special object
+         that allow the programming context to start scanning the file for the components",
         "configuration": {
         
             "__comment__components__": "Array of components that will be registrated in the context",    
@@ -46,7 +47,8 @@ following specification:
                     "__comment__components__name__": "The name of the component",
                     "name": "component_name",
                     
-                    "__comment__components__classPath__": "The path to the class which instance will be registrated in context as the component",
+                    "__comment__components__classPath__": "The path to the class which instance
+                     will be registrated in context as the component",
                     "classPath": "component_class_path",
                     
                     "__comment__components__properties__": "The array of properties of the component",                    
@@ -63,20 +65,26 @@ following specification:
                             "__comment__components__properties__name__": "The name of the property",
                             "name": "property_name",
                             
-                            "__comment__components__properties__value__": "The reference to the another component in context",
+                            "__comment__components__properties__value__": "The reference to the another 
+                            component in context",
                             "reference": "another_component_identifier"
                         }                    
                     ],
                     
-                    "__comment__components__lifecycle__": "The special object than defines lifecycle of the component in programming context",
+                    "__comment__components__lifecycle__": "The special object than defines 
+                    lifecycle of the component in programming context",
                     "lifecycle": {
-                        "__comment__components__lifecycle__initMethod__": "The method specified in the class of the component which calls before the registration of the component in the context",
+                        "__comment__components__lifecycle__initMethod__": "The method specified in the class
+                         of the component which calls before the registration of the component in the context",
                         "initMethod": "component_init_method_name",
                         
-                        "__comment__components__lifecycle__afterPropertiesWereSetMethod__": "The method specified in the class of the component which calls after setting properties to the component in the context",
+                        "__comment__components__lifecycle__afterPropertiesWereSetMethod__": "The method specified 
+                        in the class of the component which calls after setting properties to the component 
+                        in the context",
                         "afterPropertiesWereSetMethod": "component_after_properties_were_set_method_name",
                         
-                        "__comment__components__lifecycle__destroyMethod__": "The method specified in the class of the component which calls before removing the component from the context",
+                        "__comment__components__lifecycle__destroyMethod__": "The method specified in the class 
+                        of the component which calls before removing the component from the context",
                         "destroyMethod": "component_destroy_method_name",                                            
                     }             
                  }            
