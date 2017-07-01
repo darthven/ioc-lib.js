@@ -3,9 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("util");
 var core_module_1 = require("../../core-module/core-module");
 /**
- * Created by kokh0716 on 6/26/2017.
- */
-/**
  * Class that responds for lifecycle's validation of the component
  */
 var LifecycleValidator = (function () {
@@ -125,10 +122,10 @@ var LifecycleValidator = (function () {
         }
         return lifecycle;
     };
-    /**
-     * Logger for logging all events during lifecycle's validation process
-     */
-    LifecycleValidator.logger = require('log4js').getLogger();
     return LifecycleValidator;
 }());
+/**
+ * Logger for logging all events during lifecycle's validation process
+ */
+LifecycleValidator.logger = require('log4js').getLogger();
 exports.default = LifecycleValidator;

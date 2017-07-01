@@ -1,6 +1,3 @@
-/**
- * Created by kokh0716 on 6/27/2017.
- */
 export {default as Property} from "./context/Property"
 export {default as ComponentLifecycle} from "./context/ComponentLifecycle"
 export {Scope, default as Component} from "./context/Component"

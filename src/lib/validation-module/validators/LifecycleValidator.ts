@@ -1,8 +1,6 @@
 import {isFunction, isObject, isUndefined} from "util";
 import {ComponentLifecycle} from "../../core-module/core-module";
-/**
- * Created by kokh0716 on 6/26/2017.
- */
+
 /**
  * Class that responds for lifecycle's validation of the component
  */

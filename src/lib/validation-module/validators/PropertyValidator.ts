@@ -1,6 +1,3 @@
-/**
- * Created by kokh0716 on 6/26/2017.
- */
 import {Property} from '../../core-module/core-module'
 import {isObject, isString} from "util";
 

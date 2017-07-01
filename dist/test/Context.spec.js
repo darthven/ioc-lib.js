@@ -73,11 +73,11 @@ var ContextTest = (function () {
         console.log('Expected ', expectedResult[0].config.components);
         assert.equal(_.matches(objects, expectedResult), true, "Expected objects have correct file path and components.");
     };
-    __decorate([
-        mocha_typescript_1.test
-    ], ContextTest.prototype, "getObjectsFromJSON", null);
-    ContextTest = __decorate([
-        mocha_typescript_1.suite
-    ], ContextTest);
     return ContextTest;
 }());
+__decorate([
+    mocha_typescript_1.test
+], ContextTest.prototype, "getObjectsFromJSON", null);
+ContextTest = __decorate([
+    mocha_typescript_1.suite
+], ContextTest);

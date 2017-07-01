@@ -1,8 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Created by kokh0716 on 6/26/2017.
- */
 var ComponentValidator_1 = require("./validators/ComponentValidator");
 exports.ComponentValidator = ComponentValidator_1.default;
 var LifecycleValidator_1 = require("./validators/LifecycleValidator");

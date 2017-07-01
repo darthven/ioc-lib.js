@@ -1,8 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Created by kokh0716 on 6/27/2017.
- */
 var Property_1 = require("./context/Property");
 exports.Property = Property_1.default;
 var ComponentLifecycle_1 = require("./context/ComponentLifecycle");
