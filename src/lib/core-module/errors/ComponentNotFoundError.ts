@@ -4,8 +4,8 @@
  */
 
 class ComponentNotFoundError extends Error {
-    constructor(message) {
-        super(message);
+    constructor(componentId: string) {
+        super(`Component with id "${componentId}" cannot be found in context`);
         this.name = 'ComponentNotFoundError';
     }
 }

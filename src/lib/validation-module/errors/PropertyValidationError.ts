@@ -3,7 +3,7 @@
  * when property's validation was failed
  */
 class PropertyValidationError extends Error {
-    constructor(componentId) {
+    constructor(componentId: string) {
         const message = `Component with id "${componentId}" contains wrong property.`;
         super(message);
         this.name = 'PropertyValidationError';

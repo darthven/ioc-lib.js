@@ -14,6 +14,7 @@ var Context = (function () {
      * @param configs paths to the configuration files
      */
     function Context(configs) {
+        validation_module_1.MetadataValidator.validateMetadata(configs);
         this.configs = configs;
         this.registerComponentsInContext();
         Context.logger.info('Context was initialized');
@@ -102,7 +103,8 @@ var Context = (function () {
     Context.prototype.setBasicPropertiesToComponents = function (configComponents, basicComponents) {
         var _this = this;
         configComponents.forEach(function (comp) {
-            var classPath = "../../../../../../" + comp['classPath'];
+            //const classPath = `../../../../../../${comp['classPath']}`;
+            var classPath = "../../" + comp['classPath'];
             var entity = require(classPath).default.prototype;
             var lifecycle = validation_module_1.LifecycleValidator.validateLifecycle(entity, comp);
             lifecycle.callInitMethod();
@@ -230,10 +232,10 @@ var Context = (function () {
             _this.close();
         });
     };
+    /**
+     * Logger for logging all important events in the application context
+     */
+    Context.logger = require('log4js').getLogger();
     return Context;
 }());
-/**
- * Logger for logging all important events in the application context
- */
-Context.logger = require('log4js').getLogger();
 exports.default = Context;

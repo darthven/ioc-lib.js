@@ -10,7 +10,7 @@ var ComponentValidator = (function () {
     };
     ComponentValidator.validateComponent = function () {
     };
+    ComponentValidator.logger = require('log4js').getLogger();
     return ComponentValidator;
 }());
-ComponentValidator.logger = require('log4js').getLogger();
 exports.default = ComponentValidator;

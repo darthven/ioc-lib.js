@@ -1,5 +1,5 @@
 import {Scope, ComponentNotFoundError, Property, Component} from '../core-module'
-import {PropertyValidator, LifecycleValidator} from "../../validation-module/validation-module";
+import {MetadataValidator, PropertyValidator, LifecycleValidator} from "../../validation-module/validation-module";
 import jsonfile = require('jsonfile');
 
 /**
@@ -31,6 +31,7 @@ class Context {
      * @param configs paths to the configuration files
      */
     constructor(configs: string[]) {
+        MetadataValidator.validateMetadata(configs);
         this.configs = configs;
         this.registerComponentsInContext();
         Context.logger.info('Context was initialized');
@@ -122,7 +123,8 @@ class Context {
      */
     private setBasicPropertiesToComponents(configComponents: Object[], basicComponents: Map<string, Component>) {
         configComponents.forEach((comp) => {
-            const classPath = `../../../../../../${comp['classPath']}`;
+            //const classPath = `../../../../../../${comp['classPath']}`;
+            const classPath = `../../${comp['classPath']}`;
             const entity = require(classPath).default.prototype;
             let lifecycle = LifecycleValidator.validateLifecycle(entity, comp);
             lifecycle.callInitMethod();

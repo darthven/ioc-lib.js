@@ -65,10 +65,10 @@ var ComponentLifecycle = (function () {
     ComponentLifecycle.prototype.setDestroyMethod = function (destroyMethod) {
         this.destroyMethod = destroyMethod;
     };
+    /**
+     * Logger for logging all important events during components' existence
+     */
+    ComponentLifecycle.logger = require('log4js').getLogger();
     return ComponentLifecycle;
 }());
-/**
- * Logger for logging all important events during components' existence
- */
-ComponentLifecycle.logger = require('log4js').getLogger();
 exports.default = ComponentLifecycle;

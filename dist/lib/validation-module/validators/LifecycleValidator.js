@@ -122,10 +122,10 @@ var LifecycleValidator = (function () {
         }
         return lifecycle;
     };
+    /**
+     * Logger for logging all events during lifecycle's validation process
+     */
+    LifecycleValidator.logger = require('log4js').getLogger();
     return LifecycleValidator;
 }());
-/**
- * Logger for logging all events during lifecycle's validation process
- */
-LifecycleValidator.logger = require('log4js').getLogger();
 exports.default = LifecycleValidator;

@@ -16,8 +16,8 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ComponentNotFoundError = (function (_super) {
     __extends(ComponentNotFoundError, _super);
-    function ComponentNotFoundError(message) {
-        var _this = _super.call(this, message) || this;
+    function ComponentNotFoundError(componentId) {
+        var _this = _super.call(this, "Component with id \"" + componentId + "\" cannot be found in context") || this;
         _this.name = 'ComponentNotFoundError';
         return _this;
     }
