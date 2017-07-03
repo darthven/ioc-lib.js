@@ -12,6 +12,5 @@ var ComponentValidator = (function () {
     };
     return ComponentValidator;
 }());
-//TODO fill it as soon as possible
 ComponentValidator.logger = require('log4js').getLogger();
 exports.default = ComponentValidator;

@@ -37,15 +37,16 @@ var PropertyValidator = (function () {
      * @returns {boolean} validation result
      */
     PropertyValidator.validateProperties = function (properties) {
-        var _this = this;
         properties.forEach(function (property) {
             if (!property.getValue()) {
-                if (!_this.validateName(property) || !_this.validateReference(property)) {
+                if (!PropertyValidator.validateName(property) ||
+                    !PropertyValidator.validateReference(property)) {
                     return false;
                 }
             }
             else if (property.getValue()) {
-                if (!_this.validateName(property) || !_this.validateValue(property)) {
+                if (!PropertyValidator.validateName(property) ||
+                    !PropertyValidator.validateValue(property)) {
                     return false;
                 }
             }

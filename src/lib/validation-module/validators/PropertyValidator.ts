@@ -41,11 +41,13 @@ class PropertyValidator {
     public static validateProperties(properties: Property[]): boolean {
         properties.forEach((property) => {
             if (!property.getValue()) {
-                if (!this.validateName(property) || !this.validateReference(property)) {
+                if (!PropertyValidator.validateName(property) ||
+                    !PropertyValidator.validateReference(property)) {
                     return false;
                 }
             } else if (property.getValue()) {
-                if (!this.validateName(property) || !this.validateValue(property)) {
+                if (!PropertyValidator.validateName(property) ||
+                    !PropertyValidator.validateValue(property)) {
                     return false;
                 }
             }

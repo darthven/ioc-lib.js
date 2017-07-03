@@ -55,8 +55,8 @@ class LifecycleValidator {
     /**
      * Function that sets default library's init-method
      * to the lifecycle instance of the component
-     * @param {ComponentLifecycle} lifecycle
-     * @param {Object} component
+     * @param {ComponentLifecycle} lifecycle's instance of the component
+     * @param {Object} component parsed object from the meta-data
      */
     private static setDafaultInitMethod(lifecycle: ComponentLifecycle, component: Object): void {
         LifecycleValidator.logger.warn(`No init-method was detected in component with id "${component['id']}"`);
@@ -68,8 +68,8 @@ class LifecycleValidator {
     /**
      * Function that sets default library's after-properties-were-set-method
      * to the lifecycle instance of the component
-     * @param {ComponentLifecycle} lifecycle
-     * @param {Object} component
+     * @param {ComponentLifecycle} lifecycle's instance of the component
+     * @param {Object} component parsed object from the meta-data
      */
     private static setDefaultAfterPropertiesWereSetMethod(lifecycle: ComponentLifecycle, component: Object): void {
         LifecycleValidator.logger.warn(`No after-properties-set-method was detected in component with id "${component['id']}"`);
@@ -81,8 +81,8 @@ class LifecycleValidator {
     /**
      * Function that sets default library's destroy-method
      * to the lifecycle instance of the component
-     * @param {ComponentLifecycle} lifecycle
-     * @param {Object} component
+     * @param {ComponentLifecycle} lifecycle's instance of the component
+     * @param {Object} component parsed object from the meta-data
      */
     private static setDafaultDestroyMethod(lifecycle: ComponentLifecycle, component: Object): void {
         LifecycleValidator.logger.warn(`No  destroy-method  was detected in component with id "${component['id']}"`);
@@ -94,37 +94,37 @@ class LifecycleValidator {
     /**
      * Function that validates the whole lifecycle instance
      * of the possible component
-     * @param entity custom class instance
-     * @param component parsed object from the meta-data
-     * @returns {ComponentLifecycle}
+     * @param {Object} entity custom class instance
+     * @param {Object} component parsed object from the meta-data
+     * @returns {ComponentLifecycle} lifecycle's instance of the component
      */
     public static validateLifecycle(entity: Object, component: Object): ComponentLifecycle {
         let initMethod, afterPropertiesWereSetMethod, destroyMethod;
         let lifecycle = new ComponentLifecycle();
         lifecycle.setComponentId(component['id']);
-        if (this.lifecycleExistsInConfiguration(component)) {
+        if (LifecycleValidator.lifecycleExistsInConfiguration(component)) {
             initMethod = entity[component['lifecycle'].initMethod];
             afterPropertiesWereSetMethod = entity[component['lifecycle'].afterPropertiesWereSetMethod];
             destroyMethod = entity[component['lifecycle'].destroyMethod];
-            if (!this.validateInitMethod(initMethod)) {
-                this.setDafaultInitMethod(lifecycle, component);
+            if (!LifecycleValidator.validateInitMethod(initMethod)) {
+                LifecycleValidator.setDafaultInitMethod(lifecycle, component);
             } else {
                 lifecycle.setInitMethod(initMethod);
             }
-            if (!this.validateAfterPropertiesWereSetMethod(afterPropertiesWereSetMethod)) {
-                this.setDefaultAfterPropertiesWereSetMethod(lifecycle, component);
+            if (!LifecycleValidator.validateAfterPropertiesWereSetMethod(afterPropertiesWereSetMethod)) {
+                LifecycleValidator.setDefaultAfterPropertiesWereSetMethod(lifecycle, component);
             } else {
                 lifecycle.setAfterPropertiesWereSetMethod(afterPropertiesWereSetMethod);
             }
-            if (!this.validateDestroyMethod(destroyMethod)) {
-                this.setDafaultDestroyMethod(lifecycle, component);
+            if (!LifecycleValidator.validateDestroyMethod(destroyMethod)) {
+                LifecycleValidator.setDafaultDestroyMethod(lifecycle, component);
             } else {
                 lifecycle.setDestroyMethod(destroyMethod);
             }
         } else {
-            this.setDafaultInitMethod(lifecycle, component);
-            this.setDefaultAfterPropertiesWereSetMethod(lifecycle, component);
-            this.setDafaultDestroyMethod(lifecycle, component);
+            LifecycleValidator.setDafaultInitMethod(lifecycle, component);
+            LifecycleValidator.setDefaultAfterPropertiesWereSetMethod(lifecycle, component);
+            LifecycleValidator.setDafaultDestroyMethod(lifecycle, component);
         }
         return lifecycle;
     }
