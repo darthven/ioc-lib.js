@@ -123,8 +123,7 @@ class Context {
      */
     private setBasicPropertiesToComponents(configComponents: Object[], basicComponents: Map<string, Component>) {
         configComponents.forEach((comp) => {
-            //const classPath = `../../../../../../${comp['classPath']}`;
-            const classPath = `../../${comp['classPath']}`;
+            const classPath = `../../../../../../${comp['classPath']}`;
             const entity = require(classPath).default.prototype;
             let lifecycle = LifecycleValidator.validateLifecycle(entity, comp);
             lifecycle.callInitMethod();

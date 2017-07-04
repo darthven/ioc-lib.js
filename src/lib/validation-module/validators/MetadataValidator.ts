@@ -4,10 +4,24 @@ import fs = require('fs');
 import {MetadataValidationError} from "../validation-module";
 import {isArray, isNullOrUndefined, isObject, isString} from "util";
 
+/**
+ * Class that responds for validation of metadata from
+ * all configuration files context should receive
+ */
 class MetadataValidator {
 
+    /**
+     * Logger for logging all important events
+     * during metadata validation
+     */
     private static logger = require('log4js').getLogger();
 
+    /**
+     * Method that validates configuration files' existence
+     * and their format as JSON
+     * @param paths
+     * @returns {Array} of parsed objects from metadata
+     */
     private static validateConfigurationFiles(paths: string[]): Object[] {
         let configFilesContent = [];
         paths.forEach((path) => {
@@ -22,9 +36,16 @@ class MetadataValidator {
         return configFilesContent;
     }
 
-    private static validateConfigurationObjects(configFiles: Object[]): Object[] {
+    /**
+     * Method that validates parsed objects from metadata
+     * according to the library's specification
+     * @param configFilesContent parsed content from metadata
+     * @returns {Array} configuration objects (special objects
+     * on the highest level of the metadata hierarchy)
+     */
+    private static validateConfigurationObjects(configFilesContent: Object[]): Object[] {
         let configuratioObjects = [];
-        configFiles.forEach((file) => {
+        configFilesContent.forEach((file) => {
             let configurationObject = file['content']['configuration'];
             if (!configurationObject) {
                 MetadataValidator.logger.error(`Configuration object from metadata in file "${file['path']}" does not exist`);
@@ -35,7 +56,12 @@ class MetadataValidator {
         return configuratioObjects;
     }
 
-    private static validateComponentsArray(configurationObjects: Object[]): Object[] {
+    /**
+     * Method that validates arrays of possible components
+     * @param configurationObjects special objects
+     * on the highest level of the metadata hierarchy
+     */
+    private static validateComponentsArray(configurationObjects: Object[]): void {
         let componentsArrays = [];
         configurationObjects.forEach((configObj) => {
             let componentsArray = configObj['configuration']['components'];
@@ -46,9 +72,13 @@ class MetadataValidator {
             let componentsArrayDescriptor = {filePath: configObj['filePath'], components: componentsArray};
             MetadataValidator.validateConfigComponent(componentsArrayDescriptor);
         });
-        return componentsArrays;
     }
 
+    /**
+     * Method that validates the object instance of possible component
+     * @param componentsArrayDescriptor descriptor of an array of possible components
+     * that stores information about its content and the path to the configuration file
+     */
     private static validateConfigComponent(componentsArrayDescriptor: Object): void {
         componentsArrayDescriptor['components'].forEach((comp, index) => {
             if (!isObject(comp)) {
@@ -62,6 +92,39 @@ class MetadataValidator {
         });
     }
 
+    /**
+     * Method that validates the existence of the init-method in the lifecycle object
+     * @param lifecycle object
+     * @returns {boolean|Object} validation result
+     */
+    private static configLifecycleHasInitMethod(lifecycle: Object): boolean {
+        return lifecycle.hasOwnProperty('initMethod') && isString(lifecycle['initMethod']);
+    }
+
+    /**
+     * Method that validates the existence of the after-properties-were-set-method in the lifecycle object
+     * @param lifecycle object
+     * @returns {boolean|Object} validation result
+     */
+    private static configLifecycleHasAfterPropertiesWereSetMethod(lifecycle: Object): boolean {
+        return lifecycle.hasOwnProperty('afterPropertiesWereSetMethod') && isString(lifecycle['afterPropertiesWereSetMethod']);
+    }
+
+    /**
+     * Method that validates the existence of the destroy-method in the lifecycle object
+     * @param lifecycle object
+     * @returns {boolean|Object} validation result
+     */
+    private static configLifecycleHasDestroyMethod(lifecycle: Object): boolean {
+        return lifecycle.hasOwnProperty('destroyMethod') && isString(lifecycle['destroyMethod']);
+    }
+
+    /**
+     * Method that validated lifecycle object according to the library's specification
+     * @param componentDescriptor descriptor that stores information about
+     * component object's position in the array of possible components, its instance and
+     * path to the configuration file
+     */
     private static validateConfigLifecycle(componentDescriptor: Object): void {
         let configLifecycle = componentDescriptor['instance']['lifecycle'];
         if (!configLifecycle) {
@@ -74,9 +137,9 @@ class MetadataValidator {
                 throw new MetadataValidationError(componentDescriptor['filePath']);
             }
             let lifecycleMethods = Object.keys(configLifecycle);
-            console.log('LIFECYCLE METHODS ', lifecycleMethods);
-            if (lifecycleMethods.length <= 3 && lifecycleMethods.includes('initMethod') ||
-                lifecycleMethods.includes('afterPropertiesWereSetMethod') || lifecycleMethods.includes('destroyMethod')) {
+            if (lifecycleMethods.length === 3 && MetadataValidator.configLifecycleHasInitMethod(configLifecycle)
+                && MetadataValidator.configLifecycleHasAfterPropertiesWereSetMethod(configLifecycle)
+                && MetadataValidator.configLifecycleHasDestroyMethod(configLifecycle)) {
                 MetadataValidator.logger.debug(`Lifecycle of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" 
             is successfully validated`);
             } else {
@@ -87,6 +150,39 @@ class MetadataValidator {
         }
     }
 
+    /**
+     * Method that validates property object's name existence and type
+     * @param property object
+     * @returns {boolean|Object} validation result
+     */
+    private static configPropertyHasName(property: Object): boolean {
+        return property.hasOwnProperty('name') && isString(property['name']);
+    }
+
+    /**
+     * Method that validates property object's value existence and type
+     * @param property object
+     * @returns {boolean|Object} validation result
+     */
+    private static configPropertyHasValue(property: Object): boolean {
+        return property.hasOwnProperty('value') && !isNullOrUndefined(property['value']);
+    }
+
+    /**
+     * Method that validates property object's reference existence and type
+     * @param property object
+     * @returns {boolean|Object} validation result
+     */
+    private static configPropertyHasReference(property: Object): boolean {
+        return property.hasOwnProperty('reference') && isString(property['reference']);
+    }
+
+    /**
+     * Method that validated properties' array according to the library's specification
+     * @param componentDescriptor descriptor that stores information about
+     * component object's position in the array of possible components, its instance and
+     * path to the configuration file
+     */
     private static validateConfigProperties(componentDescriptor: Object): void {
         let configProperties = componentDescriptor['instance']['properties'];
         if (!isArray(configProperties)) {
@@ -108,30 +204,38 @@ class MetadataValidator {
         });
     }
 
-    private static configPropertyHasName(property: Object): boolean {
-        return property.hasOwnProperty('name') && isString(property['name']);
+    /**
+     * Method that validated properties' scope according to the library's specification
+     * @param componentDescriptor descriptor that stores information about
+     * component object's position in the array of possible components, its instance and
+     * path to the configuration file
+     */
+    private static validateConfigScope(componentDescriptor: Object): void {
+        let configScope = componentDescriptor['instance']['scope'];
+        if (configScope) {
+            if (!isString(configScope) || !['singleton', 'prototype'].includes(configScope)) {
+                MetadataValidator.logger.error(`Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" 
+            has invalid scope`);
+                throw new MetadataValidationError(componentDescriptor['filePath']);
+            } else {
+                MetadataValidator.logger.debug(`Scope of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" 
+            is successfully validated`);
+            }
+        } else {
+            MetadataValidator.logger.debug(`Scope of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" 
+            will be set to SINGLETON as default`);
+        }
     }
 
-    private static configPropertyHasValue(property: Object): boolean {
-        return property.hasOwnProperty('value') && !isNullOrUndefined(property['value']);
-    }
-
-    private static configPropertyHasReference(property: Object): boolean {
-        return property.hasOwnProperty('reference') && isString(property['reference']);
-    }
-
-    private static validateConfigScope(componentDescriptor: Object): string {
-        let configScope = null;
-
-        return configScope;
-    }
-
+    /**
+     * Main method that validates all metadata from configuration files
+     * @param paths to the configuration files
+     */
     public static validateMetadata(paths: string[]): void {
         const configFilesContent = MetadataValidator.validateConfigurationFiles(paths);
         const configurationKeywords = MetadataValidator.validateConfigurationObjects(configFilesContent);
-        const components = MetadataValidator.validateComponentsArray(configurationKeywords);
+        MetadataValidator.validateComponentsArray(configurationKeywords);
     }
-
 }
 
 export default MetadataValidator;
