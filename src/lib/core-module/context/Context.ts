@@ -1,6 +1,7 @@
 import {Scope, ComponentNotFoundError, Property, Component} from '../core-module'
 import {MetadataValidator, PropertyValidator, LifecycleValidator} from "../../validation-module/validation-module";
 import jsonfile = require('jsonfile');
+import PropertyValidationError from "../../validation-module/errors/PropertyValidationError";
 
 /**
  * Class that responds for creation and management process of the components,
@@ -135,7 +136,7 @@ class Context {
                 component.setProperties(properties);
                 basicComponents.set(comp['id'], Object.assign(component, entity));
             } else {
-                this.close();
+                throw new PropertyValidationError(comp['id']);
             }
         });
     }

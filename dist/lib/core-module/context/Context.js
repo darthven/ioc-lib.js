@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_module_1 = require("../core-module");
 var validation_module_1 = require("../../validation-module/validation-module");
 var jsonfile = require("jsonfile");
+var PropertyValidationError_1 = require("../../validation-module/errors/PropertyValidationError");
 /**
  * Class that responds for creation and management process of the components,
  * for updating and closing application context in safe-mode,
@@ -115,7 +116,7 @@ var Context = (function () {
                 basicComponents.set(comp['id'], Object.assign(component, entity));
             }
             else {
-                _this.close();
+                throw new PropertyValidationError_1.default(comp['id']);
             }
         });
     };

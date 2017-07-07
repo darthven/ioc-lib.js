@@ -5,6 +5,18 @@ import {MetadataValidationError} from "../validation-module";
 import {isArray, isNullOrUndefined, isObject, isString} from "util";
 
 /**
+ * Length of property's object
+ * @type {number}
+ */
+const PROPERTY_LENGTH = 2;
+
+/**
+ * Maximum length of lifecycle object
+ * @type {number}
+ */
+const MAX_LIFECYCLE_LENGTH = 3;
+
+/**
  * Class that responds for validation of metadata from
  * all configuration files context should receive
  */
@@ -137,7 +149,7 @@ class MetadataValidator {
                 throw new MetadataValidationError(componentDescriptor['filePath']);
             }
             let lifecycleMethods = Object.keys(configLifecycle);
-            if (lifecycleMethods.length === 3 && MetadataValidator.configLifecycleHasInitMethod(configLifecycle)
+            if (lifecycleMethods.length === MAX_LIFECYCLE_LENGTH && MetadataValidator.configLifecycleHasInitMethod(configLifecycle)
                 && MetadataValidator.configLifecycleHasAfterPropertiesWereSetMethod(configLifecycle)
                 && MetadataValidator.configLifecycleHasDestroyMethod(configLifecycle)) {
                 MetadataValidator.logger.debug(`Metadata Validation: Lifecycle of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" 
@@ -191,7 +203,7 @@ class MetadataValidator {
             throw new MetadataValidationError(componentDescriptor['filePath']);
         }
         configProperties.forEach((prop) => {
-            if (Object.keys(prop).length === 2 && MetadataValidator.configPropertyHasName(prop)) {
+            if (Object.keys(prop).length === PROPERTY_LENGTH && MetadataValidator.configPropertyHasName(prop)) {
                 if (MetadataValidator.configPropertyHasValue(prop) || MetadataValidator.configPropertyHasReference(prop)) {
                     MetadataValidator.logger.debug(`Metadata Validation: Property "${prop['name']}" of the Component[${componentDescriptor['index']}] 
                     from metadata in file "${componentDescriptor['filePath']} is successfully validated`)
