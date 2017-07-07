@@ -52,7 +52,7 @@ var LifecycleValidator = (function () {
      * @param {Object} component parsed object from the meta-data
      */
     LifecycleValidator.setDafaultInitMethod = function (lifecycle, component) {
-        LifecycleValidator.logger.warn("No init-method was detected in component with id \"" + component['id'] + "\"");
+        LifecycleValidator.logger.warn("Lifecycle Validation: No init-method was detected in component with id \"" + component['id'] + "\"");
         lifecycle.setInitMethod(function () {
             LifecycleValidator.logger.debug("Default init-method is called to the component with id \"" + component['id'] + "\"");
         });
@@ -64,7 +64,7 @@ var LifecycleValidator = (function () {
      * @param {Object} component parsed object from the meta-data
      */
     LifecycleValidator.setDefaultAfterPropertiesWereSetMethod = function (lifecycle, component) {
-        LifecycleValidator.logger.warn("No after-properties-set-method was detected in component with id \"" + component['id'] + "\"");
+        LifecycleValidator.logger.warn("Lifecycle Validation: No after-properties-set-method was detected in component with id \"" + component['id'] + "\"");
         lifecycle.setAfterPropertiesWereSetMethod(function () {
             LifecycleValidator.logger.debug("Default after-properties-set-method is called to the component with id \"" + component['id'] + "\"");
         });
@@ -76,7 +76,7 @@ var LifecycleValidator = (function () {
      * @param {Object} component parsed object from the meta-data
      */
     LifecycleValidator.setDafaultDestroyMethod = function (lifecycle, component) {
-        LifecycleValidator.logger.warn("No  destroy-method  was detected in component with id \"" + component['id'] + "\"");
+        LifecycleValidator.logger.warn("Lifecycle Validation: No destroy-method  was detected in component with id \"" + component['id'] + "\"");
         lifecycle.setDestroyMethod(function () {
             LifecycleValidator.logger.debug("Default destroy-method is called to the component with id \"" + component['id'] + "\"");
         });

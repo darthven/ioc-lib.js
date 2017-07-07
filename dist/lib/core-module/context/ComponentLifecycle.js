@@ -26,7 +26,7 @@ var ComponentLifecycle = (function () {
      */
     ComponentLifecycle.prototype.callInitMethod = function () {
         this.initMethod();
-        ComponentLifecycle.logger.debug("Component with id \"" + this.getComponentId() + "\" was initialized");
+        ComponentLifecycle.logger.debug("Component Lifecycle: Component with id \"" + this.getComponentId() + "\" was initialized");
     };
     /**
      * Function that sets init-method of the component to its lifecycle
@@ -40,7 +40,7 @@ var ComponentLifecycle = (function () {
      */
     ComponentLifecycle.prototype.callAfterPropertiesWereSetMethod = function () {
         this.afterPropertiesWereSetMethod();
-        ComponentLifecycle.logger.debug("Component with id \"" + this.getComponentId() + "\" received its properties");
+        ComponentLifecycle.logger.debug("Component Lifecycle: Component with id \"" + this.getComponentId() + "\" received its properties");
     };
     /**
      * Function that sets method that will be executed after setting
@@ -55,7 +55,7 @@ var ComponentLifecycle = (function () {
      */
     ComponentLifecycle.prototype.callDestroyMethod = function () {
         this.destroyMethod();
-        ComponentLifecycle.logger.debug("Component with id \"" + this.getComponentId() + "\" was destroyed");
+        ComponentLifecycle.logger.debug("Component Lifecycle: Component with id \"" + this.getComponentId() + "\" was destroyed");
     };
     /**
      * Function that sets method that will be executed before setting

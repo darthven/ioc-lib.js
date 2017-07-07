@@ -59,7 +59,7 @@ class LifecycleValidator {
      * @param {Object} component parsed object from the meta-data
      */
     private static setDafaultInitMethod(lifecycle: ComponentLifecycle, component: Object): void {
-        LifecycleValidator.logger.warn(`No init-method was detected in component with id "${component['id']}"`);
+        LifecycleValidator.logger.warn(`Lifecycle Validation: No init-method was detected in component with id "${component['id']}"`);
         lifecycle.setInitMethod(() => {
             LifecycleValidator.logger.debug(`Default init-method is called to the component with id "${component['id']}"`)
         });
@@ -72,7 +72,7 @@ class LifecycleValidator {
      * @param {Object} component parsed object from the meta-data
      */
     private static setDefaultAfterPropertiesWereSetMethod(lifecycle: ComponentLifecycle, component: Object): void {
-        LifecycleValidator.logger.warn(`No after-properties-set-method was detected in component with id "${component['id']}"`);
+        LifecycleValidator.logger.warn(`Lifecycle Validation: No after-properties-set-method was detected in component with id "${component['id']}"`);
         lifecycle.setAfterPropertiesWereSetMethod(() => {
             LifecycleValidator.logger.debug(`Default after-properties-set-method is called to the component with id "${component['id']}"`)
         });
@@ -85,7 +85,7 @@ class LifecycleValidator {
      * @param {Object} component parsed object from the meta-data
      */
     private static setDafaultDestroyMethod(lifecycle: ComponentLifecycle, component: Object): void {
-        LifecycleValidator.logger.warn(`No  destroy-method  was detected in component with id "${component['id']}"`);
+        LifecycleValidator.logger.warn(`Lifecycle Validation: No destroy-method  was detected in component with id "${component['id']}"`);
         lifecycle.setDestroyMethod(() => {
             LifecycleValidator.logger.debug(`Default destroy-method is called to the component with id "${component['id']}"`)
         });

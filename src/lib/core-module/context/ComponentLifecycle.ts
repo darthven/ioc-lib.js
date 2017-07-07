@@ -51,7 +51,7 @@ class ComponentLifecycle {
      */
     public callInitMethod(): void {
         this.initMethod();
-        ComponentLifecycle.logger.debug(`Component with id "${this.getComponentId()}" was initialized`);
+        ComponentLifecycle.logger.debug(`Component Lifecycle: Component with id "${this.getComponentId()}" was initialized`);
     }
 
     /**
@@ -67,7 +67,7 @@ class ComponentLifecycle {
      */
     public callAfterPropertiesWereSetMethod(): void {
         this.afterPropertiesWereSetMethod();
-        ComponentLifecycle.logger.debug(`Component with id "${this.getComponentId()}" received its properties`);
+        ComponentLifecycle.logger.debug(`Component Lifecycle: Component with id "${this.getComponentId()}" received its properties`);
     }
 
     /**
@@ -84,7 +84,7 @@ class ComponentLifecycle {
      */
     public callDestroyMethod(): void {
         this.destroyMethod();
-        ComponentLifecycle.logger.debug(`Component with id "${this.getComponentId()}" was destroyed`);
+        ComponentLifecycle.logger.debug(`Component Lifecycle: Component with id "${this.getComponentId()}" was destroyed`);
     }
 
     /**
