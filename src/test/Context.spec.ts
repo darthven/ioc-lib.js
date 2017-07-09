@@ -22,7 +22,7 @@ const configs = [__dirname + "/config/context.json"];
 
         const expectedResult = [
             {
-                configName: 'C:\\Users\\kokh0716\\WebstormProjects\\ExperimentalLib\\src\\test/config/context.json',
+                configName: 'test/config/context.json',
                 config: {
                     components: [
                         {

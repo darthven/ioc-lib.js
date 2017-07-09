@@ -23,7 +23,7 @@ var ContextTest = (function () {
         });
         var expectedResult = [
             {
-                configName: 'C:\\Users\\kokh0716\\WebstormProjects\\ExperimentalLib\\src\\test/config/context.json',
+                configName: 'test/config/context.json',
                 config: {
                     components: [
                         {

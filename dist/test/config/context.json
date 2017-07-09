@@ -5,6 +5,7 @@
         "id": "admin",
         "name": "Admin",
         "classPath": "../test/components/classes/Admin.js",
+        "scope": "prototype",
         "properties": [
           {
             "name": "referenceToUser",
@@ -21,7 +22,7 @@
         ],
         "lifecycle" : {
           "initMethod" : "initAdmin",
-          "afterPropertiesWereSetMe": "setPropertiesForAdmin",
+          "afterPropertiesWereSetMethod": "setPropertiesForAdmin",
           "destroyMethod": "destroyAdmin"
         }
       },
@@ -29,17 +30,13 @@
         "id": "user",
         "name": "User",
         "classPath": "../test/components/classes/User.js",
+        "scope": "singleton",
         "properties": [
             {
               "name": "name",
               "value": "user"
             }
-        ],
-        "lifecycle": {
-          "initMethod" : "initUser",
-          "afterPropertiesWereSetMethod": "setPropertiesForUser",
-          "destroyMethod": "destroyUser"
-        }
+        ]
       }
     ]
   }
