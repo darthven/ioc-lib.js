@@ -28,13 +28,28 @@ class Context {
     private static logger = require('log4js').getLogger();
 
     /**
+     * Default context constructor for decorator-based usage
+     */
+    constructor();
+
+    /**
+     * Context constructor for configuration-base usage
+     * @param configs paths to the configuration files
+     */
+    constructor(configs: string[]);
+
+    /**
      * Context constructor
      * @param configs paths to the configuration files
      */
-    constructor(configs: string[]) {
-        MetadataValidator.validateMetadata(configs);
-        this.configs = configs;
-        this.registerComponentsInContext();
+    constructor(configs?: string[]) {
+        if(configs) {
+            MetadataValidator.validateMetadata(configs);
+            this.configs = configs;
+            this.registerComponentsInContext();
+        } else {
+
+        }
         Context.logger.info('Context was initialized');
     }
 

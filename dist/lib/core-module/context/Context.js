@@ -15,9 +15,13 @@ var Context = (function () {
      * @param configs paths to the configuration files
      */
     function Context(configs) {
-        validation_module_1.MetadataValidator.validateMetadata(configs);
-        this.configs = configs;
-        this.registerComponentsInContext();
+        if (configs) {
+            validation_module_1.MetadataValidator.validateMetadata(configs);
+            this.configs = configs;
+            this.registerComponentsInContext();
+        }
+        else {
+        }
         Context.logger.info('Context was initialized');
     }
     /**

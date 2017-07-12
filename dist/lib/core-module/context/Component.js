@@ -9,17 +9,17 @@ var Component = (function () {
     /**
      * Component's constructor
      * @param id unique identifier
-     * @param name of the component
+     * @param componentName of the component
      * @param classPath path to the class of the entity
      * @param scope of the component
      * @param lifecycle of the component
      */
-    function Component(id, name, classPath, scope, lifecycle) {
-        this.id = id;
-        this.name = name;
-        this.classPath = classPath;
-        this.scope = scope;
-        this.lifecycle = lifecycle;
+    function Component(id, componentName, classPath, scope, lifecycle) {
+        this.id = id || null;
+        this.componentName = componentName || null;
+        this.classPath = classPath || null;
+        this.scope = scope || 0 /* SINGLETON */;
+        this.lifecycle = lifecycle || null;
     }
     /**
      * Function that returns component's unique identifier
@@ -39,15 +39,15 @@ var Component = (function () {
      * Function that returns component's name
      * @returns {string} name of the component
      */
-    Component.prototype.getName = function () {
-        return this.name;
+    Component.prototype.getComponentName = function () {
+        return this.componentName;
     };
     /**
      * Function that sets name to the component
      * @param name
      */
-    Component.prototype.setName = function (name) {
-        this.name = name;
+    Component.prototype.setComponentName = function (name) {
+        this.componentName = name;
     };
     /**
      * Function that returns component's properties

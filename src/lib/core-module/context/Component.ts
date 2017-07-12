@@ -26,7 +26,7 @@ class Component {
     /**
      * Name of the component
      */
-    private name: string;
+    private componentName: string;
 
     /**
      * Path to the class of the entity
@@ -52,17 +52,17 @@ class Component {
     /**
      * Component's constructor
      * @param id unique identifier
-     * @param name of the component
+     * @param componentName of the component
      * @param classPath path to the class of the entity
      * @param scope of the component
      * @param lifecycle of the component
      */
-    constructor(id: string, name: string, classPath: string, scope: Scope, lifecycle: ComponentLifecycle) {
-        this.id = id;
-        this.name = name;
-        this.classPath = classPath;
-        this.scope = scope;
-        this.lifecycle = lifecycle;
+    constructor(id?: string, componentName?: string, classPath?: string, scope?: Scope, lifecycle?: ComponentLifecycle) {
+        this.id = id || null;
+        this.componentName = componentName || null;
+        this.classPath = classPath || null;
+        this.scope = scope || Scope.SINGLETON;
+        this.lifecycle = lifecycle || null;
     }
 
     /**
@@ -85,16 +85,16 @@ class Component {
      * Function that returns component's name
      * @returns {string} name of the component
      */
-    public getName(): string {
-        return this.name;
+    public getComponentName(): string {
+        return this.componentName;
     }
 
     /**
      * Function that sets name to the component
      * @param name
      */
-    public setName(name: string): void {
-        this.name = name;
+    public setComponentName(name: string): void {
+        this.componentName = name;
     }
 
     /**

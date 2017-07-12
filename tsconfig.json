@@ -1,12 +1,17 @@
 {
-    "compilerOptions": {
-        "outDir": "dist",
-        "module": "commonjs",
-        "target": "es5",
-        "noImplicitAny": false,
-        "sourceMap": false,
-        "typeRoots": ["node_modules/@types"],
-        "lib":["ES2017"],
-        "experimentalDecorators": true
-    }
+  "compilerOptions": {
+    "outDir": "dist",
+    "module": "commonjs",
+    "target": "es5",
+    "noImplicitAny": false,
+    "sourceMap": false,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "ES2017"
+    ],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": false
+  }
 }
