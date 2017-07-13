@@ -1,4 +1,4 @@
-import {Component, ComponentLifecycle, Property} from '../core-module';
+import {Component, ComponentLifecycle} from '../core-module';
 import ReflectionUtil from "../utils/ReflectionUtil";
 import {Scope} from "./Component";
 
@@ -11,10 +11,8 @@ export function component(target: any, propertyKey: string, descriptor: Property
     console.log('DESCRIPTOR VALUE', entity);
     const component = () => {
       let lifecycle = new ComponentLifecycle();
-      let properties = [];
       let component = new Component();
       component.setLifecycle(lifecycle);
-      component.setProperties(properties);
       return Object.assign(component, Object.getPrototypeOf(entity.call()));
     };
     descriptor.value = component;

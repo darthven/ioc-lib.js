@@ -1,7 +1,3 @@
-import InternetOrderManagementService from "./components/services/InternetOrderManagementService"
-import TvOrderManagementService from "./components/services/TvOrderManagementService"
-import MobileOrderManagementService from "./components/services/MobileOrderManagementService"
-import Customer from "./components/entities/Customer"
 import User from "./components/classes/User"
 import Context from "../lib/core-module/context/Context"
 import MetadataContext from "../lib/core-module/context/MetadataContext";

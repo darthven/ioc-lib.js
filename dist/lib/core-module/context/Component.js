@@ -50,20 +50,6 @@ var Component = (function () {
         this.componentName = name;
     };
     /**
-     * Function that returns component's properties
-     * @returns {Property[]} properties of the component
-     */
-    Component.prototype.getProperties = function () {
-        return this.properties;
-    };
-    /**
-     * Function that sets properties to the component
-     * @param properties
-     */
-    Component.prototype.setProperties = function (properties) {
-        this.properties = properties;
-    };
-    /**
      * Function that returns path to the class of component's entity
      * @returns {string} path to the class
      */

@@ -3,7 +3,6 @@
  */
 import Context from "../lib/core-module/context/Context"
 import {Scope, default as Component} from '../lib/core-module/context/Component'
-import Property from '../lib/core-module/context/Property'
 import ComponentLifeCycle from '../lib/core-module/context/ComponentLifecycle'
 import ComponentNotFoundError from '../lib/core-module/errors/ComponentNotFoundError'
 import jsonfile = require('jsonfile');

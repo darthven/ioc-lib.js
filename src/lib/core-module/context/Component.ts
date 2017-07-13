@@ -1,4 +1,4 @@
-import {ComponentLifecycle, Property} from '../core-module'
+import {ComponentLifecycle} from '../core-module'
 
 /**
  * Enumeration of two possible component's scopes.
@@ -43,11 +43,6 @@ class Component {
      * Lifecycle of the component
      */
     private lifecycle: ComponentLifecycle;
-
-    /**
-     * Properties of the component
-     */
-    private properties: Property[];
 
     /**
      * Component's constructor
@@ -95,22 +90,6 @@ class Component {
      */
     public setComponentName(name: string): void {
         this.componentName = name;
-    }
-
-    /**
-     * Function that returns component's properties
-     * @returns {Property[]} properties of the component
-     */
-    public getProperties(): Property[] {
-        return this.properties;
-    }
-
-    /**
-     * Function that sets properties to the component
-     * @param properties
-     */
-    public setProperties(properties: Property[]): void {
-        this.properties = properties;
     }
 
     /**

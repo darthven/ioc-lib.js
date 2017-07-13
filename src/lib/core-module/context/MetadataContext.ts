@@ -1,4 +1,4 @@
-import {Scope, Property, Component} from '../core-module'
+import {Scope, Component} from '../core-module'
 import {MetadataValidator, PropertyValidator, LifecycleValidator} from "../../validation-module/validation-module";
 import jsonfile = require('jsonfile');
 import PropertyValidationError from "../../validation-module/errors/PropertyValidationError";
@@ -64,18 +64,16 @@ class MetadataContext extends Context {
      * @param {Object} configComponent parsed object from configuration file
      * @returns {Property[]} array of properties (with values)
      */
-    private getPropertyValuesFromConfiguration(configComponent: Object): Property[] {
+    private getPropertyValuesFromConfiguration(configComponent: Object) {
         let propertiesFromContext = configComponent['properties'];
         let properties = [];
         if (propertiesFromContext) {
             propertiesFromContext.forEach((prop) => {
-                let property = new Property(prop.name);
+                //TODO check property-value if entity-class has it
                 if (prop['value']) {
-                    property.setValue(prop.value);
-                    properties.push(property);
+                    properties.push();
                 }
-            });
-        }
+            });        }
         return properties;
     }
 
@@ -87,15 +85,14 @@ class MetadataContext extends Context {
      * @returns {Property[]} array of properties (with references to other objects by
      * unique identifiers)
      */
-    private getPropertyReferencesFromConfiguration(configComponent: Object): Property[] {
+    private getPropertyReferencesFromConfiguration(configComponent: Object) {
         let propertiesFromContext = configComponent['properties'];
         let properties = [];
         if (propertiesFromContext) {
             propertiesFromContext.forEach((prop) => {
-                let property = new Property(prop.name);
+                //TODO check property-reference if entity-class has it
                 if (prop['reference']) {
-                    property.setReference(prop.reference);
-                    properties.push(property);
+                    properties.push();
                 }
             });
         }
@@ -136,9 +133,9 @@ class MetadataContext extends Context {
             let component = new Component(comp['id'],
                 comp['name'], comp['classPath'], this.defineComponentScope(comp), lifecycle);
             let properties = this.getPropertyValuesFromConfiguration(comp);
-            let propertiesAreValid = PropertyValidator.validateProperties(properties);
+            let propertiesAreValid = true; //TODO validate properties
             if (propertiesAreValid) {
-                component.setProperties(properties);
+                //TODO set property-values to the component
                 basicComponents.set(comp['id'], Object.assign(component, entity));
             } else {
                 throw new PropertyValidationError(comp['id']);
@@ -158,8 +155,7 @@ class MetadataContext extends Context {
         basicComponents.forEach((component) => {
             configComponents.forEach((comp) => {
                 const references = this.getPropertyReferencesFromConfiguration(comp);
-                const currentProperties = component.getProperties();
-                component.setProperties(currentProperties.concat(references));
+                //TODO set property-references to the component
                 component.getLifecycle().callAfterPropertiesWereSetMethod();
             });
         });

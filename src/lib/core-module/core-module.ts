@@ -1,4 +1,3 @@
-export {default as Property} from "./context/Property"
 export {default as ComponentLifecycle} from "./context/ComponentLifecycle"
 export {Scope, default as Component} from "./context/Component"
 export {default as MetadataContext} from "./context/MetadataContext"
