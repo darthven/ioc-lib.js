@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Context_1 = require("../lib/core-module/context/Context");
+var MetadataContext_1 = require("../lib/core-module/context/MetadataContext");
 // let iservice = new InternetOrderManagementService();
 // let tvservice = new TvOrderManagementService();
 // let mservice = new MobileOrderManagementService();
@@ -17,7 +17,7 @@ var Context_1 = require("../lib/core-module/context/Context");
 var http = require('http');
 var path = require('path');
 var configs = [__dirname + "/config/context.json", __dirname + "/config/context1.json", __dirname + "/config/context2.json"];
-var context1 = new Context_1.default(configs);
+var context1 = new MetadataContext_1.default(configs);
 //let context2 = new Context(configs);
 context1.registerShutdownHook();
 //context2.registerShutdownHook();

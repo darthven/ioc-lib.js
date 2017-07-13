@@ -4,6 +4,7 @@ import MobileOrderManagementService from "./components/services/MobileOrderManag
 import Customer from "./components/entities/Customer"
 import User from "./components/classes/User"
 import Context from "../lib/core-module/context/Context"
+import MetadataContext from "../lib/core-module/context/MetadataContext";
 // let iservice = new InternetOrderManagementService();
 // let tvservice = new TvOrderManagementService();
 // let mservice = new MobileOrderManagementService();
@@ -21,7 +22,7 @@ import Context from "../lib/core-module/context/Context"
 const http = require('http');
 const path = require('path');
 const configs = [__dirname + "/config/context.json", __dirname + "/config/context1.json", __dirname + "/config/context2.json"];
-let context1 = new Context(configs);
+let context1 = new MetadataContext(configs);
 //let context2 = new Context(configs);
 context1.registerShutdownHook();
 //context2.registerShutdownHook();
