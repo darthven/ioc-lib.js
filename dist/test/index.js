@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var MetadataContext_1 = require("../lib/core-module/context/MetadataContext");
+var Admin_1 = require("./components/classes/Admin");
 // let iservice = new InternetOrderManagementService();
 // let tvservice = new TvOrderManagementService();
 // let mservice = new MobileOrderManagementService();
@@ -21,8 +22,14 @@ var context1 = new MetadataContext_1.default(configs);
 //let context2 = new Context(configs);
 context1.registerShutdownHook();
 //context2.registerShutdownHook();
-var admin = context1.getComponent('admin');
-console.log('ADMIN', admin);
+var admin = context1.getComponent('adminId');
+admin.name = 'Bean name';
+console.log('From Context', admin);
+var admin2 = new Admin_1.default();
+admin2.name = 'asdad';
+admin2.age = 123;
+admin2.bye();
+console.log('Simple', admin2);
 admin.bye();
 // http.createServer((req, res) => {
 //   context1.updateContext();

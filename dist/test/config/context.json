@@ -2,14 +2,14 @@
   "configuration": {
     "components" : [
       {
-        "id": "admin",
+        "id": "adminId",
         "name": "Admin",
         "classPath": "../test/components/classes/Admin.js",
         "scope": "prototype",
         "properties": [
           {
-            "name": "referenceToUser",
-            "reference": "user1"
+            "name": "user",
+            "reference": "user1Id"
           },
           {
             "name": "name",
@@ -27,14 +27,14 @@
         }
       },
       {
-        "id": "user",
+        "id": "userId",
         "name": "User",
         "classPath": "../test/components/classes/User.js",
         "scope": "singleton",
         "properties": [
             {
               "name": "name",
-              "value": "user"
+              "value": "testUser3"
             }
         ]
       }

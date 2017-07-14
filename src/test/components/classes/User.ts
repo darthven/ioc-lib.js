@@ -1,8 +1,8 @@
 class User {
-  name: string;
+  private _name: string;
 
   constructor(name: string) {
-    this.name = name;
+    this._name = name;
   }
 
   public hello(): void {
@@ -11,6 +11,14 @@ class User {
 
   public initUser(): void {
     console.log("Init user");
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  set name(value: string) {
+    this._name = value;
   }
 
   public setPropertiesForUser(): void {

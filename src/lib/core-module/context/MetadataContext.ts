@@ -62,37 +62,26 @@ class MetadataContext extends Context {
      * Function that retrieves properties' values
      * of the object that was retrieved from meta-data
      * @param {Object} configComponent parsed object from configuration file
-     * @returns {Property[]} array of properties (with values)
+     * @param component possible component instance
+     * @returns {Object[]} array of properties (with values)
      */
-    private getPropertyValuesFromConfiguration(configComponent: Object) {
+    private getPropertiesFromConfiguration(configComponent: Object, entity: Object): Object[] {
         let propertiesFromContext = configComponent['properties'];
         let properties = [];
         if (propertiesFromContext) {
             propertiesFromContext.forEach((prop) => {
-                //TODO check property-value if entity-class has it
-                if (prop['value']) {
-                    properties.push();
-                }
-            });        }
-        return properties;
-    }
-
-    /**
-     * Function that retrieves properties' references
-     * of the current object to other objects by unique identifier
-     * that was retrieved from meta-data
-     * @param {Object} configComponent parsed object from configuration file
-     * @returns {Property[]} array of properties (with references to other objects by
-     * unique identifiers)
-     */
-    private getPropertyReferencesFromConfiguration(configComponent: Object) {
-        let propertiesFromContext = configComponent['properties'];
-        let properties = [];
-        if (propertiesFromContext) {
-            propertiesFromContext.forEach((prop) => {
-                //TODO check property-reference if entity-class has it
-                if (prop['reference']) {
-                    properties.push();
+                let entityPropertyNames = Object.getOwnPropertyNames(entity['default']['prototype']);
+                let propertyName = entityPropertyNames.find(propName => propName === prop['name']);
+                if (prop['value'] && propertyName) {
+                    properties.push({
+                        name: prop['name'],
+                        value: prop['value']
+                    });
+                } else if (prop['reference'] && propertyName) {
+                    properties.push({
+                        name: prop['name'],
+                        reference: prop['reference']
+                    });
                 }
             });
         }
@@ -125,20 +114,42 @@ class MetadataContext extends Context {
      * (without values, without references)
      */
     private setBasicPropertiesToComponents(configComponents: Object[], basicComponents: Map<string, Component>) {
-        configComponents.forEach((comp) => {
-            const classPath = `../../../../../../${comp['classPath']}`;
-            const entity = require(classPath).default.prototype;
-            let lifecycle = LifecycleValidator.validateLifecycle(entity, comp);
+        configComponents.forEach((configComp) => {
+            const classPath = `../../${configComp['classPath']}`;
+            const entityClass = require(classPath);
+            const entityPrototype = entityClass.default.prototype;
+            let entity = Object.create(entityPrototype);
+            let lifecycle = LifecycleValidator.validateLifecycle(entityPrototype, configComp);
             lifecycle.callInitMethod();
-            let component = new Component(comp['id'],
-                comp['name'], comp['classPath'], this.defineComponentScope(comp), lifecycle);
-            let properties = this.getPropertyValuesFromConfiguration(comp);
-            let propertiesAreValid = true; //TODO validate properties
+            let component = new Component(configComp['id'],
+                configComp['name'], configComp['classPath'], this.defineComponentScope(configComp), lifecycle);
+            let properties = this.getPropertiesFromConfiguration(configComp, entityClass);
+            let propertiesAreValid = PropertyValidator.validateProperties(properties);
             if (propertiesAreValid) {
-                //TODO set property-values to the component
-                basicComponents.set(comp['id'], Object.assign(component, entity));
+                //component = Object.assign(component, entityPrototype);
+                console.log('ENTITY PROT', entityPrototype);
+                properties.forEach((prop) => {
+                    if (prop['value']) {
+                        entity[prop['name']] = prop['value'];
+                    } else {
+                        entity[prop['name']] = null;
+                    }
+                    // let entityPropertyDescriptor = Object.getOwnPropertyDescriptor(entityPrototype, prop['name']);
+                    // Object.defineProperty(component, prop['name'], entityPropertyDescriptor);
+                    // component[prop['name']] = prop['value'];
+                    // console.log('AFTER DEF PROPERTY COMPONENT', component);
+                    //
+                    //
+                    // console.log('ENTITY PROP DESCRIPTOR', entityPropertyDescriptor);
+                    // if (entityPropertyDescriptor['get'] && entityPropertyDescriptor['set']) {
+                    //
+                    // }
+                });
+                component.setEntityInstance(entity);
+                console.log('COMPONENT READY', component);
+                basicComponents.set(configComp['id'], component);
             } else {
-                throw new PropertyValidationError(comp['id']);
+                throw new PropertyValidationError(configComp['id']);
             }
         });
     }
@@ -151,11 +162,22 @@ class MetadataContext extends Context {
      * @param {Map<string, Component>} basicComponents unregistered components in their basic form
      * (with values, without references)
      */
-    private setReferencesToComponents(configComponents: Object[], basicComponents: Map<string, Component>): void {
-        basicComponents.forEach((component) => {
+    private setReferencesToComponents(configComponents: Object[]): void {
+        this.components.forEach((component) => {
             configComponents.forEach((comp) => {
-                const references = this.getPropertyReferencesFromConfiguration(comp);
-                //TODO set property-references to the component
+                const classPath = `../../${comp['classPath']}`;
+                const entityClass = require(classPath);
+                let entity = this.getComponent(comp['id']);
+                const properties = this.getPropertiesFromConfiguration(comp, entityClass);
+                properties.forEach((prop) => {
+                    if (prop['reference']) {
+                        console.log('REFERENCE', prop);
+                        let injectedComponent = this.getComponent(prop['reference']);
+                        console.log('INJECTED COMPONENT', injectedComponent);
+                        entity[prop['name']] = injectedComponent;
+                    }
+                });
+                //component = Object.assign(component, entity);
                 component.getLifecycle().callAfterPropertiesWereSetMethod();
             });
         });
@@ -195,8 +217,8 @@ class MetadataContext extends Context {
         let basicComponents = new Map<string, Component>();
         let configComponents = this.getConfigComponents();
         this.setBasicPropertiesToComponents(configComponents, basicComponents);
-        this.setReferencesToComponents(configComponents, basicComponents);
         this.components = basicComponents;
+        this.setReferencesToComponents(configComponents);
     }
 
     /**

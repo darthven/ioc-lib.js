@@ -91,6 +91,20 @@ var Component = (function () {
     Component.prototype.setLifecycle = function (lifecycle) {
         this.lifecycle = lifecycle;
     };
+    /**
+     * Function that returns the entity instance of the class
+     * @returns {any} entity instance
+     */
+    Component.prototype.getEntityInstance = function () {
+        return this.entityInstance;
+    };
+    /**
+     * Function that sets the entity instance to the component
+     * @param entityInstance
+     */
+    Component.prototype.setEntityInstance = function (entityInstance) {
+        this.entityInstance = entityInstance;
+    };
     return Component;
 }());
 exports.default = Component;

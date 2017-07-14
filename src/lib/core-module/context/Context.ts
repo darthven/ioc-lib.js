@@ -1,5 +1,5 @@
 import {Scope, ComponentNotFoundError, Component} from '../core-module'
-
+import _ = require('lodash');
 /**
  * Class that responds for creation and management process of the components,
  * for updating and closing application context in safe-mode,
@@ -45,17 +45,18 @@ abstract class Context {
     /**
      * Function that retrieves component's instance by unique identifier
      * @param {string} componentId unique identifier of the component
-     * @returns component's instance
+     * @returns component's entity instance
      */
     public getComponent(componentId: string): any {
         let component = this.components.get(componentId);
         if (!component) {
             throw new ComponentNotFoundError(`Component was not found by id "${componentId}"`);
         }
+        //TODO provide copying components' instances
         if (component.getScope() === Scope.PROTOTYPE) {
-            return Object.assign({}, component);
+
         }
-        return component;
+        return component.getEntityInstance();
     }
 
     /**

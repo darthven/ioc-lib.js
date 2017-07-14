@@ -2,13 +2,13 @@
   "configuration": {
     "components" : [
       {
-        "id": "admin",
+        "id": "adminId",
         "name": "Admin",
         "classPath": "../test/components/classes/Admin.js",
         "properties": [
           {
-            "name": "referenceToUser",
-            "reference": "user"
+            "name": "user",
+            "reference": "user1Id"
           },
           {
             "name": "name",
@@ -26,13 +26,13 @@
         }
       },
       {
-        "id": "user1",
+        "id": "user1Id",
         "name": "User1",
         "classPath": "../test/components/classes/User.js",
         "properties": [
             {
               "name": "name",
-              "value": "user"
+              "value": "testUser2"
             }
         ],
         "lifecycle": {

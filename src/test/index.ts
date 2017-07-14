@@ -1,6 +1,7 @@
 import User from "./components/classes/User"
 import Context from "../lib/core-module/context/Context"
 import MetadataContext from "../lib/core-module/context/MetadataContext";
+import Admin from "./components/classes/Admin";
 // let iservice = new InternetOrderManagementService();
 // let tvservice = new TvOrderManagementService();
 // let mservice = new MobileOrderManagementService();
@@ -22,8 +23,20 @@ let context1 = new MetadataContext(configs);
 //let context2 = new Context(configs);
 context1.registerShutdownHook();
 //context2.registerShutdownHook();
-let admin = context1.getComponent('admin');
-console.log('ADMIN', admin);
+let admin = context1.getComponent('adminId');
+
+admin.name = 'Bean name';
+console.log('From Context', admin);
+
+let admin2 = new Admin();
+
+admin2.name = 'asdad';
+
+admin2.age = 123;
+
+admin2.bye();
+
+console.log('Simple', admin2)
 
 admin.bye();
 // http.createServer((req, res) => {

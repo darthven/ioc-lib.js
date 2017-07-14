@@ -9,13 +9,13 @@ export function component(target: any, propertyKey: string, descriptor: Property
     //const fields = ReflectionUtil.getFunctionArgumentsNames(target);
     const entity = descriptor.value;
     console.log('DESCRIPTOR VALUE', entity);
-    const component = () => {
+    const componentInstance = () => {
       let lifecycle = new ComponentLifecycle();
       let component = new Component();
       component.setLifecycle(lifecycle);
       return Object.assign(component, Object.getPrototypeOf(entity.call()));
     };
-    descriptor.value = component;
+    descriptor.value = componentInstance;
     return descriptor;
 }
 

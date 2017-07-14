@@ -2,35 +2,63 @@ import User from './User';
 
 class Admin {
 
-  name: string;
-  age: string;
-  user: User;
+    private _name: string;
+    private _age: number;
+    private _user: User;
 
-  constructor(name: string, age: string, user: User) {
-    this.name = name;
-    this.age = age;
-    this.user = user;
-  }
+    constructor();
 
-  public hello(): void {
-    console.log('Hello from Admin');
-  }
+    constructor(name: string, age: number, user: User);
 
-  public bye(): void {
-    console.log('Bye from Admin');
-  }
+    constructor(name?: string, age?: number, user?: User) {
+        this._name = name || null;
+        this._age = age || null;
+        this._user = user || null;
+    }
 
-  public initAdmin(): void {
-    console.log("Init admin");
-  }
+    get name(): string {
+        return this._name;
+    }
 
-  public setPropertiesForAdmin(): void {
-    console.log("Properties were set admin");
-  }
+    set name(value: string) {
+        this._name = value;
+    }
 
-  public destroyAdmin(): void {
-    console.log("Destroy admin");
-  }  
+    get age(): number {
+        return this._age;
+    }
+
+    set age(value: number) {
+        this._age = value;
+    }
+
+    get user(): User {
+        return this._user;
+    }
+
+    set user(value: User) {
+        this._user = value;
+    }
+
+    public hello(): void {
+        console.log('Hello from Admin');
+    }
+
+    public bye(): void {
+        console.log('Bye from Admin');
+    }
+
+    public initAdmin(): void {
+        console.log("Init admin");
+    }
+
+    public setPropertiesForAdmin(): void {
+        console.log("Properties were set admin");
+    }
+
+    public destroyAdmin(): void {
+        console.log("Destroy admin");
+    }
 }
 
 export default Admin;

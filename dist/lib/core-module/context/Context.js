@@ -35,17 +35,17 @@ var Context = (function () {
     /**
      * Function that retrieves component's instance by unique identifier
      * @param {string} componentId unique identifier of the component
-     * @returns component's instance
+     * @returns component's entity instance
      */
     Context.prototype.getComponent = function (componentId) {
         var component = this.components.get(componentId);
         if (!component) {
             throw new core_module_1.ComponentNotFoundError("Component was not found by id \"" + componentId + "\"");
         }
+        //TODO provide copying components' instances
         if (component.getScope() === 1 /* PROTOTYPE */) {
-            return Object.assign({}, component);
         }
-        return component;
+        return component.getEntityInstance();
     };
     /**
      * Function that closes application context in safe-mode

@@ -5,54 +5,54 @@ import {isObject, isString} from "util";
  */
 class PropertyValidator {
 
-    // /**
-    //  * Function that validates property's name
-    //  * @param {Property} property of the component
-    //  * @returns {boolean} validation result
-    //  */
-    // private static validateName(property: Property): boolean {
-    //     return property.getName() != null && isString(property.getName()) ;
-    // }
-    //
-    // /**
-    //  * Function that validates property's value
-    //  * @param {Property} property of the component
-    //  * @returns {boolean} validation result
-    //  */
-    // private static validateValue(property: Property): boolean {
-    //     return property.getValue() != null;
-    // }
-    //
-    // /**
-    //  * Function that validates property's reference
-    //  * @param {Property} property of the component
-    //  * @returns {boolean} validation result
-    //  */
-    // private static validateReference(property: Property): boolean {
-    //     return property.getReference() != null && isObject(property.getReference());
-    // }
-    //
-    // /**
-    //  * Function that validates all properties of the component
-    //  * @param {Property[]} properties of the component
-    //  * @returns {boolean} validation result
-    //  */
-    // public static validateProperties(properties: Property[]): boolean {
-    //     properties.forEach((property) => {
-    //         if (!property.getValue()) {
-    //             if (!PropertyValidator.validateName(property) ||
-    //                 !PropertyValidator.validateReference(property)) {
-    //                 return false;
-    //             }
-    //         } else if (property.getValue()) {
-    //             if (!PropertyValidator.validateName(property) ||
-    //                 !PropertyValidator.validateValue(property)) {
-    //                 return false;
-    //             }
-    //         }
-    //     });
-    //     return true;
-    // }
+    /**
+     * Function that validates property's name
+     * @param {Object} property of the component
+     * @returns {boolean} validation result
+     */
+    private static validateName(property: Object): boolean {
+        return property['name'] != null && isString(property['name']) ;
+    }
+
+    /**
+     * Function that validates property's value
+     * @param {Object} property of the component
+     * @returns {boolean} validation result
+     */
+    private static validateValue(property: Object): boolean {
+        return property['value'] != null;
+    }
+
+    /**
+     * Function that validates property's reference
+     * @param {Object} property of the component
+     * @returns {boolean} validation result
+     */
+    private static validateReference(property: Object): boolean {
+        return property['reference'] != null && isObject(property['reference']);
+    }
+
+    /**
+     * Function that validates all properties of the component
+     * @param {Object[]} properties of the component
+     * @returns {boolean} validation result
+     */
+    public static validateProperties(properties: Object[]): boolean {
+        properties.forEach((property) => {
+            if (!property['value']) {
+                if (!PropertyValidator.validateName(property) ||
+                    !PropertyValidator.validateReference(property)) {
+                    return false;
+                }
+            } else if (property['value']) {
+                if (!PropertyValidator.validateName(property) ||
+                    !PropertyValidator.validateValue(property)) {
+                    return false;
+                }
+            }
+        });
+        return true;
+    }
 }
 
 export default PropertyValidator;

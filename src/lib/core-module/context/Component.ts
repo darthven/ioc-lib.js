@@ -45,6 +45,11 @@ class Component {
     private lifecycle: ComponentLifecycle;
 
     /**
+     * Instance of the entity class
+     */
+    private entityInstance: any;
+
+    /**
      * Component's constructor
      * @param id unique identifier
      * @param componentName of the component
@@ -138,6 +143,22 @@ class Component {
      */
     public setLifecycle(lifecycle: ComponentLifecycle): void {
         this.lifecycle = lifecycle;
+    }
+
+    /**
+     * Function that returns the entity instance of the class
+     * @returns {any} entity instance
+     */
+    public getEntityInstance(): any {
+        return this.entityInstance;
+    }
+
+    /**
+     * Function that sets the entity instance to the component
+     * @param entityInstance
+     */
+    public setEntityInstance(entityInstance: any): void {
+        this.entityInstance = entityInstance;
     }
 }
 
