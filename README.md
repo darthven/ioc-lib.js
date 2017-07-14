@@ -154,26 +154,6 @@ Example of the configuration file:
 
 There are several main classes which took part in programming context process.
 
-<h4>Property Class</h4>
-
----
-
-Class that can be represented by simple values like string, numbers, arrays etc and references to another components via unique identifiers.
-
-<h5> List of Methods </h5>
-
-- getName - returns the name of the property in string format
-
-- setName - sets the name of the property in string format
-
-- getValue - returns the value of the property in any format
-
-- setValue - sets the name of the property in any format
-
-- getReference - returns the value of the unique identifier of another component in string format
-
-- setReference - sets the value of the unique identifier of another component in string format
-
 <h4>ComponentLifecycle Class</h4>
 
 ---
@@ -229,7 +209,11 @@ and allows you to inject other entities to itself according to Dependency Inject
 
 - getLifecycle - returns lifecycle instance of the component
 
-- getLifecycle - sets lifecycle instance to the component
+- setLifecycle - sets lifecycle instance to the component
+
+- getEntityInstance - returns instance of the class defined by the classpath
+
+- setEntityInstance - sets the instance of the class defined by the classpath
 
 
 <h4>Context Class</h4>
