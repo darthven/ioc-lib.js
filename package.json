@@ -5,10 +5,10 @@
   "main": "js/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/darthven/ExperimentalLib.git"
+    "url": "git+https://github.com/darthven/ioc-lib.js.git"
   },
   "bugs": {
-    "url": "https://github.com/darthven/ExperimentalLib/issues",
+    "url": "https://github.com/darthven/ioc-lib.js/issues",
     "email": "kostharl@gmail.com"
   },
   "keywords": [
