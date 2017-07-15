@@ -115,7 +115,7 @@ class MetadataContext extends Context {
      */
     private setBasicPropertiesToComponents(configComponents: Object[], basicComponents: Map<string, Component>) {
         configComponents.forEach((configComp) => {
-            const classPath = `../../${configComp['classPath']}`;
+            const classPath = `../../../../../../${configComp['classPath']}`;
             const entityClass = require(classPath);
             const entityPrototype = entityClass.default.prototype;
             let entity = Object.create(entityPrototype);
@@ -126,27 +126,14 @@ class MetadataContext extends Context {
             let properties = this.getPropertiesFromConfiguration(configComp, entityClass);
             let propertiesAreValid = PropertyValidator.validateProperties(properties);
             if (propertiesAreValid) {
-                //component = Object.assign(component, entityPrototype);
-                console.log('ENTITY PROT', entityPrototype);
                 properties.forEach((prop) => {
                     if (prop['value']) {
                         entity[prop['name']] = prop['value'];
                     } else {
                         entity[prop['name']] = null;
                     }
-                    // let entityPropertyDescriptor = Object.getOwnPropertyDescriptor(entityPrototype, prop['name']);
-                    // Object.defineProperty(component, prop['name'], entityPropertyDescriptor);
-                    // component[prop['name']] = prop['value'];
-                    // console.log('AFTER DEF PROPERTY COMPONENT', component);
-                    //
-                    //
-                    // console.log('ENTITY PROP DESCRIPTOR', entityPropertyDescriptor);
-                    // if (entityPropertyDescriptor['get'] && entityPropertyDescriptor['set']) {
-                    //
-                    // }
                 });
                 component.setEntityInstance(entity);
-                console.log('COMPONENT READY', component);
                 basicComponents.set(configComp['id'], component);
             } else {
                 throw new PropertyValidationError(configComp['id']);
@@ -165,19 +152,16 @@ class MetadataContext extends Context {
     private setReferencesToComponents(configComponents: Object[]): void {
         this.components.forEach((component) => {
             configComponents.forEach((comp) => {
-                const classPath = `../../${comp['classPath']}`;
+                const classPath =  `../../../../../../${comp['classPath']}`;
                 const entityClass = require(classPath);
-                let entity = this.getComponent(comp['id']);
+                let entity = this.getComponentEntityInstance(comp['id']);
                 const properties = this.getPropertiesFromConfiguration(comp, entityClass);
                 properties.forEach((prop) => {
                     if (prop['reference']) {
-                        console.log('REFERENCE', prop);
-                        let injectedComponent = this.getComponent(prop['reference']);
-                        console.log('INJECTED COMPONENT', injectedComponent);
-                        entity[prop['name']] = injectedComponent;
+                        entity[prop['name']] = this.getComponentEntityInstance(prop['reference']);
+                        component.setEntityInstance(entity);
                     }
                 });
-                //component = Object.assign(component, entity);
                 component.getLifecycle().callAfterPropertiesWereSetMethod();
             });
         });

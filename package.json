@@ -28,6 +28,7 @@
   "license": "ISC",
   "dependencies": {
     "jsonfile": "^2.4.0",
+    "lodash": "^4.17.4",
     "log4js": "^1.1.1",
     "mocha": "^3.4.2",
     "mocha-typescript": "^1.1.4",

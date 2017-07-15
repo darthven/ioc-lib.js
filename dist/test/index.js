@@ -22,7 +22,7 @@ var context1 = new MetadataContext_1.default(configs);
 //let context2 = new Context(configs);
 context1.registerShutdownHook();
 //context2.registerShutdownHook();
-var admin = context1.getComponent('adminId');
+var admin = context1.getComponentEntityInstance('adminId');
 admin.name = 'Bean name';
 console.log('From Context', admin);
 var admin2 = new Admin_1.default();

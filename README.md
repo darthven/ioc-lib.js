@@ -195,10 +195,6 @@ and allows you to inject other entities to itself according to Dependency Inject
 
 - setName - sets the name of the component in string format
 
-- getProperties - returns all component's properties as an array
-
-- setProperties - sets properties to the component
-
 - getClassPath - returns path to the class of component's entity in string format
 
 - setClassPath - sets the path to the class of component's entity
@@ -220,43 +216,255 @@ and allows you to inject other entities to itself according to Dependency Inject
 
 ---
 
-Main class that responds for creating context, scanning and parsing configuration files, retrieving, registering and removing components from context
+Main class that responds for creating context, retrieving and removing components from it
+
+<h5> List of Methods </h5>
+
+- getComponentEntityInstance - returns the component's entity instance by the unique identifier in string format
+
+- registerShutdownHook - closes programming context after finishing the main process of the application.
+
+
+<h4>MetadataContext Class</h4>
+
+---
+
+
+Class that is inherited from Context class and responds for scanning and parsing configuration files
+and component's registration in the context
 
 <h5> List of Methods </h5>
 
 - updateContext - updates context if there were any changes in configuration files
 
-- getComponent - returns the component by the unique identifier in string format
 
-- registerShutdownHook - closes programming context after finishing the main process of the application.
+<h4>DecoratorContext Class</h4>
 
+---
+
+Class that is inherited from Context class and responds for component's registration in the context by decorating classes and methods.
+<h5> List of Methods </h5>
+IN DEVELOPMENT UNTIL RELEASE 0.2.3
 
 <h3>Live Code Sample of Library's Usage</h3>
 
 ---
 
-- Creating programming context
+<h4>Metadata Context Usage Example</h4>
+
+- Create plain  classes written on Typescript (ES6-classes are very similar, exclude only access modifiers, types usage and constructor reloading)
+
+Service.ts
+<pre>
+class Service {
+
+    private _name: string;
+
+    private _price: number;
+
+    constructor();
+
+    constructor(name: string, price: number);
+
+    constructor(name?: string, price?: number) {
+        this._name = name || null;
+        this._price = price || 0;
+    }
+
+    get name(): string {
+        return this._name;
+    }
+
+    set name(value: string) {
+        this._name = value;
+    }
+
+    get price(): number {
+        return this._price;
+    }
+
+    set price(value: number) {
+        this._price = value;
+    }
+
+    public initService() : void {
+        console.log('Before Service will be initialized');
+    }
+
+    public afterPropertiesWereSetToService() : void {
+        console.log('After Service received its props');
+    }
+
+    public destroyService() : void {
+        console.log('Before Service will bee destroyed');
+    }
+}
+
+export default Service;
+</pre>
+
+User.ts
+<pre>
+import Service from "../services/Service";
+
+class User {
+
+    private _name: string;
+
+    private _age: number;
+
+    private _phoneNumbers: string[];
+
+    private _service: Service;
+
+    constructor();
+
+    constructor(name: string, age: number, phoneNumbers: string[], service: Service);
+
+    constructor(name?: string, age?: number, phoneNumbers?: string[], service?: Service) {
+        this._name = name || null;
+        this._age = age || 0;
+        this._phoneNumbers = phoneNumbers || [];
+        this._service = service || null;
+    }
+
+    get name(): string {
+        return this._name;
+    }
+
+    set name(value: string) {
+        this._name = value;
+    }
+
+    get age(): number {
+        return this._age;
+    }
+
+    set age(value: number) {
+        this._age = value;
+    }
+
+    get phoneNumbers(): string[] {
+        return this._phoneNumbers;
+    }
+
+    set phoneNumbers(value: string[]) {
+        this._phoneNumbers = value;
+    }
+
+    get service(): Service {
+        return this._service;
+    }
+
+    set service(value: Service) {
+        this._service = value;
+    }
+
+    public initUser() : void {
+        console.log('Before User will be initialized');
+    }
+
+    public afterPropertiesWereSetToUser() : void {
+        console.log('After User received its props');
+    }
+
+    public destroyUser() : void {
+        console.log('Before User will be destroyed');
+    }
+}
+
+export default User;
+</pre>
+
+- Create configuration file by the library's specification
+
+<pre>
+{
+  "configuration": {
+    "components": [
+      {
+        "id": "user",
+        "name": "USER",
+        "classPath": "build/entities/User.js",
+        "scope": "singleton",
+        "properties": [
+          {
+            "name": "name",
+            "value": "John Smith"
+          },
+          {
+            "name": "age",
+            "value": 23
+          },
+          {
+            "name": "phoneNumbers",
+            "value": [
+              "12312312",
+              "41241412",
+              "45788943"
+            ]
+          },
+          {
+            "name": "service",
+            "reference": "service"
+          }
+        ],
+        "lifecycle": {
+          "initMethod": "initUser",
+          "afterPropertiesWereSetMethod": "afterPropertiesWereSetToUser",
+          "destroyMethod": "destroyUser"
+        }
+      },
+
+      {
+        "id": "service",
+        "name": "SERVICE",
+        "classPath": "build/services/Service.js",
+        "scope": "prototype",
+        "properties": [
+          {
+            "name": "name",
+            "value": "Mobile Service Vodafone"
+          },
+          {
+            "name": "price",
+            "value": 12345.53
+          }
+        ],
+        "lifecycle": {
+          "initMethod": "initService",
+          "afterPropertiesWereSetMethod": "afterPropertiesWereSetToService",
+          "destroyMethod": "destroyService"
+        }
+      }
+    ]
+  }
+}
+</pre>
+
+App.ts
+- Create programming context based on metadata
 
 <pre>    
-    import {Context} from 'ioc-lib.js/dist'
+    import {MetadataContext} from 'ioc-lib.js/dist'
     const path = require('path');
     
-    //Getting configuration files with metadata
-    const configs = [__dirname + "/config1.json", __dirname + "/config2.json", __dirname + "/config3.json"];
+    //Getting configuration files with metadata (can be several files)
+    const configs = [__dirname + "configs/config.json"];
     
     //Creating programming context by the following configurations
-    let context = new Context(configs);
+    let context = new MetadataContext(configs);
 </pre>
 
 
-- Getting the component from the context
+- Get the component from the context
 
 <pre>   
-    //Getting admin component by unique identifier
-    let admin = context.getComponent('admin');
+    //Getting admin component's entity instance by unique identifier
+    let admin = context.getComponentEntityInstance('admin');
      
     //Call custom admin's method if need
-    admin.enterSystem();
+    console.log(admin.getName());
 </pre>
 
 - Closing context after finishing the main process of the application

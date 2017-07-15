@@ -47,14 +47,13 @@ abstract class Context {
      * @param {string} componentId unique identifier of the component
      * @returns component's entity instance
      */
-    public getComponent(componentId: string): any {
+    public getComponentEntityInstance(componentId: string): any {
         let component = this.components.get(componentId);
         if (!component) {
             throw new ComponentNotFoundError(`Component was not found by id "${componentId}"`);
         }
-        //TODO provide copying components' instances
         if (component.getScope() === Scope.PROTOTYPE) {
-
+            return _.cloneDeep(component.getEntityInstance());
         }
         return component.getEntityInstance();
     }

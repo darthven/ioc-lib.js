@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_module_1 = require("../core-module");
+var _ = require("lodash");
 /**
  * Class that responds for creation and management process of the components,
  * for updating and closing application context in safe-mode,
@@ -37,13 +38,13 @@ var Context = (function () {
      * @param {string} componentId unique identifier of the component
      * @returns component's entity instance
      */
-    Context.prototype.getComponent = function (componentId) {
+    Context.prototype.getComponentEntityInstance = function (componentId) {
         var component = this.components.get(componentId);
         if (!component) {
             throw new core_module_1.ComponentNotFoundError("Component was not found by id \"" + componentId + "\"");
         }
-        //TODO provide copying components' instances
         if (component.getScope() === 1 /* PROTOTYPE */) {
+            return _.cloneDeep(component.getEntityInstance());
         }
         return component.getEntityInstance();
     };
