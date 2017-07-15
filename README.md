@@ -252,7 +252,24 @@ IN DEVELOPMENT UNTIL RELEASE 0.2.3
 
 <h4>Metadata Context Usage Example</h4>
 
-- Create plain  classes written on Typescript (ES6-classes are very similar, exclude only access modifiers, types usage and constructor reloading)
+- Create plain classes. They are written on Typescript here, but ES6-classes are very similar, exclude only access modifiers, types usage and constructor reloading.
+Anyway, you will understand the main concepts.
+
+Project structure
+    
+        Typescript-based (used)            Plain JS (ES6+)                
+                      ApplicationDirectory
+         -- build                        -- configs
+            -- configs                       context.json
+                context.json             -- src
+            [Compilation output]            -- entities
+         -- src                                 User.js
+            -- entities                     -- services
+                User.ts                         Service.js
+            -- services                      index.js
+                Service.ts
+             index.ts   
+                     
 
 Service.ts
 <pre>
@@ -442,7 +459,7 @@ export default User;
 }
 </pre>
 
-App.ts
+index.ts
 - Create programming context based on metadata
 
 <pre>    
@@ -467,14 +484,14 @@ App.ts
     console.log(admin.getName());
 </pre>
 
-- Closing context after finishing the main process of the application
+- Close context after finishing the main process of the application
 
 <pre>
     //Call this method for safe closing context
     context.registerShutdownHook();
 </pre>
 
-- Force-update of the context after changing the configuration file
+- Force-update the context after changing the configuration file
 
 <pre>
     //Call this method for updating context
