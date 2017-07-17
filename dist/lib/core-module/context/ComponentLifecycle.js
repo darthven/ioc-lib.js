@@ -11,21 +11,29 @@ var ComponentLifecycle = (function () {
      * @param componentId id of the component
      */
     function ComponentLifecycle(componentId) {
-        var _this = this;
         this.componentId = componentId;
-        this.preInitMethod =
-            function () { return ComponentLifecycle.logger.debug("Default pre-init-method is called to the component with id \"" + _this.componentId + "\""); };
-        this.postInitMethod =
-            function () { return ComponentLifecycle.logger.debug("Default post-init-method is called to the component with id \"" + _this.componentId + "\""); };
-        this.beforePropertiesWereSetMethod =
-            function () { return ComponentLifecycle.logger.debug("Default before-properties-were-set-method is called to the component with id \"" + _this.componentId + "\""); };
-        this.afterPropertiesWereSetMethod =
-            function () { return ComponentLifecycle.logger.debug("Default after-properties-were-set-method is called to the component with id \"" + _this.componentId + "\""); };
-        this.preDestroyMethod =
-            function () { return ComponentLifecycle.logger.debug("Default pre-destroy-method is called to the component with id \"" + _this.componentId + "\""); };
-        this.postDestroyMethod =
-            function () { return ComponentLifecycle.logger.debug("Default post-destroy-method is called to the component with id \"" + _this.componentId + "\""); };
+        this.setDefaultLifecycleMethods();
     }
+    /**
+     * Function that sets default lifecycle methods.
+     * They can be override by custom methods which are
+     * described in metadata from configuration files
+     */
+    ComponentLifecycle.prototype.setDefaultLifecycleMethods = function () {
+        var _this = this;
+        this.preInitMethod =
+            function () { return ComponentLifecycle.logger.info("Default pre-init-method is called to the component with id \"" + _this.componentId + "\""); };
+        this.postInitMethod =
+            function () { return ComponentLifecycle.logger.info("Default post-init-method is called to the component with id \"" + _this.componentId + "\""); };
+        this.beforePropertiesWereSetMethod =
+            function () { return ComponentLifecycle.logger.info("Default before-properties-were-set-method is called to the component with id \"" + _this.componentId + "\""); };
+        this.afterPropertiesWereSetMethod =
+            function () { return ComponentLifecycle.logger.info("Default after-properties-were-set-method is called to the component with id \"" + _this.componentId + "\""); };
+        this.preDestroyMethod =
+            function () { return ComponentLifecycle.logger.info("Default pre-destroy-method is called to the component with id \"" + _this.componentId + "\""); };
+        this.postDestroyMethod =
+            function () { return ComponentLifecycle.logger.info("Default post-destroy-method is called to the component with id \"" + _this.componentId + "\""); };
+    };
     /**
      * Function that returns component's unique identifier
      * @returns {string} unique identifier of the component
@@ -78,7 +86,8 @@ var ComponentLifecycle = (function () {
     /**
      * Function that sets method that will be executed before setting
      * all properties of the component to its lifecycle
-     * @param {Function} beforePropertiesWereSetMethod is called before setting all properties to the component
+     * @param {Function} beforePropertiesWereSetMethod is called before setting
+     * all properties to the component
      */
     ComponentLifecycle.prototype.setBeforePropertiesWereSetMethod = function (beforePropertiesWereSetMethod) {
         this.beforePropertiesWereSetMethod = beforePropertiesWereSetMethod;

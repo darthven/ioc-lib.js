@@ -109,6 +109,7 @@ class MetadataValidator {
      * @param lifecycle object
      * @returns {boolean|Object} validation result
      */
+    //TODO provide validation for all methods
     private static configLifecycleHasInitMethod(lifecycle: Object): boolean {
         return lifecycle.hasOwnProperty('preInitMethod') && isString(lifecycle['preInitMethod']);
     }
@@ -118,6 +119,7 @@ class MetadataValidator {
      * @param lifecycle object
      * @returns {boolean|Object} validation result
      */
+    //TODO provide validation for all methods
     private static configLifecycleHasAfterPropertiesWereSetMethod(lifecycle: Object): boolean {
         return lifecycle.hasOwnProperty('afterPropertiesWereSetMethod') && isString(lifecycle['afterPropertiesWereSetMethod']);
     }
@@ -127,6 +129,7 @@ class MetadataValidator {
      * @param lifecycle object
      * @returns {boolean|Object} validation result
      */
+    //TODO provide validation for all methods
     private static configLifecycleHasDestroyMethod(lifecycle: Object): boolean {
         return lifecycle.hasOwnProperty('preDestroyMethod') && isString(lifecycle['preDestroyMethod']);
     }
@@ -140,13 +143,14 @@ class MetadataValidator {
     private static validateConfigLifecycle(componentDescriptor: Object): void {
         let configLifecycle = componentDescriptor['instance']['lifecycle'];
         if (!configLifecycle) {
-            MetadataValidator.logger.warn(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}"has no lifecycle object`);
+            MetadataValidator.logger.warn(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" has no lifecycle object`);
         } else {
             if (!isObject(configLifecycle)) {
-                MetadataValidator.logger.error(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}"has invalid lifecycle object`);
+                MetadataValidator.logger.error(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" has invalid lifecycle object`);
                 throw new MetadataValidationError(componentDescriptor['filePath']);
             }
             let lifecycleMethods = Object.keys(configLifecycle);
+            //TODO provide validation for all six types of methods
             if (lifecycleMethods.length <= MAX_LIFECYCLE_LENGTH && MetadataValidator.configLifecycleHasInitMethod(configLifecycle)
                 && MetadataValidator.configLifecycleHasAfterPropertiesWereSetMethod(configLifecycle)
                 && MetadataValidator.configLifecycleHasDestroyMethod(configLifecycle)) {

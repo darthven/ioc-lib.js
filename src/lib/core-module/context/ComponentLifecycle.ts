@@ -52,18 +52,27 @@ class ComponentLifecycle {
      */
     constructor(componentId: string) {
         this.componentId = componentId;
+        this.setDefaultLifecycleMethods();
+    }
+
+    /**
+     * Function that sets default lifecycle methods.
+     * They can be override by custom methods which are
+     * described in metadata from configuration files
+     */
+    private setDefaultLifecycleMethods() {
         this.preInitMethod =
-            () => ComponentLifecycle.logger.debug(`Default pre-init-method is called to the component with id "${this.componentId}"`);
+            () => ComponentLifecycle.logger.info(`Default pre-init-method is called to the component with id "${this.componentId}"`);
         this.postInitMethod =
-            () => ComponentLifecycle.logger.debug(`Default post-init-method is called to the component with id "${this.componentId}"`);
+            () => ComponentLifecycle.logger.info(`Default post-init-method is called to the component with id "${this.componentId}"`);
         this.beforePropertiesWereSetMethod =
-            () => ComponentLifecycle.logger.debug(`Default before-properties-were-set-method is called to the component with id "${this.componentId}"`);
+            () => ComponentLifecycle.logger.info(`Default before-properties-were-set-method is called to the component with id "${this.componentId}"`);
         this.afterPropertiesWereSetMethod =
-            () => ComponentLifecycle.logger.debug(`Default after-properties-were-set-method is called to the component with id "${this.componentId}"`);
+            () => ComponentLifecycle.logger.info(`Default after-properties-were-set-method is called to the component with id "${this.componentId}"`);
         this.preDestroyMethod =
-            () => ComponentLifecycle.logger.debug(`Default pre-destroy-method is called to the component with id "${this.componentId}"`);
+            () => ComponentLifecycle.logger.info(`Default pre-destroy-method is called to the component with id "${this.componentId}"`);
         this.postDestroyMethod =
-            () => ComponentLifecycle.logger.debug(`Default post-destroy-method is called to the component with id "${this.componentId}"`);
+            () => ComponentLifecycle.logger.info(`Default post-destroy-method is called to the component with id "${this.componentId}"`);
     }
 
     /**
@@ -125,7 +134,8 @@ class ComponentLifecycle {
     /**
      * Function that sets method that will be executed before setting
      * all properties of the component to its lifecycle
-     * @param {Function} beforePropertiesWereSetMethod is called before setting all properties to the component
+     * @param {Function} beforePropertiesWereSetMethod is called before setting
+     * all properties to the component
      */
     public setBeforePropertiesWereSetMethod(beforePropertiesWereSetMethod: Function): void {
         this.beforePropertiesWereSetMethod = beforePropertiesWereSetMethod
