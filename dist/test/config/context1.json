@@ -4,7 +4,7 @@
       {
         "id": "adminId",
         "name": "Admin",
-        "classPath": "../test/components/classes/Admin.js",
+        "classPath": "dist/test/components/classes/Admin.js",
         "properties": [
           {
             "name": "user",
@@ -28,7 +28,7 @@
       {
         "id": "user1Id",
         "name": "User1",
-        "classPath": "../test/components/classes/User.js",
+        "classPath": "dist/test/components/classes/User.js",
         "properties": [
             {
               "name": "name",
