@@ -27,6 +27,7 @@
   "author": "darthvenus",
   "license": "ISC",
   "dependencies": {
+    "app-root-dir": "^1.0.2",
     "jsonfile": "^2.4.0",
     "lodash": "^4.17.4",
     "log4js": "^1.1.1",

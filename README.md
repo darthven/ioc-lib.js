@@ -31,10 +31,9 @@ represented by metadata from special configuration files in JSON-format.
 If you want to specify special objects as the components of your system and registry them
 in the programming context of the library you will need to create configuration file by the
 following specification:
-<pre>
+```json
 {
-    "__comment__": "Configuration object is the special object
-     that allow the programming context to start scanning the file for the components",
+    "__comment__": "Configuration object is the special object\nthat allow the programming context to start scanning the file for the components",
     "configuration": {
     
         "__comment__components__": "Array of components that will be registrated in the context",    
@@ -46,14 +45,10 @@ following specification:
                 "__comment__components__name__": "The name of the component",
                 "name": "component_name",
                 
-                "__comment__components__classPath__": "The path to the class which instance
-                 will be registrated in context as the component",
+                "__comment__components__classPath__": "The path to the class which instance\nwill be registrated in context as the component",
                 "classPath": "component_class_path",
                 
-                "__comment__components__scope__": "Enumeration of two possible component's scopes.
-                It can be represented as two types of values:
-                    1) SINGLETON (component based on this object will be created once in the application context)
-                    2) PROTOTYPE (component can be created several times as the copies of the one main instance)",
+                "__comment__components__scope__": "Enumeration of two possible component's scopes.\nIt can be represented as two types of values:\n 1) SINGLETON (component based on this object will be created once in the application context)\n 2) PROTOTYPE (component can be created several times as the copies of the one main instance)",
                 "scope": "component_scope",
                 
                 "__comment__components__properties__": "The array of properties of the component",                    
@@ -70,36 +65,30 @@ following specification:
                         "__comment__components__properties__name__": "The name of the property",
                         "name": "property_name",
                         
-                        "__comment__components__properties__value__": "The reference to the another 
-                        component in context",
+                        "__comment__components__properties__value__": "The reference to the another\ncomponent in context",
                         "reference": "another_component_identifier"
                     }                    
                 ],
                 
-                "__comment__components__lifecycle__": "The special object than defines 
-                lifecycle of the component in programming context",
+                "__comment__components__lifecycle__": "The special object than defines\nlifecycle of the component in programming context",
                 "lifecycle": {
-                    "__comment__components__lifecycle__initMethod__": "The method specified in the class
-                     of the component which calls before the registration of the component in the context",
+                    "__comment__components__lifecycle__initMethod__": "The method specified in the class\nof the component which calls before the registration of the component in the context",
                     "initMethod": "component_init_method_name",
                     
-                    "__comment__components__lifecycle__afterPropertiesWereSetMethod__": "The method specified 
-                    in the class of the component which calls after setting properties to the component 
-                    in the context",
+                    "__comment__components__lifecycle__afterPropertiesWereSetMethod__": "The method specified\nin the class of the component which calls after setting properties to the component\nin the context",
                     "afterPropertiesWereSetMethod": "component_after_properties_were_set_method_name",
                     
-                    "__comment__components__lifecycle__destroyMethod__": "The method specified in the class 
-                    of the component which calls before removing the component from the context",
-                    "destroyMethod": "component_destroy_method_name",                                            
+                    "__comment__components__lifecycle__destroyMethod__": "The method specified in the class\nof the component which calls before removing the component from the context",
+                    "destroyMethod": "component_destroy_method_name"                                          
                 }             
              }            
         ]        
     }   
 }
-</pre>
+```
 
 Example of the configuration file:
-<pre>
+```json 
     {
       "configuration": {
         "components": [
@@ -148,8 +137,7 @@ Example of the configuration file:
         ]
       }
     }
-</pre>
-
+```
 <h3>API Documentation</h3>
 
 There are several main classes which took part in programming context process.
@@ -272,7 +260,8 @@ Project structure
                      
 
 Service.ts
-<pre>
+```typescript
+
 class Service {
 
     private _name: string;
@@ -318,10 +307,10 @@ class Service {
 }
 
 export default Service;
-</pre>
+```
 
 User.ts
-<pre>
+```typescript
 import Service from "../services/Service";
 
 class User {
@@ -391,11 +380,11 @@ class User {
 }
 
 export default User;
-</pre>
+```
 
 - Create configuration file by the library's specification
 
-<pre>
+```json
 {
   "configuration": {
     "components": [
@@ -457,12 +446,12 @@ export default User;
     ]
   }
 }
-</pre>
+```
 
 index.ts
 - Create programming context based on metadata
 
-<pre>    
+```typescript   
     import {MetadataContext} from 'ioc-lib.js/dist'
     const path = require('path');
     
@@ -471,30 +460,30 @@ index.ts
     
     //Creating programming context by the following configurations
     let context = new MetadataContext(configs);
-</pre>
+```
 
 
 - Get the component from the context
 
-<pre>   
+```typescript   
     //Getting admin component's entity instance by unique identifier
     let admin = context.getComponentEntityInstance('admin');
      
     //Call custom admin's method if need
     console.log(admin.getName());
-</pre>
+```
 
 - Close context after finishing the main process of the application
 
-<pre>
+```typescript
     //Call this method for safe closing context
     context.registerShutdownHook();
-</pre>
+```
 
 - Force-update the context after changing the configuration file
 
-<pre>
+```typescript
     //Call this method for updating context
     context.updateContext();
-</pre>
+```
 

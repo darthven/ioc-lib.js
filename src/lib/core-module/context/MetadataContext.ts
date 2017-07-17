@@ -1,6 +1,7 @@
 import {Scope, Component} from '../core-module'
 import {MetadataValidator, PropertyValidator, LifecycleValidator} from "../../validation-module/validation-module";
 import jsonfile = require('jsonfile');
+const APPLICATION_ROOT_DIRECTORY = require('app-root-dir').get();
 import PropertyValidationError from "../../validation-module/errors/PropertyValidationError";
 import Context from "./Context";
 
@@ -115,7 +116,7 @@ class MetadataContext extends Context {
      */
     private setBasicPropertiesToComponents(configComponents: Object[], basicComponents: Map<string, Component>) {
         configComponents.forEach((configComp) => {
-            const classPath = `../../../../../../${configComp['classPath']}`;
+            const classPath = `${APPLICATION_ROOT_DIRECTORY}/${configComp['classPath']}`;
             const entityClass = require(classPath);
             const entityPrototype = entityClass.default.prototype;
             let entity = Object.create(entityPrototype);
@@ -152,7 +153,7 @@ class MetadataContext extends Context {
     private setReferencesToComponents(configComponents: Object[]): void {
         this.components.forEach((component) => {
             configComponents.forEach((comp) => {
-                const classPath =  `../../../../../../${comp['classPath']}`;
+                const classPath =  `${APPLICATION_ROOT_DIRECTORY}/${comp['classPath']}`;
                 const entityClass = require(classPath);
                 let entity = this.getComponentEntityInstance(comp['id']);
                 const properties = this.getPropertiesFromConfiguration(comp, entityClass);
