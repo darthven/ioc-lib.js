@@ -1,11 +1,30 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = require("util");
 /**
  * Class that is responsive for the components' lifecycle
  * management in the application context.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
 var ComponentLifecycle = (function () {
-    function ComponentLifecycle() {
+    /**
+     * Component's constructor
+     * @param componentId id of the component
+     */
+    function ComponentLifecycle(componentId) {
+        var _this = this;
+        this.componentId = componentId;
+        this.preInitMethod =
+            function () { return ComponentLifecycle.logger.debug("Default pre-init-method is called to the component with id \"" + _this.componentId + "\""); };
+        this.postInitMethod =
+            function () { return ComponentLifecycle.logger.debug("Default post-init-method is called to the component with id \"" + _this.componentId + "\""); };
+        this.beforePropertiesWereSetMethod =
+            function () { return ComponentLifecycle.logger.debug("Default before-properties-were-set-method is called to the component with id \"" + _this.componentId + "\""); };
+        this.afterPropertiesWereSetMethod =
+            function () { return ComponentLifecycle.logger.debug("Default after-properties-were-set-method is called to the component with id \"" + _this.componentId + "\""); };
+        this.preDestroyMethod =
+            function () { return ComponentLifecycle.logger.debug("Default pre-destroy-method is called to the component with id \"" + _this.componentId + "\""); };
+        this.postDestroyMethod =
+            function () { return ComponentLifecycle.logger.debug("Default post-destroy-method is called to the component with id \"" + _this.componentId + "\""); };
     }
     /**
      * Function that returns component's unique identifier
@@ -22,25 +41,54 @@ var ComponentLifecycle = (function () {
         this.componentId = componentId;
     };
     /**
-     * Function that executes init-method of the component
+     * Function that executes pre-init-method of the component
      */
-    ComponentLifecycle.prototype.callInitMethod = function () {
-        this.initMethod();
-        ComponentLifecycle.logger.debug("Component Lifecycle: Component with id \"" + this.getComponentId() + "\" was initialized");
+    ComponentLifecycle.prototype.callPreInitMethod = function () {
+        ComponentLifecycle.logger.debug("Component Lifecycle: Before Component with id \"" + this.getComponentId() + "\" will be initialized");
+        this.preInitMethod();
     };
     /**
-     * Function that sets init-method of the component to its lifecycle
-     * @param {Function} initMethod is called before the initialization of the component
+     * Function that sets pre-init-method of the component to its lifecycle
+     * @param {Function} preInitMethod is called before the initialization of the component
      */
-    ComponentLifecycle.prototype.setInitMethod = function (initMethod) {
-        this.initMethod = initMethod;
+    ComponentLifecycle.prototype.setPreInitMethod = function (preInitMethod) {
+        this.preInitMethod = preInitMethod;
+    };
+    /**
+     * Function that executes post-init-method of the component
+     */
+    ComponentLifecycle.prototype.callPostInitMethod = function () {
+        ComponentLifecycle.logger.debug("Component Lifecycle: After Component with id \"" + this.getComponentId() + "\" was initialized");
+        this.postInitMethod();
+    };
+    /**
+     * Function that sets post-init-method of the component to its lifecycle
+     * @param {Function} postInitMethod is called after the initialization of the component
+     */
+    ComponentLifecycle.prototype.setPostInitMethod = function (postInitMethod) {
+        this.postInitMethod = postInitMethod;
+    };
+    /**
+     * Function that is executed after setting all properties of the component
+     */
+    ComponentLifecycle.prototype.callBeforePropertiesWereSetMethod = function () {
+        ComponentLifecycle.logger.debug("Component Lifecycle: Before Component with id \"" + this.getComponentId() + "\" will receive its properties");
+        this.beforePropertiesWereSetMethod();
+    };
+    /**
+     * Function that sets method that will be executed before setting
+     * all properties of the component to its lifecycle
+     * @param {Function} beforePropertiesWereSetMethod is called before setting all properties to the component
+     */
+    ComponentLifecycle.prototype.setBeforePropertiesWereSetMethod = function (beforePropertiesWereSetMethod) {
+        this.beforePropertiesWereSetMethod = beforePropertiesWereSetMethod;
     };
     /**
      * Function that is executed after setting all properties of the component
      */
     ComponentLifecycle.prototype.callAfterPropertiesWereSetMethod = function () {
+        ComponentLifecycle.logger.debug("Component Lifecycle: After Component with id \"" + this.getComponentId() + "\" received its properties");
         this.afterPropertiesWereSetMethod();
-        ComponentLifecycle.logger.debug("Component Lifecycle: Component with id \"" + this.getComponentId() + "\" received its properties");
     };
     /**
      * Function that sets method that will be executed after setting
@@ -53,17 +101,45 @@ var ComponentLifecycle = (function () {
     /**
      * Function that is executed before removing component from the application context
      */
-    ComponentLifecycle.prototype.callDestroyMethod = function () {
-        this.destroyMethod();
-        ComponentLifecycle.logger.debug("Component Lifecycle: Component with id \"" + this.getComponentId() + "\" was destroyed");
+    ComponentLifecycle.prototype.callPreDestroyMethod = function () {
+        ComponentLifecycle.logger.debug("Component Lifecycle: Before Component with id \"" + this.getComponentId() + "\" will be destroyed");
+        this.preDestroyMethod();
     };
     /**
      * Function that sets method that will be executed before setting
      *  removing component from the application context to its lifecycle
-     * @param {Function} destroyMethod is called before removing component from the application context
+     * @param {Function} preDestroyMethod is called before removing component from the application context
      */
-    ComponentLifecycle.prototype.setDestroyMethod = function (destroyMethod) {
-        this.destroyMethod = destroyMethod;
+    ComponentLifecycle.prototype.setPreDestroyMethod = function (preDestroyMethod) {
+        this.preDestroyMethod = preDestroyMethod;
+    };
+    /**
+     * Function that is executed after removing component from the application context
+     */
+    ComponentLifecycle.prototype.callPostDestroyMethod = function () {
+        ComponentLifecycle.logger.debug("Component Lifecycle: After Component with id \"" + this.getComponentId() + "\" was destroyed");
+        this.postDestroyMethod();
+    };
+    /**
+     * Function that sets method that will be executed after removing component
+     * from the application context to its lifecycle
+     * @param {Function} postDestroyMethod is called after removing component from the application context
+     */
+    ComponentLifecycle.prototype.setPostDestroyMethod = function (postDestroyMethod) {
+        this.postDestroyMethod = postDestroyMethod;
+    };
+    /**
+     * Function that sets all lifecycle methods to the component's lifecycle instance
+     * @param lifecycleMethodsDescriptor descriptor that has methods' names as keys and
+     * functions as values
+     */
+    ComponentLifecycle.prototype.setLifecycleMethods = function (lifecycleMethodsDescriptor) {
+        var _this = this;
+        Object.keys(lifecycleMethodsDescriptor).forEach(function (methodName) {
+            if (_this[methodName] && !util_1.isNull(lifecycleMethodsDescriptor[methodName])) {
+                _this[methodName] = lifecycleMethodsDescriptor[methodName];
+            }
+        });
     };
     /**
      * Logger for logging all important events during components' existence

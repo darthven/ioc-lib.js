@@ -4,7 +4,7 @@
       {
         "id": "adminId",
         "name": "Admin",
-        "classPath": "../test/components/classes/Admin.js",
+        "classPath": "dist/test/components/classes/Admin.js",
         "properties": [
           {
             "name": "user",
@@ -20,15 +20,15 @@
           }
         ],
         "lifecycle" : {
-          "initMethod" : "initAdmin",
+          "preInitMethod" : "initAdmin",
           "afterPropertiesWereSetMethod": "setPropertiesForAdmin",
-          "destroyMethod": "destroyAdmin"
+          "preDestroyMethod": "destroyAdmin"
         }
       },
       {
         "id": "user1Id",
         "name": "User1",
-        "classPath": "../test/components/classes/User.js",
+        "classPath": "dist/test/components/classes/User.js",
         "properties": [
             {
               "name": "name",
@@ -36,9 +36,9 @@
             }
         ],
         "lifecycle": {
-          "initMethod" : "initUser",
+          "preInitMethod" : "initUser",
           "afterPropertiesWereSetMethod": "setPropertiesForUser",
-          "destroyMethod": "destroyUser"
+          "preDestroyMethod": "destroyUser"
         }
       }
     ]

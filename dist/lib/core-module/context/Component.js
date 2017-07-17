@@ -14,12 +14,11 @@ var Component = (function () {
      * @param scope of the component
      * @param lifecycle of the component
      */
-    function Component(id, componentName, classPath, scope, lifecycle) {
+    function Component(id, componentName, classPath, scope) {
         this.id = id || null;
         this.componentName = componentName || null;
         this.classPath = classPath || null;
         this.scope = scope || 0 /* SINGLETON */;
-        this.lifecycle = lifecycle || null;
     }
     /**
      * Function that returns component's unique identifier
@@ -76,20 +75,6 @@ var Component = (function () {
      */
     Component.prototype.setScope = function (scope) {
         this.scope = scope;
-    };
-    /**
-     * Function that returns lifecycle instance of the component
-     * @returns {ComponentLifecycle} lifecycle of the component
-     */
-    Component.prototype.getLifecycle = function () {
-        return this.lifecycle;
-    };
-    /**
-     * Function that sets lifecycle instance to the component
-     * @param lifecycle
-     */
-    Component.prototype.setLifecycle = function (lifecycle) {
-        this.lifecycle = lifecycle;
     };
     /**
      * Function that returns the entity instance of the class

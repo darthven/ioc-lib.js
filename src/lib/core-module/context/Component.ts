@@ -40,11 +40,6 @@ class Component {
     private scope: Scope;
 
     /**
-     * Lifecycle of the component
-     */
-    private lifecycle: ComponentLifecycle;
-
-    /**
      * Instance of the entity class
      */
     private entityInstance: any;
@@ -57,12 +52,11 @@ class Component {
      * @param scope of the component
      * @param lifecycle of the component
      */
-    constructor(id?: string, componentName?: string, classPath?: string, scope?: Scope, lifecycle?: ComponentLifecycle) {
+    constructor(id?: string, componentName?: string, classPath?: string, scope?: Scope) {
         this.id = id || null;
         this.componentName = componentName || null;
         this.classPath = classPath || null;
         this.scope = scope || Scope.SINGLETON;
-        this.lifecycle = lifecycle || null;
     }
 
     /**
@@ -127,22 +121,6 @@ class Component {
      */
     public setScope(scope: Scope): void {
         this.scope = scope;
-    }
-
-    /**
-     * Function that returns lifecycle instance of the component
-     * @returns {ComponentLifecycle} lifecycle of the component
-     */
-    public getLifecycle(): ComponentLifecycle {
-        return this.lifecycle;
-    }
-
-    /**
-     * Function that sets lifecycle instance to the component
-     * @param lifecycle
-     */
-    public setLifecycle(lifecycle: ComponentLifecycle): void {
-        this.lifecycle = lifecycle;
     }
 
     /**

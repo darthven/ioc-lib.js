@@ -14,7 +14,7 @@ const PROPERTY_LENGTH = 2;
  * Maximum length of lifecycle object
  * @type {number}
  */
-const MAX_LIFECYCLE_LENGTH = 3;
+const MAX_LIFECYCLE_LENGTH = 6;
 
 /**
  * Class that responds for validation of metadata from
@@ -110,7 +110,7 @@ class MetadataValidator {
      * @returns {boolean|Object} validation result
      */
     private static configLifecycleHasInitMethod(lifecycle: Object): boolean {
-        return lifecycle.hasOwnProperty('initMethod') && isString(lifecycle['initMethod']);
+        return lifecycle.hasOwnProperty('preInitMethod') && isString(lifecycle['preInitMethod']);
     }
 
     /**
@@ -128,7 +128,7 @@ class MetadataValidator {
      * @returns {boolean|Object} validation result
      */
     private static configLifecycleHasDestroyMethod(lifecycle: Object): boolean {
-        return lifecycle.hasOwnProperty('destroyMethod') && isString(lifecycle['destroyMethod']);
+        return lifecycle.hasOwnProperty('preDestroyMethod') && isString(lifecycle['preDestroyMethod']);
     }
 
     /**
@@ -140,23 +140,19 @@ class MetadataValidator {
     private static validateConfigLifecycle(componentDescriptor: Object): void {
         let configLifecycle = componentDescriptor['instance']['lifecycle'];
         if (!configLifecycle) {
-            MetadataValidator.logger.warn(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" 
-            has no lifecycle object`);
+            MetadataValidator.logger.warn(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}"has no lifecycle object`);
         } else {
             if (!isObject(configLifecycle)) {
-                MetadataValidator.logger.error(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" 
-            has invalid lifecycle object`);
+                MetadataValidator.logger.error(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}"has invalid lifecycle object`);
                 throw new MetadataValidationError(componentDescriptor['filePath']);
             }
             let lifecycleMethods = Object.keys(configLifecycle);
-            if (lifecycleMethods.length === MAX_LIFECYCLE_LENGTH && MetadataValidator.configLifecycleHasInitMethod(configLifecycle)
+            if (lifecycleMethods.length <= MAX_LIFECYCLE_LENGTH && MetadataValidator.configLifecycleHasInitMethod(configLifecycle)
                 && MetadataValidator.configLifecycleHasAfterPropertiesWereSetMethod(configLifecycle)
                 && MetadataValidator.configLifecycleHasDestroyMethod(configLifecycle)) {
-                MetadataValidator.logger.debug(`Metadata Validation: Lifecycle of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" 
-            is successfully validated`);
+                MetadataValidator.logger.debug(`Metadata Validation: Lifecycle of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" is successfully validated`);
             } else {
-                MetadataValidator.logger.error(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" 
-            has invalid lifecycle object`);
+                MetadataValidator.logger.error(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" has invalid lifecycle object`);
                 throw new MetadataValidationError(componentDescriptor['filePath']);
             }
         }
@@ -198,18 +194,15 @@ class MetadataValidator {
     private static validateConfigProperties(componentDescriptor: Object): void {
         let configProperties = componentDescriptor['instance']['properties'];
         if (!isArray(configProperties)) {
-            MetadataValidator.logger.error(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" 
-            has invalid properties' instance`);
+            MetadataValidator.logger.error(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}"has invalid properties' instance`);
             throw new MetadataValidationError(componentDescriptor['filePath']);
         }
         configProperties.forEach((prop) => {
             if (Object.keys(prop).length === PROPERTY_LENGTH && MetadataValidator.configPropertyHasName(prop)) {
                 if (MetadataValidator.configPropertyHasValue(prop) || MetadataValidator.configPropertyHasReference(prop)) {
-                    MetadataValidator.logger.debug(`Metadata Validation: Property "${prop['name']}" of the Component[${componentDescriptor['index']}] 
-                    from metadata in file "${componentDescriptor['filePath']} is successfully validated`)
+                    MetadataValidator.logger.debug(`Metadata Validation: Property "${prop['name']}" of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']} is successfully validated`)
                 } else {
-                    MetadataValidator.logger.error(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}
-                    has invalid property "${prop['name']}"`);
+                    MetadataValidator.logger.error(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']} has invalid property "${prop['name']}"`);
                     throw new MetadataValidationError(componentDescriptor['filePath']);
                 }
             }
@@ -226,16 +219,13 @@ class MetadataValidator {
         let configScope = componentDescriptor['instance']['scope'];
         if (configScope) {
             if (!isString(configScope) || !['singleton', 'prototype'].includes(configScope)) {
-                MetadataValidator.logger.error(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" 
-            has invalid scope`);
+                MetadataValidator.logger.error(`Metadata Validation: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" has invalid scope`);
                 throw new MetadataValidationError(componentDescriptor['filePath']);
             } else {
-                MetadataValidator.logger.debug(`Metadata Validation: Scope of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" 
-            is successfully validated`);
+                MetadataValidator.logger.debug(`Metadata Validation: Scope of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']} is successfully validated`);
             }
         } else {
-            MetadataValidator.logger.debug(`Metadata Validation: Scope of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" 
-            will be set to SINGLETON as default`);
+            MetadataValidator.logger.debug(`Metadata Validation: Scope of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" will be set to SINGLETON as default`);
         }
     }
 

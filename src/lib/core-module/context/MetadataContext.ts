@@ -63,7 +63,7 @@ class MetadataContext extends Context {
      * Function that retrieves properties' values
      * of the object that was retrieved from meta-data
      * @param {Object} configComponent parsed object from configuration file
-     * @param component possible component instance
+     * @param {Object} entity custom class instance
      * @returns {Object[]} array of properties (with values)
      */
     private getPropertiesFromConfiguration(configComponent: Object, entity: Object): Object[] {
@@ -120,10 +120,11 @@ class MetadataContext extends Context {
             const entityClass = require(classPath);
             const entityPrototype = entityClass.default.prototype;
             let entity = Object.create(entityPrototype);
-            let lifecycle = LifecycleValidator.validateLifecycle(entityPrototype, configComp);
-            lifecycle.callInitMethod();
+            LifecycleValidator.validateLifecycle(this, entityPrototype, configComp);
+            let componentLifecycle = this.getContextLifecycle().getComponentLifecycles().get(configComp['id']);
+            componentLifecycle.callPreInitMethod();
             let component = new Component(configComp['id'],
-                configComp['name'], configComp['classPath'], this.defineComponentScope(configComp), lifecycle);
+                configComp['name'], configComp['classPath'], this.defineComponentScope(configComp));
             let properties = this.getPropertiesFromConfiguration(configComp, entityClass);
             let propertiesAreValid = PropertyValidator.validateProperties(properties);
             if (propertiesAreValid) {
@@ -134,8 +135,10 @@ class MetadataContext extends Context {
                         entity[prop['name']] = null;
                     }
                 });
+                componentLifecycle.callBeforePropertiesWereSetMethod();
                 component.setEntityInstance(entity);
                 basicComponents.set(configComp['id'], component);
+                componentLifecycle.callPostInitMethod();
             } else {
                 throw new PropertyValidationError(configComp['id']);
             }
@@ -147,13 +150,13 @@ class MetadataContext extends Context {
      * in the application context (last step of registering component in the context)
      * and executes method after setting all properties to it
      * @param {Object[]} configComponents parsed objects from meta-data
-     * @param {Map<string, Component>} basicComponents unregistered components in their basic form
      * (with values, without references)
      */
     private setReferencesToComponents(configComponents: Object[]): void {
         this.components.forEach((component) => {
+            let componentLifecycle = this.getContextLifecycle().getComponentLifecycles().get(component.getId());
             configComponents.forEach((comp) => {
-                const classPath =  `${APPLICATION_ROOT_DIRECTORY}/${comp['classPath']}`;
+                const classPath = `${APPLICATION_ROOT_DIRECTORY}/${comp['classPath']}`;
                 const entityClass = require(classPath);
                 let entity = this.getComponentEntityInstance(comp['id']);
                 const properties = this.getPropertiesFromConfiguration(comp, entityClass);
@@ -163,15 +166,15 @@ class MetadataContext extends Context {
                         component.setEntityInstance(entity);
                     }
                 });
-                component.getLifecycle().callAfterPropertiesWereSetMethod();
             });
+            componentLifecycle.callAfterPropertiesWereSetMethod();
         });
     }
 
     /**
-     * Function that returns parsed objects from meta-data
+     * Function that returns parsed objects from metadata
      * without duplicates by unique identifiers
-     * @returns {Object[]} parsed objects from meta-data without duplicates
+     * @returns {Object[]} parsed objects from metadata without duplicates
      */
     private getUniqueConfigComponents(): Object[] {
         let configComponents = [];
@@ -199,10 +202,8 @@ class MetadataContext extends Context {
      * Function that registers components in the application context
      */
     private registerComponentsInContext(): void {
-        let basicComponents = new Map<string, Component>();
         let configComponents = this.getConfigComponents();
-        this.setBasicPropertiesToComponents(configComponents, basicComponents);
-        this.components = basicComponents;
+        this.setBasicPropertiesToComponents(configComponents, this.getComponents());
         this.setReferencesToComponents(configComponents);
     }
 

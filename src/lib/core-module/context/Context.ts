@@ -1,5 +1,8 @@
 import {Scope, ComponentNotFoundError, Component} from '../core-module'
+import ContextLifecycle from "./ContextLifecycle";
 import _ = require('lodash');
+import ComponentLifecycle from "./ComponentLifecycle";
+
 /**
  * Class that responds for creation and management process of the components,
  * for updating and closing application context in safe-mode,
@@ -14,9 +17,38 @@ abstract class Context {
     protected components: Map<string, Component>;
 
     /**
+     * Lifecycle of the application context
+     */
+    protected contextLifecycle: ContextLifecycle;
+
+    /**
      * Logger for logging all important events in the application context
      */
     protected static logger = require('log4js').getLogger();
+
+    /**
+     * Default constructor of the context
+     */
+    constructor() {
+        this.contextLifecycle = new ContextLifecycle();
+        this.components = new Map<string, Component>();
+    }
+
+    /**
+     * Function that returns lifecycle of the context
+     * @returns {ContextLifecycle} lifecycle
+     */
+    public getContextLifecycle(): ContextLifecycle {
+        return this.contextLifecycle;
+    }
+
+    /**
+     * Function that returns the map of components with their unique identifiers as keys
+     * @returns {Map<string, Component>} map of the components
+     */
+    public getComponents(): Map<string, Component> {
+        return this.components;
+    }
 
     /**
      * Function that removes component from application context by unique identifier
@@ -34,9 +66,10 @@ abstract class Context {
     private close(): void {
         Context.logger.info('Closing current context...');
         this.components.forEach((component) => {
-            const lifecycle = component.getLifecycle();
-            lifecycle.callDestroyMethod();
+            const lifecycle = this.contextLifecycle.getComponentLifecycles().get(component.getId());
+            lifecycle.callPreDestroyMethod();
             this.removeComponentFromContext(component.getId());
+            lifecycle.callPostDestroyMethod();
         });
         Context.logger.info('Context is closed...');
         this.components.clear();
@@ -50,7 +83,7 @@ abstract class Context {
     public getComponentEntityInstance(componentId: string): any {
         let component = this.components.get(componentId);
         if (!component) {
-            throw new ComponentNotFoundError(`Component was not found by id "${componentId}"`);
+            throw new ComponentNotFoundError(componentId);
         }
         if (component.getScope() === Scope.PROTOTYPE) {
             return _.cloneDeep(component.getEntityInstance());
