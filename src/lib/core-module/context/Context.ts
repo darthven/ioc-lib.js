@@ -64,14 +64,14 @@ abstract class Context {
      * calls destroy-methods before their deletion and finally closes it
      */
     private close(): void {
-        Context.logger.info('Closing current context...');
+        Context.logger.info('[Context]: Closing current context...');
         this.components.forEach((component) => {
             const lifecycle = this.contextLifecycle.getComponentLifecycles().get(component.getId());
             lifecycle.callPreDestroyMethod();
             this.removeComponentFromContext(component.getId());
             lifecycle.callPostDestroyMethod();
         });
-        Context.logger.info('Context is closed...');
+        Context.logger.info('[Context]: Context is closed...');
         this.components.clear();
     }
 

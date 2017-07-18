@@ -44,14 +44,14 @@ var Context = (function () {
      */
     Context.prototype.close = function () {
         var _this = this;
-        Context.logger.info('Closing current context...');
+        Context.logger.info('[Context]: Closing current context...');
         this.components.forEach(function (component) {
             var lifecycle = _this.contextLifecycle.getComponentLifecycles().get(component.getId());
             lifecycle.callPreDestroyMethod();
             _this.removeComponentFromContext(component.getId());
             lifecycle.callPostDestroyMethod();
         });
-        Context.logger.info('Context is closed...');
+        Context.logger.info('[Context]: Context is closed...');
         this.components.clear();
     };
     /**

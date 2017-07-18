@@ -40,7 +40,7 @@ class MetadataContext extends Context {
             MetadataValidator.validateMetadata(configs);
             this.configs = configs;
             this.registerComponentsInContext();
-            MetadataContext.logger.info('Context was initialized');
+            MetadataContext.logger.info('[MetadataContext]: Context was initialized');
         }
     }
 

@@ -22,17 +22,17 @@ var ComponentLifecycle = (function () {
     ComponentLifecycle.prototype.setDefaultLifecycleMethods = function () {
         var _this = this;
         this.preInitMethod =
-            function () { return ComponentLifecycle.logger.info("Default pre-init-method is called to the component with id \"" + _this.componentId + "\""); };
+            function () { return ComponentLifecycle.logger.info("[Component Lifecycle]: Default pre-init-method is called to the component with id \"" + _this.componentId + "\""); };
         this.postInitMethod =
-            function () { return ComponentLifecycle.logger.info("Default post-init-method is called to the component with id \"" + _this.componentId + "\""); };
+            function () { return ComponentLifecycle.logger.info("[Component Lifecycle]: Default post-init-method is called to the component with id \"" + _this.componentId + "\""); };
         this.beforePropertiesWereSetMethod =
-            function () { return ComponentLifecycle.logger.info("Default before-properties-were-set-method is called to the component with id \"" + _this.componentId + "\""); };
+            function () { return ComponentLifecycle.logger.info("[Component Lifecycle]: Default before-properties-were-set-method is called to the component with id \"" + _this.componentId + "\""); };
         this.afterPropertiesWereSetMethod =
-            function () { return ComponentLifecycle.logger.info("Default after-properties-were-set-method is called to the component with id \"" + _this.componentId + "\""); };
+            function () { return ComponentLifecycle.logger.info("[Component Lifecycle]: Default after-properties-were-set-method is called to the component with id \"" + _this.componentId + "\""); };
         this.preDestroyMethod =
-            function () { return ComponentLifecycle.logger.info("Default pre-destroy-method is called to the component with id \"" + _this.componentId + "\""); };
+            function () { return ComponentLifecycle.logger.info("[Component Lifecycle]: Default pre-destroy-method is called to the component with id \"" + _this.componentId + "\""); };
         this.postDestroyMethod =
-            function () { return ComponentLifecycle.logger.info("Default post-destroy-method is called to the component with id \"" + _this.componentId + "\""); };
+            function () { return ComponentLifecycle.logger.info("[Component Lifecycle]: Default post-destroy-method is called to the component with id \"" + _this.componentId + "\""); };
     };
     /**
      * Function that returns component's unique identifier
@@ -52,7 +52,7 @@ var ComponentLifecycle = (function () {
      * Function that executes pre-init-method of the component
      */
     ComponentLifecycle.prototype.callPreInitMethod = function () {
-        ComponentLifecycle.logger.debug("Component Lifecycle: Before Component with id \"" + this.getComponentId() + "\" will be initialized");
+        ComponentLifecycle.logger.debug("[Component Lifecycle]: Before Component with id \"" + this.getComponentId() + "\" will be initialized");
         this.preInitMethod();
     };
     /**
@@ -66,7 +66,7 @@ var ComponentLifecycle = (function () {
      * Function that executes post-init-method of the component
      */
     ComponentLifecycle.prototype.callPostInitMethod = function () {
-        ComponentLifecycle.logger.debug("Component Lifecycle: After Component with id \"" + this.getComponentId() + "\" was initialized");
+        ComponentLifecycle.logger.debug("[Component Lifecycle]: After Component with id \"" + this.getComponentId() + "\" was initialized");
         this.postInitMethod();
     };
     /**
@@ -80,7 +80,7 @@ var ComponentLifecycle = (function () {
      * Function that is executed after setting all properties of the component
      */
     ComponentLifecycle.prototype.callBeforePropertiesWereSetMethod = function () {
-        ComponentLifecycle.logger.debug("Component Lifecycle: Before Component with id \"" + this.getComponentId() + "\" will receive its properties");
+        ComponentLifecycle.logger.debug("[Component Lifecycle]: Before Component with id \"" + this.getComponentId() + "\" will receive its properties");
         this.beforePropertiesWereSetMethod();
     };
     /**
@@ -96,7 +96,7 @@ var ComponentLifecycle = (function () {
      * Function that is executed after setting all properties of the component
      */
     ComponentLifecycle.prototype.callAfterPropertiesWereSetMethod = function () {
-        ComponentLifecycle.logger.debug("Component Lifecycle: After Component with id \"" + this.getComponentId() + "\" received its properties");
+        ComponentLifecycle.logger.debug("[Component Lifecycle]: After Component with id \"" + this.getComponentId() + "\" received its properties");
         this.afterPropertiesWereSetMethod();
     };
     /**
@@ -111,7 +111,7 @@ var ComponentLifecycle = (function () {
      * Function that is executed before removing component from the application context
      */
     ComponentLifecycle.prototype.callPreDestroyMethod = function () {
-        ComponentLifecycle.logger.debug("Component Lifecycle: Before Component with id \"" + this.getComponentId() + "\" will be destroyed");
+        ComponentLifecycle.logger.debug("[Component Lifecycle]: Before Component with id \"" + this.getComponentId() + "\" will be destroyed");
         this.preDestroyMethod();
     };
     /**
@@ -126,7 +126,7 @@ var ComponentLifecycle = (function () {
      * Function that is executed after removing component from the application context
      */
     ComponentLifecycle.prototype.callPostDestroyMethod = function () {
-        ComponentLifecycle.logger.debug("Component Lifecycle: After Component with id \"" + this.getComponentId() + "\" was destroyed");
+        ComponentLifecycle.logger.debug("[Component Lifecycle]: After Component with id \"" + this.getComponentId() + "\" was destroyed");
         this.postDestroyMethod();
     };
     /**
