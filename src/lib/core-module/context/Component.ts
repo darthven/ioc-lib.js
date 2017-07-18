@@ -1,5 +1,3 @@
-import {ComponentLifecycle} from '../core-module'
-
 /**
  * Enumeration of two possible component's scopes.
  * It can be represented as two types of values:

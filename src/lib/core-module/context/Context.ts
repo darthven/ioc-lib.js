@@ -1,7 +1,6 @@
-import {Scope, ComponentNotFoundError, Component} from '../core-module'
-import ContextLifecycle from "./ContextLifecycle";
+import {Scope, ComponentNotFoundError, Component, ContextLifecycle} from '../core-module'
 import _ = require('lodash');
-import ComponentLifecycle from "./ComponentLifecycle";
+
 
 /**
  * Class that responds for creation and management process of the components,

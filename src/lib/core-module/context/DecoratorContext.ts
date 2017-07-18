@@ -1,4 +1,4 @@
-import Context from "./Context";
+import {Context} from "../core-module"
 
 /**
  * Class that responds for creation and management process of the components,

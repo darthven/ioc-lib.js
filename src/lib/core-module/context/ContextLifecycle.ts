@@ -1,5 +1,4 @@
-import ComponentLifecycle from "./ComponentLifecycle";
-import LifecycleNotFoundError from "../errors/LifecycleNotFoundError";
+import {ComponentLifecycle, LifecycleNotFoundError} from "../core-module";
 
 /**
  * Class of the application context's lifecycle

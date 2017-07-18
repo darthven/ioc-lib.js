@@ -25,8 +25,8 @@ var ComponentLifecycle = (function () {
             function () { return ComponentLifecycle.logger.info("[Component Lifecycle]: Default pre-init-method is called to the component with id \"" + _this.componentId + "\""); };
         this.postInitMethod =
             function () { return ComponentLifecycle.logger.info("[Component Lifecycle]: Default post-init-method is called to the component with id \"" + _this.componentId + "\""); };
-        this.beforePropertiesWereSetMethod =
-            function () { return ComponentLifecycle.logger.info("[Component Lifecycle]: Default before-properties-were-set-method is called to the component with id \"" + _this.componentId + "\""); };
+        this.beforePropertiesWillBeSetMethod =
+            function () { return ComponentLifecycle.logger.info("[Component Lifecycle]: Default before-properties-will-be-set-method is called to the component with id \"" + _this.componentId + "\""); };
         this.afterPropertiesWereSetMethod =
             function () { return ComponentLifecycle.logger.info("[Component Lifecycle]: Default after-properties-were-set-method is called to the component with id \"" + _this.componentId + "\""); };
         this.preDestroyMethod =
@@ -77,20 +77,20 @@ var ComponentLifecycle = (function () {
         this.postInitMethod = postInitMethod;
     };
     /**
-     * Function that is executed after setting all properties of the component
+     * Function that is executed before setting all properties of the component
      */
-    ComponentLifecycle.prototype.callBeforePropertiesWereSetMethod = function () {
+    ComponentLifecycle.prototype.callBeforePropertiesWillBeSetMethod = function () {
         ComponentLifecycle.logger.debug("[Component Lifecycle]: Before Component with id \"" + this.getComponentId() + "\" will receive its properties");
-        this.beforePropertiesWereSetMethod();
+        this.beforePropertiesWillBeSetMethod();
     };
     /**
      * Function that sets method that will be executed before setting
      * all properties of the component to its lifecycle
-     * @param {Function} beforePropertiesWereSetMethod is called before setting
+     * @param {Function} beforePropertiesWillBeSetMethod is called before setting
      * all properties to the component
      */
-    ComponentLifecycle.prototype.setBeforePropertiesWereSetMethod = function (beforePropertiesWereSetMethod) {
-        this.beforePropertiesWereSetMethod = beforePropertiesWereSetMethod;
+    ComponentLifecycle.prototype.setBeforePropertiesWillBeSetMethod = function (beforePropertiesWillBeSetMethod) {
+        this.beforePropertiesWillBeSetMethod = beforePropertiesWillBeSetMethod;
     };
     /**
      * Function that is executed after setting all properties of the component

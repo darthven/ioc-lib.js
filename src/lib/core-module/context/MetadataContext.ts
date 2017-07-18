@@ -1,9 +1,9 @@
-import {Scope, Component} from '../core-module'
-import {MetadataValidator, PropertyValidator, LifecycleValidator} from "../../validation-module/validation-module";
+import {Context, Scope, Component} from '../core-module'
+import {MetadataValidator, PropertyValidator, LifecycleValidator, PropertyValidationError} from "../../validation-module/validation-module";
+
 import jsonfile = require('jsonfile');
 const APPLICATION_ROOT_DIRECTORY = require('app-root-dir').get();
-import PropertyValidationError from "../../validation-module/errors/PropertyValidationError";
-import Context from "./Context";
+
 
 /**
  * Class that responds for creation and management process of the components,
@@ -135,7 +135,7 @@ class MetadataContext extends Context {
                         entity[prop['name']] = null;
                     }
                 });
-                componentLifecycle.callBeforePropertiesWereSetMethod();
+                componentLifecycle.callBeforePropertiesWillBeSetMethod();
                 component.setEntityInstance(entity);
                 basicComponents.set(configComp['id'], component);
                 componentLifecycle.callPostInitMethod();

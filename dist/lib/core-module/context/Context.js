@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_module_1 = require("../core-module");
-var ContextLifecycle_1 = require("./ContextLifecycle");
 var _ = require("lodash");
 /**
  * Class that responds for creation and management process of the components,
@@ -13,7 +12,7 @@ var Context = (function () {
      * Default constructor of the context
      */
     function Context() {
-        this.contextLifecycle = new ContextLifecycle_1.default();
+        this.contextLifecycle = new core_module_1.ContextLifecycle();
         this.components = new Map();
     }
     /**

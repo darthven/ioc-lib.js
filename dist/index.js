@@ -1,10 +1,5 @@
 "use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Created by kokh0716 on 6/27/2017.
- */
-__export(require("./lib/core-module/core-module"));
-__export(require("./lib/validation-module/validation-module"));
+var core_module_1 = require("./lib/core-module/core-module");
+exports.MetadataContext = core_module_1.MetadataContext;
+exports.DecoratorContext = core_module_1.DecoratorContext;

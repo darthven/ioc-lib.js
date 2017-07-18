@@ -9,14 +9,6 @@ to build scalable and flexible applications on Node.js platform.
 
 <h2>Full Documentation</h2>
 
-<h3>Preconditions for Usage</h3>
-
----
-
-- Ecmascript 6 language level is required
-- Your applications should consist of classes according 
-to the object-oriented principles
-
 <h3>Main Information</h3>
 
 ---
@@ -33,7 +25,8 @@ in the programming context of the library you will need to create configuration 
 following specification:
 ```json
 {
-    "__comment__": "Configuration object is the special object\nthat allow the programming context to start scanning the file for the components",
+    "__comment__": "Configuration object is the special object
+    that allow the programming context to start scanning the file for the components",
     "configuration": {
     
         "__comment__components__": "Array of components that will be registrated in the context",    
@@ -45,10 +38,14 @@ following specification:
                 "__comment__components__name__": "The name of the component",
                 "name": "component_name",
                 
-                "__comment__components__classPath__": "The path to the class which instance\nwill be registrated in context as the component",
+                "__comment__components__classPath__": "The path to the class which instance
+                will be registrated in context as the component",
                 "classPath": "component_class_path",
                 
-                "__comment__components__scope__": "Enumeration of two possible component's scopes.\nIt can be represented as two types of values:\n 1) SINGLETON (component based on this object will be created once in the application context)\n 2) PROTOTYPE (component can be created several times as the copies of the one main instance)",
+                "__comment__components__scope__": "Enumeration of two possible component's scopes.
+                It can be represented as two types of values:
+                 1) SINGLETON (component based on this object will be created once in the application context)
+                 2) PROTOTYPE (component can be created several times as the copies of the one main instance)",
                 "scope": "component_scope",
                 
                 "__comment__components__properties__": "The array of properties of the component",                    
@@ -65,21 +62,40 @@ following specification:
                         "__comment__components__properties__name__": "The name of the property",
                         "name": "property_name",
                         
-                        "__comment__components__properties__value__": "The reference to the another\ncomponent in context",
+                        "__comment__components__properties__value__": "The reference to the another
+                        component in context",
                         "reference": "another_component_identifier"
                     }                    
                 ],
                 
-                "__comment__components__lifecycle__": "The special object than defines\nlifecycle of the component in programming context",
+                "__comment__components__lifecycle__": "The special object than defines
+                lifecycle of the component in programming context",
                 "lifecycle": {
-                    "__comment__components__lifecycle__initMethod__": "The method specified in the class\nof the component which calls before the registration of the component in the context",
-                    "initMethod": "component_init_method_name",
+                    "__comment__components__lifecycle__preInitMethod__": "The method specified in the class
+                    of the component which calls before the registration of the component in the context",
+                    "preInitMethod": "component_init_method_name",
                     
-                    "__comment__components__lifecycle__afterPropertiesWereSetMethod__": "The method specified\nin the class of the component which calls after setting properties to the component\nin the context",
-                    "afterPropertiesWereSetMethod": "component_after_properties_were_set_method_name",
+                    "__comment__components__lifecycle__postInitMethod__": "The method specified in the class
+                    of the component which calls after the registration of the component in the context",
+                    "postInitMethod": "component_init_method_name",          
                     
-                    "__comment__components__lifecycle__destroyMethod__": "The method specified in the class\nof the component which calls before removing the component from the context",
-                    "destroyMethod": "component_destroy_method_name"                                          
+                    "__comment__components__lifecycle__beforePropertiesWillBeSetMethod__": "The method specified
+                    in the class of the component which calls before setting properties to the component
+                    in the context",
+                    "beforePropertiesWillBeSetMethod": "component_before_properties_will_be_set_method_name",
+                    
+                    "__comment__components__lifecycle__afterPropertiesWereSetMethod__": "The method specified
+                    in the class of the component which calls after setting properties to the component
+                    in the context",
+                    "afterPropertiesWillBeSetMethod": "component_after_properties_were_set_method_name",            
+                    
+                    "__comment__components__lifecycle__preDestroyMethod__": "The method specified in the class
+                    of the component which calls before removing the component from the context",
+                    "preDestroyMethod": "component_pre_destroy_method_name",
+                    
+                    "__comment__components__lifecycle__postDestroyMethod__": "The method specified in the class
+                    of the component which calls after removing the component from the context",
+                    "postDestroyMethod": "component_post_destroy_method_name"                                           
                 }             
              }            
         ]        
@@ -89,116 +105,54 @@ following specification:
 
 Example of the configuration file:
 ```json 
-    {
-      "configuration": {
-        "components": [
-          {
-            "id": "admin",
-            "name": "Admin",
-            "classPath": "app/entities/Admin.js",
-            "scope": "singleton",
-            "properties": [
-              {
-                "name": "referenceToUser",
-                "reference": "user1"
+{
+    "configuration": {
+        "components" : [
+                {
+                      "id": "adminId",
+                      "name": "Admin",
+                      "classPath": "dist/test/components/classes/Admin.js",
+                      "scope": "prototype",
+                      "properties": [
+                            {
+                              "name": "user",
+                              "reference": "userId"
+                            },
+                            {
+                                "name": "name",
+                                "value": "darthven"
+                            },
+                            {
+                                "name": "age",
+                                "value": 21
+                            }
+                      ],
+                      "lifecycle" : {
+                          "preInitMethod" : "preInitAdmin",
+                          "postInitMethod": "postInitAdmin",
+                          "beforePropertiesWillBeSetMethod": "beforeSettingPropertiesForAdmin",
+                          "afterPropertiesWereSetMethod": "afterSettingPropertiesForAdmin",
+                          "preDestroyMethod": "preDestroyAdmin",
+                          "postDestroyMethod": "postDestroyAdmin"
+                      }
               },
               {
-                "name": "name",
-                "value": "John Smith"
-              },
-              {
-                "name": "age",
-                "value": 35
+                  "id": "userId",
+                  "name": "User",
+                  "classPath": "dist/test/components/classes/User.js",
+                  "scope": "singleton",
+                  "properties": [
+                        {
+                          "name": "name",
+                          "value": "testUser3"
+                        }
+                  ]
               }
-            ],
-            "lifecycle": {
-              "initMethod" : "initAdmin",
-              "afterPropertiesWereSetMethod": "setPropertiesForAdmin",
-              "destroyMethod": "destroyAdmin"
-            }
-          },
-          {
-            "id": "user",
-            "name": "User",
-            "classPath": "app/entities/User.js",
-            "scope": "prototype",
-            "properties": [
-              {
-                "name": "name",
-                "value": "Julia Brown"
-              }
-            ],
-            "lifecycle": {
-              "initMethod" : "initUser",
-              "afterPropertiesWereSetMethod": "setPropertiesForUser",
-              "destroyMethod": "destroyUser"
-            }
-          }
         ]
-      }
     }
+}   
 ```
 <h3>API Documentation</h3>
-
-There are several main classes which took part in programming context process.
-
-<h4>ComponentLifecycle Class</h4>
-
----
-
-Class that responds for the lifecycle of the component during the context's activity
-
-<h5> List of Methods </h5>
-
-- getComponentId - returns the value of identifier of the component in string format
-
-- setComponentId - sets the value of identifier of the component in string format
-
-- callInitMethod - calls method before component's initialization
-
-- setInitMethod - sets the method to the component in Function format
-
-- callAfterPropertiesWereSetMethod - calls method after setting of component's properties
-
-- setAfterPropertiesWereSetMethod - sets the method to the component in Function format
-
-- callDestroyMethod - calls method before removing component from the context
-
-- setDestroyMethod - sets the method to the component in Function format
-
-<h4>Component Class</h4>
-
----
-
-Class that represents any entity marked as class in the custom application in the application context 
-and allows you to inject other entities to itself according to Dependency Injection mechanism.
-
-<h5> List of Methods </h5>
-
-- getId - returns the value of unique identifier of the component in string format
-
-- setId - sets the value of unique identifier of the component in string format
-
-- getName - returns the name of the component in string format
-
-- setName - sets the name of the component in string format
-
-- getClassPath - returns path to the class of component's entity in string format
-
-- setClassPath - sets the path to the class of component's entity
-
-- getScope - returns scope of the component as one of two values of enumeration (SINGLETON/ PROTOTYPE)
-
-- setScope - sets the scope to the component
-
-- getLifecycle - returns lifecycle instance of the component
-
-- setLifecycle - sets lifecycle instance to the component
-
-- getEntityInstance - returns instance of the class defined by the classpath
-
-- setEntityInstance - sets the instance of the class defined by the classpath
-
 
 <h4>Context Class</h4>
 
@@ -261,7 +215,6 @@ Project structure
 
 Service.ts
 ```typescript
-
 class Service {
 
     private _name: string;
@@ -293,16 +246,16 @@ class Service {
         this._price = value;
     }
 
-    public initService() : void {
-        console.log('Before Service will be initialized');
+    public preInitService() : void {
+        console.log('BEFORE Service will be initialized');
     }
 
     public afterPropertiesWereSetToService() : void {
-        console.log('After Service received its props');
+        console.log('AFTER Service received its props');
     }
 
-    public destroyService() : void {
-        console.log('Before Service will bee destroyed');
+    public preDestroyService() : void {
+        console.log('BEFORE Service will bee destroyed');
     }
 }
 
@@ -366,16 +319,28 @@ class User {
         this._service = value;
     }
 
-    public initUser() : void {
-        console.log('Before User will be initialized');
+    public preInitUser(): void {
+        console.log('BEFORE User will be initialized');
     }
 
-    public afterPropertiesWereSetToUser() : void {
-        console.log('After User received its props');
+    public postInitUser(): void {
+        console.log('AFTER User will be initialized');
     }
 
-    public destroyUser() : void {
-        console.log('Before User will be destroyed');
+    public beforePropertiesWereSetToUser(): void {
+        console.log('BEFORE User received its props');
+    }
+
+    public afterPropertiesWereSetToUser(): void {
+        console.log('AFTER User received its props');
+    }
+
+    public preDestroyUser(): void {
+        console.log('BEFORE User will be destroyed');
+    }
+
+    public postDestroyUser(): void {
+        console.log('AFTER User will be destroyed');
     }
 }
 
@@ -416,9 +381,12 @@ export default User;
           }
         ],
         "lifecycle": {
-          "initMethod": "initUser",
+          "preInitMethod" : "preInitUser",
+          "postInitMethod": "postInitUser",
+          "beforePropertiesWillBeSetMethod": "beforePropertiesWereSetToUser",
           "afterPropertiesWereSetMethod": "afterPropertiesWereSetToUser",
-          "destroyMethod": "destroyUser"
+          "preDestroyMethod": "preDestroyUser",
+          "postDestroyMethod": "postDestroyUser"
         }
       },
 
@@ -430,7 +398,7 @@ export default User;
         "properties": [
           {
             "name": "name",
-            "value": "Mobile Service Vodafone"
+            "value": "Test Mobile Service"
           },
           {
             "name": "price",
@@ -438,9 +406,9 @@ export default User;
           }
         ],
         "lifecycle": {
-          "initMethod": "initService",
+          "preInitMethod": "preInitService",
           "afterPropertiesWereSetMethod": "afterPropertiesWereSetToService",
-          "destroyMethod": "destroyService"
+          "preDestroyMethod": "preDestroyService"
         }
       }
     ]

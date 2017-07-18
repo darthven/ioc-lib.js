@@ -1,33 +1,34 @@
 class User {
-  private _name: string;
+    private _name: string;
 
-  constructor(name: string) {
-    this._name = name;
-  }
+    constructor(name: string) {
+        this._name = name;
+    }
 
-  public hello(): void {
-    console.log('Hello from User');
-  }
+    get name(): string {
+        return this._name;
+    }
 
-  public initUser(): void {
-    console.log("Init user");
-  }
+    set name(value: string) {
+        this._name = value;
+    }
 
-  get name(): string {
-    return this._name;
-  }
+    public initUser(): void {
+        console.log("BEFORE Init user");
+    }
 
-  set name(value: string) {
-    this._name = value;
-  }
+    public setPropertiesForUser(): void {
+        console.log("AFTER Properties were set user");
+    }
 
-  public setPropertiesForUser(): void {
-    console.log("Properties were set user");
-  }
+    public destroyUser(): void {
+        console.log("BEFORE Destroy user");
+    }
 
-  public destroyUser(): void {
-    console.log("Destroy user");
-  }
+    public hello(): void {
+        console.log('Hello from User');
+    }
+
 }
 
 export default User;

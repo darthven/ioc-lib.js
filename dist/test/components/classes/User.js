@@ -4,12 +4,6 @@ var User = (function () {
     function User(name) {
         this._name = name;
     }
-    User.prototype.hello = function () {
-        console.log('Hello from User');
-    };
-    User.prototype.initUser = function () {
-        console.log("Init user");
-    };
     Object.defineProperty(User.prototype, "name", {
         get: function () {
             return this._name;
@@ -20,11 +14,17 @@ var User = (function () {
         enumerable: true,
         configurable: true
     });
+    User.prototype.initUser = function () {
+        console.log("BEFORE Init user");
+    };
     User.prototype.setPropertiesForUser = function () {
-        console.log("Properties were set user");
+        console.log("AFTER Properties were set user");
     };
     User.prototype.destroyUser = function () {
-        console.log("Destroy user");
+        console.log("BEFORE Destroy user");
+    };
+    User.prototype.hello = function () {
+        console.log('Hello from User');
     };
     return User;
 }());

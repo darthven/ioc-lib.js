@@ -48,16 +48,28 @@ class Admin {
         console.log('Bye from Admin');
     }
 
-    public initAdmin(): void {
-        console.log("Init admin");
+    public preInitAdmin(): void {
+        console.log("BEFORE Init admin");
     }
 
-    public setPropertiesForAdmin(): void {
-        console.log("Properties were set admin");
+    public postInitAdmin(): void {
+        console.log("AFTER Init admin");
     }
 
-    public destroyAdmin(): void {
-        console.log("Destroy admin");
+    public beforeSettingPropertiesForAdmin(): void {
+        console.log("BEFORE Properties were set admin");
+    }
+
+    public afterSettingPropertiesForAdmin(): void {
+        console.log("AFTER Properties were set admin");
+    }
+
+    public preDestroyAdmin(): void {
+        console.log("BEFORE Destroy admin");
+    }
+
+    public postDestroyAdmin(): void {
+        console.log("AFTER Destroy admin");
     }
 }
 

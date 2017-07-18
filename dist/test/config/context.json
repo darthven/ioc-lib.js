@@ -21,9 +21,12 @@
           }
         ],
         "lifecycle" : {
-          "preInitMethod" : "initAdmin",
-          "afterPropertiesWereSetMethod": "setPropertiesForAdmin",
-          "preDestroyMethod": "destroyAdmin"
+          "preInitMethod" : "preInitAdmin",
+          "postInitMethod": "postInitAdmin",
+          "beforePropertiesWillBeSetMethod": "beforeSettingPropertiesForAdmin",
+          "afterPropertiesWereSetMethod": "afterSettingPropertiesForAdmin",
+          "preDestroyMethod": "preDestroyAdmin",
+          "postDestroyMethod": "postDestroyAdmin"
         }
       },
       {

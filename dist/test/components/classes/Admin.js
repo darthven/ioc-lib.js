@@ -42,14 +42,23 @@ var Admin = (function () {
     Admin.prototype.bye = function () {
         console.log('Bye from Admin');
     };
-    Admin.prototype.initAdmin = function () {
-        console.log("Init admin");
+    Admin.prototype.preInitAdmin = function () {
+        console.log("BEFORE Init admin");
     };
-    Admin.prototype.setPropertiesForAdmin = function () {
-        console.log("Properties were set admin");
+    Admin.prototype.postInitAdmin = function () {
+        console.log("AFTER Init admin");
     };
-    Admin.prototype.destroyAdmin = function () {
-        console.log("Destroy admin");
+    Admin.prototype.beforeSettingPropertiesForAdmin = function () {
+        console.log("BEFORE Properties were set admin");
+    };
+    Admin.prototype.afterSettingPropertiesForAdmin = function () {
+        console.log("AFTER Properties were set admin");
+    };
+    Admin.prototype.preDestroyAdmin = function () {
+        console.log("BEFORE Destroy admin");
+    };
+    Admin.prototype.postDestroyAdmin = function () {
+        console.log("AFTER Destroy admin");
     };
     return Admin;
 }());

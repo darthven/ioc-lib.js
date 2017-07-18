@@ -1,9 +1,11 @@
-export function component(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+function component(target, propertyKey, descriptor) {
     console.log('TARGET PROTOTYPE', target);
     console.log('TARGET CONSTRUCTOR', target.constructor);
     console.log('PROPERTY KEY:', propertyKey);
     //const fields = ReflectionUtil.getFunctionArgumentsNames(target);
-    const entity = descriptor.value;
+    var entity = descriptor.value;
     console.log('DESCRIPTOR VALUE', entity);
     // const componentInstance = () => {
     //   let lifecycle = new ComponentLifecycle();
@@ -14,8 +16,8 @@ export function component(target: any, propertyKey: string, descriptor: Property
     // descriptor.value = componentInstance;
     return descriptor;
 }
-
-export function initMethod(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+exports.component = component;
+function initMethod(target, propertyKey, descriptor) {
     console.log('TARGET:', target);
     console.log('Property KEY:', propertyKey);
     console.log('DESCRIPTOR:', descriptor);
@@ -23,8 +25,8 @@ export function initMethod(target: any, propertyKey: string, descriptor: Propert
     //target['lifecycle']['initMethod'] = target[propertyKey];
     console.log(descriptor);
 }
-
-export function afterPropertiesWereSetMethod(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+exports.initMethod = initMethod;
+function afterPropertiesWereSetMethod(target, propertyKey, descriptor) {
     console.log('TARGET:', target);
     console.log('Property KEY:', propertyKey);
     console.log('DESCRIPTOR:', descriptor);
@@ -32,8 +34,8 @@ export function afterPropertiesWereSetMethod(target: any, propertyKey: string, d
     //target['lifecycle']['afterPropertiesWereSetMethod'] = target[propertyKey];
     console.log(descriptor);
 }
-
-export function destroyMethod(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+exports.afterPropertiesWereSetMethod = afterPropertiesWereSetMethod;
+function destroyMethod(target, propertyKey, descriptor) {
     console.log('TARGET:', target);
     console.log('Property KEY:', propertyKey);
     console.log('DESCRIPTOR:', descriptor);
@@ -41,20 +43,19 @@ export function destroyMethod(target: any, propertyKey: string, descriptor: Prop
     //target['lifecycle']['destroyMethod'] = target[propertyKey];
     console.log(descriptor);
 }
-
-export function value(target, name, descriptor) {
+exports.destroyMethod = destroyMethod;
+function value(target, name, descriptor) {
     console.log('TARGET:', target);
     console.log('NAME:', name);
     console.log('DESCRIPTOR:', descriptor);
 }
-
-export function injected(target, name, descriptor) {
+exports.value = value;
+function injected(target, name, descriptor) {
     console.log('TARGET:', target);
     console.log('NAME:', name);
     console.log('DESCRIPTOR:', descriptor);
 }
-
-export function configuration() {
-
+exports.injected = injected;
+function configuration() {
 }
-
+exports.configuration = configuration;
