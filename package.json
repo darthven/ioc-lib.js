@@ -1,6 +1,6 @@
 {
   "name": "ioc-lib.js",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Inversion of control library written on Typescript",
   "main": "js/index.js",
   "repository": {
@@ -26,8 +26,7 @@
   },
   "author": "darthvenus",
   "license": "ISC",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/lodash": "^4.14.65",
     "@types/mocha": "^2.2.41",
