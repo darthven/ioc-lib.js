@@ -26,22 +26,23 @@
   },
   "author": "darthvenus",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "app-root-dir": "^1.0.2",
+    "jsonfile": "^2.4.0",
+    "lodash": "^4.17.4",
+    "log4js": "^1.1.1"
+  },
   "devDependencies": {
     "@types/lodash": "^4.14.65",
     "@types/mocha": "^2.2.41",
     "@types/node": "^7.0.32",
     "babel-cli": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
-    "source-map-support": "^0.4.15",
-    "ts-node": "^3.0.4",
-    "typescript": "^2.3.4",
-    "app-root-dir": "^1.0.2",
-    "jsonfile": "^2.4.0",
-    "lodash": "^4.17.4",
-    "log4js": "^1.1.1",
     "mocha": "^3.4.2",
     "mocha-typescript": "^1.1.4",
-    "reflect-metadata": "^0.1.10"
+    "reflect-metadata": "^0.1.10",
+    "source-map-support": "^0.4.15",
+    "ts-node": "^3.0.4",
+    "typescript": "^2.3.4"
   }
 }

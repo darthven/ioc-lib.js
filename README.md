@@ -186,7 +186,7 @@ and component's registration in the context
 
 Class that is inherited from Context class and responds for component's registration in the context by decorating classes and methods.
 <h5> List of Methods </h5>
-IN DEVELOPMENT UNTIL RELEASE 0.2.3
+IN DEVELOPMENT UNTIL RELEASE 0.2.5
 
 <h3>Live Code Sample of Library's Usage</h3>
 
