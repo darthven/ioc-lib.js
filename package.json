@@ -19,10 +19,7 @@
   ],
   "scripts": {
     "tsc": "tsc -w --outDir dist",
-    "test-components": "node ./dist/test/index.js",
-    "test": "tsc && mocha",
-    "watch": "mocha-typescript-watch",
-    "dev-test-watch": "mocha-typescript-watch"
+    "test": "mocha --require ts-node/register src/test/*/*.test.ts"
   },
   "author": "darthvenus",
   "license": "ISC",
@@ -39,7 +36,6 @@
     "babel-cli": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
     "mocha": "^3.4.2",
-    "mocha-typescript": "^1.1.4",
     "reflect-metadata": "^0.1.10",
     "source-map-support": "^0.4.15",
     "ts-node": "^3.0.4",

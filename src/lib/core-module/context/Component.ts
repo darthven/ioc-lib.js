@@ -48,7 +48,6 @@ class Component {
      * @param componentName of the component
      * @param classPath path to the class of the entity
      * @param scope of the component
-     * @param lifecycle of the component
      */
     constructor(id?: string, componentName?: string, classPath?: string, scope?: Scope) {
         this.id = id || null;
@@ -66,27 +65,11 @@ class Component {
     }
 
     /**
-     * Function that sets unique identifier to the component
-     * @param {string} id
-     */
-    public setId(id: string): void {
-        this.id = id;
-    }
-
-    /**
      * Function that returns component's name
      * @returns {string} name of the component
      */
     public getComponentName(): string {
         return this.componentName;
-    }
-
-    /**
-     * Function that sets name to the component
-     * @param name
-     */
-    public setComponentName(name: string): void {
-        this.componentName = name;
     }
 
     /**
@@ -98,14 +81,6 @@ class Component {
     }
 
     /**
-     * Function that sets the path to the class of component's entity
-     * @param {string} classPath
-     */
-    public setClassPath(classPath: string): void {
-        this.classPath = classPath;
-    }
-
-    /**
      * Function that returns scope of the component
      * @returns {Scope} component's scope
      */
@@ -114,16 +89,8 @@ class Component {
     }
 
     /**
-     * Function that sets the scope to the component
-     * @param scope
-     */
-    public setScope(scope: Scope): void {
-        this.scope = scope;
-    }
-
-    /**
      * Function that returns the entity instance of the class
-     * @returns {any} entity instance
+     * @returns {} entity instance
      */
     public getEntityInstance(): any {
         return this.entityInstance;

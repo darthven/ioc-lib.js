@@ -12,7 +12,6 @@ var Component = (function () {
      * @param componentName of the component
      * @param classPath path to the class of the entity
      * @param scope of the component
-     * @param lifecycle of the component
      */
     function Component(id, componentName, classPath, scope) {
         this.id = id || null;
@@ -28,25 +27,11 @@ var Component = (function () {
         return this.id;
     };
     /**
-     * Function that sets unique identifier to the component
-     * @param {string} id
-     */
-    Component.prototype.setId = function (id) {
-        this.id = id;
-    };
-    /**
      * Function that returns component's name
      * @returns {string} name of the component
      */
     Component.prototype.getComponentName = function () {
         return this.componentName;
-    };
-    /**
-     * Function that sets name to the component
-     * @param name
-     */
-    Component.prototype.setComponentName = function (name) {
-        this.componentName = name;
     };
     /**
      * Function that returns path to the class of component's entity
@@ -56,13 +41,6 @@ var Component = (function () {
         return this.classPath;
     };
     /**
-     * Function that sets the path to the class of component's entity
-     * @param {string} classPath
-     */
-    Component.prototype.setClassPath = function (classPath) {
-        this.classPath = classPath;
-    };
-    /**
      * Function that returns scope of the component
      * @returns {Scope} component's scope
      */
@@ -70,15 +48,8 @@ var Component = (function () {
         return this.scope;
     };
     /**
-     * Function that sets the scope to the component
-     * @param scope
-     */
-    Component.prototype.setScope = function (scope) {
-        this.scope = scope;
-    };
-    /**
      * Function that returns the entity instance of the class
-     * @returns {any} entity instance
+     * @returns {} entity instance
      */
     Component.prototype.getEntityInstance = function () {
         return this.entityInstance;

@@ -102,10 +102,9 @@ var MetadataContext = (function (_super) {
      * in the application context (basic step of registering component in the context)
      * and executes method before its initialization
      * @param {Object[]} configComponents parsed objects from meta-data
-     * @param {Map<string, Component>} basicComponents unregistered components in their basic form
      * (without values, without references)
      */
-    MetadataContext.prototype.setBasicPropertiesToComponents = function (configComponents, basicComponents) {
+    MetadataContext.prototype.setBasicPropertiesToComponents = function (configComponents) {
         var _this = this;
         configComponents.forEach(function (configComp) {
             var classPath = APPLICATION_ROOT_DIRECTORY + "/" + configComp['classPath'];
@@ -129,7 +128,7 @@ var MetadataContext = (function (_super) {
                 });
                 componentLifecycle.callBeforePropertiesWillBeSetMethod();
                 component.setEntityInstance(entity);
-                basicComponents.set(configComp['id'], component);
+                _this.components.set(configComp['id'], component);
                 componentLifecycle.callPostInitMethod();
             }
             else {
@@ -148,15 +147,13 @@ var MetadataContext = (function (_super) {
         var _this = this;
         this.components.forEach(function (component) {
             var componentLifecycle = _this.getContextLifecycle().getComponentLifecycles().get(component.getId());
+            var entityClass = require(APPLICATION_ROOT_DIRECTORY + "/" + component.getClassPath());
             configComponents.forEach(function (comp) {
-                var classPath = APPLICATION_ROOT_DIRECTORY + "/" + comp['classPath'];
-                var entityClass = require(classPath);
-                var entity = _this.getComponentEntityInstance(comp['id']);
                 var properties = _this.getPropertiesFromConfiguration(comp, entityClass);
                 properties.forEach(function (prop) {
                     if (prop['reference']) {
-                        entity[prop['name']] = _this.getComponentEntityInstance(prop['reference']);
-                        component.setEntityInstance(entity);
+                        var injectedComponent = _this.getComponentEntityInstance(prop['reference']);
+                        component.getEntityInstance()[prop['name']] = injectedComponent;
                     }
                 });
             });
@@ -192,7 +189,7 @@ var MetadataContext = (function (_super) {
      */
     MetadataContext.prototype.registerComponentsInContext = function () {
         var configComponents = this.getConfigComponents();
-        this.setBasicPropertiesToComponents(configComponents, this.getComponents());
+        this.setBasicPropertiesToComponents(configComponents);
         this.setReferencesToComponents(configComponents);
     };
     /**
