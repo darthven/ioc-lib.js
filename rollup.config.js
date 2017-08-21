@@ -6,7 +6,7 @@ import uglify from 'rollup-plugin-uglify-es';
 
 export default {
     entry: './src/index.ts',
-    dest: 'index.min.js',
+    dest: 'index.js',
     format: 'cjs',
     plugins: [
         nodeResolve({
