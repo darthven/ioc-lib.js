@@ -29,7 +29,6 @@ interface ComponentLifecycle {
 
     postDestroyMethod: Function;
 
-    logger;
 }
 
 interface ContextLifecycle {
