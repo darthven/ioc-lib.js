@@ -8,11 +8,11 @@ export default {
     entry: './src/index.ts',
     dest: 'index.min.js',
     format: 'cjs',
-    external: ['lodash', 'util'],
     plugins: [
         nodeResolve({
             jsnext: true,
-            main: true
+            main: true,
+            preferBuiltins: true
         }),
         typescript(require('typescript')),
         commonjs({
