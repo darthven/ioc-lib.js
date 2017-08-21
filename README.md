@@ -420,7 +420,7 @@ index.ts
 - Create programming context based on metadata
 
 ```typescript   
-    import {MetadataContext} from 'ioc-lib.js/dist'
+    import {MetadataContext} from 'ioc-lib.js'
     const path = require('path');
     
     //Getting configuration files with metadata (can be several files)

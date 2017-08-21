@@ -28,6 +28,10 @@ describe('MetadataContext', () => {
             assert.deepEqual(realEntityInstanceUser, expectedEntityInstanceUser);
         })
     });
+
+    describe('#updateContext()', () => {
+       context.registerShutdownHook()
+    });
     
 });
 

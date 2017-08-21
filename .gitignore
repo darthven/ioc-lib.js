@@ -6,3 +6,4 @@ npm-debug.log
 .idea/workspace.xml
 .idea/.name
 .idea/ioc-lib.js.iml
+.rpt2_cache

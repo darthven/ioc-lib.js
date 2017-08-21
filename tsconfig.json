@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
+//    "outFile": "index.js",
+//    "outDir": "dist",
     "module": "commonjs",
     "target": "es5",
     "noImplicitAny": false,
-    "sourceMap": false,
+    "moduleResolution": "node",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "ES2017"
+      "es7",
+      "es2016.array.include"
     ],
     "baseUrl": ".",
     "paths": {

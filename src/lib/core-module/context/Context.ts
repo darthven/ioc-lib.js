@@ -1,5 +1,8 @@
-import {Scope, ComponentNotFoundError, Component, ContextLifecycle} from '../core-module'
-import _ = require('lodash');
+const _ = require('lodash');
+import {LOGGER} from "../../utils/logger";
+import Component, {Scope} from "./Component";
+import ContextLifecycle from "./ContextLifecycle";
+import ComponentNotFoundError from "../errors/ComponentNotFoundError";
 
 
 /**
@@ -19,11 +22,6 @@ abstract class Context {
      * Lifecycle of the application context
      */
     protected contextLifecycle: ContextLifecycle;
-
-    /**
-     * Logger for logging all important events in the application context
-     */
-    protected static logger = require('log4js').getLogger();
 
     /**
      * Default constructor of the context
@@ -63,14 +61,14 @@ abstract class Context {
      * calls destroy-methods before their deletion and finally closes it
      */
     private close(): void {
-        Context.logger.info('[Context]: Closing current context...');
+        LOGGER.info('[Context]: Closing current context...');
         this.components.forEach((component) => {
             const lifecycle = this.contextLifecycle.getComponentLifecycles().get(component.getId());
             lifecycle.callPreDestroyMethod();
             this.removeComponentFromContext(component.getId());
             lifecycle.callPostDestroyMethod();
         });
-        Context.logger.info('[Context]: Context is closed...');
+        LOGGER.info('[Context]: Context is closed...');
         this.components.clear();
     }
 

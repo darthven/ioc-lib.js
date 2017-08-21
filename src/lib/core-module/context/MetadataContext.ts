@@ -1,9 +1,16 @@
-import {Context, Scope, Component} from '../core-module'
-import {MetadataValidator, PropertyValidator, LifecycleValidator, PropertyValidationError} from "../../validation-module/validation-module";
+import Context from "./Context";
+import {default as Component, Scope} from "./Component";
+import {
+    MetadataValidator,
+    PropertyValidator,
+    LifecycleValidator,
+    PropertyValidationError
+} from "../../validation-module/validation-module";
+import {LOGGER} from "../../utils/logger";
+const jsonfile = require('jsonfile');
 
-import jsonfile = require('jsonfile');
+
 const APPLICATION_ROOT_DIRECTORY = require('app-root-dir').get();
-
 
 /**
  * Class that responds for creation and management process of the components,
@@ -40,7 +47,7 @@ class MetadataContext extends Context {
             MetadataValidator.validateMetadata(configs);
             this.configs = configs;
             this.registerComponentsInContext();
-            MetadataContext.logger.info('[MetadataContext]: Context was initialized');
+            LOGGER.info('[MetadataContext]: Context was initialized');
         }
     }
 
@@ -118,14 +125,14 @@ class MetadataContext extends Context {
             const classPath = `${APPLICATION_ROOT_DIRECTORY}/${configComp['classPath']}`;
             const entityClass = require(classPath);
             const entityPrototype = entityClass.default.prototype;
-            let entity = Object.create(entityPrototype);
+            const entity = Object.create(entityPrototype);
             LifecycleValidator.validateLifecycle(this, entityPrototype, configComp);
-            let componentLifecycle = this.getContextLifecycle().getComponentLifecycles().get(configComp['id']);
+            const componentLifecycle = this.getContextLifecycle().getComponentLifecycles().get(configComp['id']);
             componentLifecycle.callPreInitMethod();
-            let component = new Component(configComp['id'],
+            const component = new Component(configComp['id'],
                 configComp['name'], configComp['classPath'], this.defineComponentScope(configComp));
-            let properties = this.getPropertiesFromConfiguration(configComp, entityClass);
-            let propertiesAreValid = PropertyValidator.validateProperties(properties);
+            const properties = this.getPropertiesFromConfiguration(configComp, entityClass);
+            const propertiesAreValid = PropertyValidator.validateProperties(properties);
             if (propertiesAreValid) {
                 properties.forEach((prop) => {
                     if (prop['value']) {
@@ -153,8 +160,8 @@ class MetadataContext extends Context {
      */
     private setReferencesToComponents(configComponents: Object[]): void {
         this.components.forEach((component) => {
-            let componentLifecycle = this.getContextLifecycle().getComponentLifecycles().get(component.getId());
-            let entityClass = require(`${APPLICATION_ROOT_DIRECTORY}/${component.getClassPath()}`);
+            const componentLifecycle = this.getContextLifecycle().getComponentLifecycles().get(component.getId());
+            const entityClass = require(`${APPLICATION_ROOT_DIRECTORY}/${component.getClassPath()}`);
             configComponents.forEach((comp) => {
                 const properties = this.getPropertiesFromConfiguration(comp, entityClass);
                 properties.forEach((prop) => {

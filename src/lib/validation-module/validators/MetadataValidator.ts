@@ -1,8 +1,9 @@
-import jsonfile = require('jsonfile');
-import path = require('path');
-import fs = require('fs');
-import {MetadataValidationError} from "../validation-module";
+const jsonfile = require('jsonfile');
+import {LOGGER} from "../../utils/logger";
+const path = require('path');
+const fs = require('fs');
 import {isArray, isNullOrUndefined, isObject, isString} from "util";
+import MetadataValidationError from "../errors/MetadataValidationError";
 
 /**
  * Length of property's object
@@ -17,12 +18,6 @@ const PROPERTY_LENGTH = 2;
 class MetadataValidator {
 
     /**
-     * Logger for logging all important events
-     * during metadata validation
-     */
-    private static logger = require('log4js').getLogger();
-
-    /**
      * Method that validates configuration files' existence
      * and their format as JSON
      * @param paths
@@ -33,10 +28,10 @@ class MetadataValidator {
         paths.forEach((path) => {
             try {
                 fs.statSync(path);
-                MetadataValidator.logger.debug(`[Metadata Validation]: Configuration file by path "${path}" was found`);
+                LOGGER.debug(`[Metadata Validation]: Configuration file by path "${path}" was found`);
                 configFilesContent.push({path: path, content: jsonfile.readFileSync(path)});
             } catch (err) {
-                MetadataValidator.logger.error(`[Metadata Validation]: Cannot read the file by the following path: "${path}".`);
+                LOGGER.error(`[Metadata Validation]: Cannot read the file by the following path: "${path}".`);
             }
         });
         return configFilesContent;
@@ -54,7 +49,7 @@ class MetadataValidator {
         configFilesContent.forEach((file) => {
             let configurationObject = file['content']['configuration'];
             if (!configurationObject) {
-                MetadataValidator.logger.error(`[Metadata Validation]: Configuration object from metadata in file "${file['path']}" does not exist`);
+                LOGGER.error(`[Metadata Validation]: Configuration object from metadata in file "${file['path']}" does not exist`);
                 throw new MetadataValidationError(file['path']);
             }
             configuratioObjects.push({filePath: file['path'], configuration: configurationObject});
@@ -72,7 +67,7 @@ class MetadataValidator {
         configurationObjects.forEach((configObj) => {
             let componentsArray = configObj['configuration']['components'];
             if (!componentsArray) {
-                MetadataValidator.logger.error(`[Metadata Validation]: Components' array from metadata in file "${configObj['filePath']}" does not exist`);
+                LOGGER.error(`[Metadata Validation]: Components' array from metadata in file "${configObj['filePath']}" does not exist`);
                 throw new MetadataValidationError(configObj['filePath']);
             }
             let componentsArrayDescriptor = {filePath: configObj['filePath'], components: componentsArray};
@@ -88,7 +83,7 @@ class MetadataValidator {
     private static validateConfigComponent(componentsArrayDescriptor: Object): void {
         componentsArrayDescriptor['components'].forEach((comp, index) => {
             if (!isObject(comp)) {
-                MetadataValidator.logger.error(`[Metadata Validation]: Component[${index}] from metadata in file "${componentsArrayDescriptor['filePath']}" is not an object`);
+                LOGGER.error(`[Metadata Validation]: Component[${index}] from metadata in file "${componentsArrayDescriptor['filePath']}" is not an object`);
                 throw new MetadataValidationError(componentsArrayDescriptor['filePath']);
             }
             let componentDescriptor = {index: index, instance: comp, filePath: componentsArrayDescriptor['filePath']};
@@ -117,21 +112,21 @@ class MetadataValidator {
     private static validateConfigLifecycle(componentDescriptor: Object): void {
         const configLifecycle = componentDescriptor['instance']['lifecycle'];
         if (!configLifecycle) {
-            MetadataValidator.logger.warn(`[Metadata Validation]: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" has no lifecycle object`);
+            LOGGER.warn(`[Metadata Validation]: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" has no lifecycle object`);
         } else {
             if (!isObject(configLifecycle)) {
-                MetadataValidator.logger.error(`[Metadata Validation]: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" has invalid lifecycle object`);
+                LOGGER.error(`[Metadata Validation]: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" has invalid lifecycle object`);
                 throw new MetadataValidationError(componentDescriptor['filePath']);
             }
             const lifecycleMethods = Object.keys(configLifecycle);
             lifecycleMethods.forEach((method) => {
                 let methodExists = MetadataValidator.configLifecycleHasMethod(configLifecycle, method);
                 if(!methodExists) {
-                    MetadataValidator.logger.error(`[Metadata Validation]: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" has invalid lifecycle object`);
+                    LOGGER.error(`[Metadata Validation]: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" has invalid lifecycle object`);
                     throw new MetadataValidationError(componentDescriptor['filePath']);
                 }
             });
-            MetadataValidator.logger.debug(`[Metadata Validation]: Lifecycle of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" is successfully validated`);
+            LOGGER.debug(`[Metadata Validation]: Lifecycle of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" is successfully validated`);
         }
     }
 
@@ -171,15 +166,15 @@ class MetadataValidator {
     private static validateConfigProperties(componentDescriptor: Object): void {
         let configProperties = componentDescriptor['instance']['properties'];
         if (!isArray(configProperties)) {
-            MetadataValidator.logger.error(`[Metadata Validation]: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}"has invalid properties' instance`);
+            LOGGER.error(`[Metadata Validation]: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}"has invalid properties' instance`);
             throw new MetadataValidationError(componentDescriptor['filePath']);
         }
         configProperties.forEach((prop) => {
             if (Object.keys(prop).length === PROPERTY_LENGTH && MetadataValidator.configPropertyHasName(prop)) {
                 if (MetadataValidator.configPropertyHasValue(prop) || MetadataValidator.configPropertyHasReference(prop)) {
-                    MetadataValidator.logger.debug(`[Metadata Validation]: Property "${prop['name']}" of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']} is successfully validated`)
+                    LOGGER.debug(`[Metadata Validation]: Property "${prop['name']}" of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']} is successfully validated`)
                 } else {
-                    MetadataValidator.logger.error(`[Metadata Validation]: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']} has invalid property "${prop['name']}"`);
+                    LOGGER.error(`[Metadata Validation]: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']} has invalid property "${prop['name']}"`);
                     throw new MetadataValidationError(componentDescriptor['filePath']);
                 }
             }
@@ -196,13 +191,13 @@ class MetadataValidator {
         let configScope = componentDescriptor['instance']['scope'];
         if (configScope) {
             if (!isString(configScope) || !['singleton', 'prototype'].includes(configScope)) {
-                MetadataValidator.logger.error(`[Metadata Validation]: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" has invalid scope`);
+                LOGGER.error(`[Metadata Validation]: Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" has invalid scope`);
                 throw new MetadataValidationError(componentDescriptor['filePath']);
             } else {
-                MetadataValidator.logger.debug(`[Metadata Validation]: Scope of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']} is successfully validated`);
+                LOGGER.debug(`[Metadata Validation]: Scope of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']} is successfully validated`);
             }
         } else {
-            MetadataValidator.logger.debug(`[Metadata Validation]: Scope of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" will be set to SINGLETON as default`);
+            LOGGER.debug(`[Metadata Validation]: Scope of the Component[${componentDescriptor['index']}] from metadata in file "${componentDescriptor['filePath']}" will be set to SINGLETON as default`);
         }
     }
 
@@ -211,11 +206,11 @@ class MetadataValidator {
      * @param paths to the configuration files
      */
     public static validateMetadata(paths: string[]): void {
-        MetadataValidator.logger.info('[Metadata Validation]: Metadata validation process is starting...');
+        LOGGER.info('[Metadata Validation]: Metadata validation process is starting...');
         const configFilesContent = MetadataValidator.validateConfigurationFiles(paths);
         const configurationKeywords = MetadataValidator.validateConfigurationObjects(configFilesContent);
         MetadataValidator.validateComponentsArray(configurationKeywords);
-        MetadataValidator.logger.info('[Metadata Validation]: Metadata validation process was finished...');
+        LOGGER.info('[Metadata Validation]: Metadata validation process was finished...');
     }
 }
 

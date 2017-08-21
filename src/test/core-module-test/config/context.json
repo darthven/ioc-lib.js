@@ -4,7 +4,7 @@
       {
         "id": "adminId",
         "name": "Admin",
-        "classPath": "dist/test/components/classes/Admin.js",
+        "classPath": "src/test/core-module-test/entities/Admin.js",
         "scope": "prototype",
         "properties": [
           {
@@ -32,7 +32,7 @@
       {
         "id": "userId",
         "name": "User",
-        "classPath": "dist/test/components/classes/User.js",
+        "classPath": "src/test/core-module-test/entities/User.js",
         "scope": "singleton",
         "properties": [
             {
