@@ -1,9 +1,6 @@
-const _ = require('lodash');
 import {LOGGER} from "../../utils/logger";
-import Component, {Scope} from "./Component";
+import Component from "./Component";
 import ContextLifecycle from "./ContextLifecycle";
-import ComponentNotFoundError from "../errors/ComponentNotFoundError";
-
 
 /**
  * Class that responds for creation and management process of the components,
@@ -73,22 +70,6 @@ abstract class Context {
     }
 
     /**
-     * Function that retrieves component's instance by unique identifier
-     * @param {string} componentId unique identifier of the component
-     * @returns component's entity instance
-     */
-    public getComponentEntityInstance(componentId: string): any {
-        let component = this.components.get(componentId);
-        if (!component) {
-            throw new ComponentNotFoundError(componentId);
-        }
-        if (component.getScope() === Scope.PROTOTYPE) {
-            return _.cloneDeep(component.getEntityInstance());
-        }
-        return component.getEntityInstance();
-    }
-
-    /**
      * Function that closes application context in safe-mode
      * as the main program's process is finished.
      */
@@ -99,6 +80,26 @@ abstract class Context {
         process.on('SIGINT', () => {
             this.close();
         });
+    }
+
+    /**
+     * Function that retrieves component's instance by unique identifier
+     * @returns component's entity instance
+     * @param searchCriteria criteria of the searching in the context
+     */
+    public abstract getComponentEntityInstance(searchCriteria: any): any;
+
+    /**
+     * Function that registers components in the application context
+     */
+    protected abstract registerComponentsInContext(): void;
+
+    /**
+     * Function that updates context. Can be called if you need to update context
+     * after updating meta-data in configuration files
+     */
+    public updateContext(): void {
+        this.registerComponentsInContext();
     }
 }
 

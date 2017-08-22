@@ -19,6 +19,7 @@
   ],
   "scripts": {
     "tsc-full": "tsc -w --outDir dist ",
+    "tsc-decor": "tsc -w --allowJs src/lib/core-module/context/decorators.ts src/test/core-module-test/config/Configuration.ts",
     "tsc": "tsc -w",
     "test": "mocha --require ts-node/register src/test/*/*.test.ts"
   },

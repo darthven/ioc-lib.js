@@ -1,60 +1,45 @@
-export function component(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-    console.log('TARGET PROTOTYPE', target);
-    console.log('TARGET CONSTRUCTOR', target.constructor);
-    console.log('PROPERTY KEY:', propertyKey);
-    //const fields = ReflectionUtil.getFunctionArgumentsNames(target);
-    const entity = descriptor.value;
-    console.log('DESCRIPTOR VALUE', entity);
-    // const componentInstance = () => {
-    //   let lifecycle = new ComponentLifecycle();
-    //   let component = new Component();
-    //   component.setLifecycle(lifecycle);
-    //   return Object.assign(component, Object.getPrototypeOf(entity.call()));
-    // };
-    // descriptor.value = componentInstance;
-    return descriptor;
+import {default as Component} from "./Component";
+
+/**
+ * Decorator that responds for wrapping functions
+ * which return some entity-objects. Instead of entity-objects
+ * they will return special objects that contain property responsible for
+ * generation of component based on those entities.
+ * @param componentDescriptor describes which names, class paths and scopes
+ * entity-objects will have
+ * @returns {(target:Function, key:string)=>any} function that is wrapping of
+ * native function of the current class/module
+ */
+export function component(componentDescriptor: Object) : Function {
+    return (target: Function, key: string): any => {
+        const getEntityInstance = target[key];
+        const getComponentInstance = () => {
+            const generateComponentId = () => {
+                return Math.random().toString(36).substring(2, 7);
+            };
+            const component = new Component(generateComponentId(),
+                componentDescriptor['name'], componentDescriptor['classPath'], componentDescriptor['scope']);
+            component.setEntityInstance(getEntityInstance.call());
+            return component;
+        };
+        Object.defineProperty(target, key, {
+            value: {
+                componentInstance: getComponentInstance
+            },
+        });
+        return Object.getOwnPropertyDescriptor(target, key);
+    }
 }
 
-export function initMethod(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-    console.log('TARGET:', target);
-    console.log('Property KEY:', propertyKey);
-    console.log('DESCRIPTOR:', descriptor);
-    target['isInitMethod'] = true;
-    //target['lifecycle']['initMethod'] = target[propertyKey];
-    console.log(descriptor);
-}
-
-export function afterPropertiesWereSetMethod(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-    console.log('TARGET:', target);
-    console.log('Property KEY:', propertyKey);
-    console.log('DESCRIPTOR:', descriptor);
-    descriptor['isAfterPropertiesWereSetMethod'] = true;
-    //target['lifecycle']['afterPropertiesWereSetMethod'] = target[propertyKey];
-    console.log(descriptor);
-}
-
-export function destroyMethod(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-    console.log('TARGET:', target);
-    console.log('Property KEY:', propertyKey);
-    console.log('DESCRIPTOR:', descriptor);
-    descriptor['isDestroyMethod'] = true;
-    //target['lifecycle']['destroyMethod'] = target[propertyKey];
-    console.log(descriptor);
-}
-
-export function value(target, name, descriptor) {
-    console.log('TARGET:', target);
-    console.log('NAME:', name);
-    console.log('DESCRIPTOR:', descriptor);
-}
-
-export function injected(target, name, descriptor) {
-    console.log('TARGET:', target);
-    console.log('NAME:', name);
-    console.log('DESCRIPTOR:', descriptor);
-}
-
-export function configuration() {
-
+export function injected(target, key, descriptor) {
+    console.log(target);
+    console.log(key);
+    console.log(descriptor);;
+    Object.defineProperty(target, key,
+        { get: () => {},
+          set: () => {},
+            enumerable: true,
+            configurable: true
+        })
 }
 

@@ -1,8 +1,5 @@
-import jsonfile = require('jsonfile');
-import * as assert from 'assert'
 import MetadataContext from "../../lib/core-module/context/MetadataContext";
-const _ = require('lodash');
-
+import * as assert from 'assert'
 
 describe('MetadataContext', () => {
     const configs = [__dirname + "/config/context.json"];
@@ -28,10 +25,7 @@ describe('MetadataContext', () => {
             assert.deepEqual(realEntityInstanceUser, expectedEntityInstanceUser);
         })
     });
-
-    describe('#updateContext()', () => {
-       context.registerShutdownHook()
-    });
-    
 });
+
+
 

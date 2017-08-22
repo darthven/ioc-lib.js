@@ -7,6 +7,8 @@ import {
     PropertyValidationError
 } from "../../validation-module/validation-module";
 import {LOGGER} from "../../utils/logger";
+import ComponentNotFoundError from "../errors/ComponentNotFoundError";
+const _ = require('lodash');
 const jsonfile = require('jsonfile');
 
 
@@ -201,22 +203,29 @@ class MetadataContext extends Context {
         return this.getUniqueConfigComponents();
     }
 
-
     /**
      * Function that registers components in the application context
      */
-    private registerComponentsInContext(): void {
+    public registerComponentsInContext(): void {
         let configComponents = this.getConfigComponents();
         this.setBasicPropertiesToComponents(configComponents);
         this.setReferencesToComponents(configComponents);
     }
 
     /**
-     * Function that updates context. Can be called if you need to update context
-     * after updating meta-data in configuration files
+     * Function that retrieves component's instance by unique identifier
+     * @returns component's entity instance
+     * @param componentId unique identifier of the component
      */
-    public updateContext(): void {
-        this.registerComponentsInContext();
+    public getComponentEntityInstance(componentId: string): any {
+        let component = this.components.get(componentId);
+        if (!component) {
+            throw new ComponentNotFoundError(componentId);
+        }
+        if (component.getScope() === Scope.PROTOTYPE) {
+            return _.cloneDeep(component.getEntityInstance());
+        }
+        return component.getEntityInstance();
     }
 }
 
