@@ -1,37 +1,33 @@
 import Admin from '../entities/Admin'
 import User from '../entities/User'
-import {Scope} from "../../../lib/core-module/context/Component";
+import {default as Component, Scope} from "../../../lib/core-module/context/Component";
 import {component} from "../../../lib/core-module/context/decorators";
 
-export class AdminConfig {
 
-    constructor() {
+export default class Configuration {
+
+    @component({                 
+        lifecycle: {}
+    })   
+    public getAdminComponent(): any {        
+        return new Admin("darthven", 21, this.getUserComponent().getEntityInstance());
     }
 
     @component({
-        name: "admin",
-        classPath: "src/test/core-module-test/entities/Admin",
-        scope: Scope.SINGLETON,
+        id: "emptyUser",      
         lifecycle: {}
     })
-    public getAdminComponent(): Admin {
-        return new Admin("darthven", 21, new User('testUser3'));
-    }
-}
-
-export class UserConfig {
-
-    constructor() {
+    public getEmptyUserComponent(): any {
+        return new User();
     }
 
     @component({
-        name: "user",
-        classPath: "src/test/core-module-test/entities/User",
-        scope: Scope.PROTOTYPE,
+        id: "userWithName",      
         lifecycle: {}
     })
-    public getUserComponent(): User {
+    public getUserComponent(): any {
         return new User("testUser3");
     }
 }
+
 

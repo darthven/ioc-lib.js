@@ -1,6 +1,8 @@
 import {LOGGER} from "../../utils/logger";
-import Component from "./Component";
+import {default as Component, Scope} from "./Component";
 import ContextLifecycle from "./ContextLifecycle";
+import ComponentNotFoundError from "../errors/ComponentNotFoundError";
+const _ = require('lodash');
 
 /**
  * Class that responds for creation and management process of the components,
@@ -85,9 +87,18 @@ abstract class Context {
     /**
      * Function that retrieves component's instance by unique identifier
      * @returns component's entity instance
-     * @param searchCriteria criteria of the searching in the context
+     * @param Class class instance
      */
-    public abstract getComponentEntityInstance(searchCriteria: any): any;
+    public getComponentEntityInstanceById(componentId: string): any {
+        const component = this.components.get(componentId);
+        if (!component) {
+            throw new ComponentNotFoundError(componentId);
+        }
+        if (component.getScope() === Scope.PROTOTYPE) {
+            return _.cloneDeep(component.getEntityInstance());
+        }
+        return component.getEntityInstance();
+    }
 
     /**
      * Function that registers components in the application context

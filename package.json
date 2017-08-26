@@ -38,8 +38,7 @@
     "babel-cli": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
     "mocha": "^3.4.2",
-    "reflect-metadata": "^0.1.10",
-    "rollup-plugin-auto-external": "^1.0.0",
+    "reflect-metadata": "^0.1.10",  
     "rollup-plugin-commonjs": "^8.1.0",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.1.0",
@@ -50,7 +49,6 @@
     "source-map-support": "^0.4.15",
     "ts-loader": "^2.3.3",
     "ts-node": "^3.0.4",
-    "typescript": "^2.4.2",
-    "webpack": "^3.5.5"
+    "typescript": "^2.4.2"
   }
 }

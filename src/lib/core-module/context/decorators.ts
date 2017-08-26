@@ -1,4 +1,5 @@
 import {default as Component} from "./Component";
+import DecoratorContext from "./DecoratorContext"
 
 /**
  * Decorator that responds for wrapping functions
@@ -10,36 +11,22 @@ import {default as Component} from "./Component";
  * @returns {(target:Function, key:string)=>any} function that is wrapping of
  * native function of the current class/module
  */
-export function component(componentDescriptor: Object) : Function {
+export function component(componentDescriptor: Object) : Function {   
     return (target: Function, key: string): any => {
-        const getEntityInstance = target[key];
+        const getEntityInstance: Function = target[key];
         const getComponentInstance = () => {
-            const generateComponentId = () => {
+            const generateComponentId: Function = () => {
                 return Math.random().toString(36).substring(2, 7);
             };
-            const component = new Component(generateComponentId(),
+            let componentId: string = componentDescriptor["id"] || generateComponentId();
+            const component: Component = new Component(componentId,
                 componentDescriptor['name'], componentDescriptor['classPath'], componentDescriptor['scope']);
-            component.setEntityInstance(getEntityInstance.call());
+            component.setEntityInstance(getEntityInstance.call(target));
             return component;
         };
         Object.defineProperty(target, key, {
-            value: {
-                componentInstance: getComponentInstance
-            },
+            value: getComponentInstance            
         });
         return Object.getOwnPropertyDescriptor(target, key);
     }
 }
-
-export function injected(target, key, descriptor) {
-    console.log(target);
-    console.log(key);
-    console.log(descriptor);;
-    Object.defineProperty(target, key,
-        { get: () => {},
-          set: () => {},
-            enumerable: true,
-            configurable: true
-        })
-}
-

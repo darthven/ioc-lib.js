@@ -1,5 +1,4 @@
 import User from './User'
-import {injected} from "../../../lib/core-module/context/decorators";
 
 export default class Admin {
 
@@ -9,7 +8,7 @@ export default class Admin {
 
     private _user: User;
 
-    constructor(name: string, age: number, user: User) {
+    constructor(name: string, age: number, user?: User) {
         this._name = name;
         this._age = age;
         this._user = user;
@@ -35,7 +34,6 @@ export default class Admin {
         return this._user;
     }
 
-    @injected
     set user(value: User) {
         this._user = value;
     }

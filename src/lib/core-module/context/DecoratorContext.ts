@@ -1,5 +1,5 @@
 import {Context} from "../core-module"
-import {Scope} from "./Component";
+import {default as Component, Scope} from "./Component";
 const _ = require('lodash');
 import ComponentNotFoundError from "../errors/ComponentNotFoundError";
 
@@ -21,8 +21,8 @@ class DecoratorContext extends Context {
      * @param configs configuration classes/modules
      */
     constructor(configs?: any[]) {
-        super();
-        if(configs) {
+        super();       
+        if(configs && configs.length > 0) {
             this.configs = configs;
             this.registerComponentsInContext();
         }
@@ -31,15 +31,15 @@ class DecoratorContext extends Context {
     /**
      * Function that registers components in the application context
      */
-    protected registerComponentsInContext(): void {
+    public registerComponentsInContext(): void {
         this.configs.forEach((config) => {
             const prototype = config['prototype'];
             const values = Object.keys(prototype).map(function(key) {
                 return prototype[key];
             });
             values.forEach((value) => {
-                if(value.hasOwnProperty('componentInstance')) {
-                    const component = value['componentInstance'].call();
+                if(value) {
+                    const component = value.call();                    
                     this.components.set(component['id'], component);
                 }
             });
@@ -51,20 +51,21 @@ class DecoratorContext extends Context {
      * @returns component's entity instance
      * @param Class class instance
      */
-    public getComponentEntityInstance(Class: any): any {
-        const componentsArray = Array.from(this.components.values());
+    public getComponentEntityInstanceByClass(Class: any): any {
+        const componentsArray: Component[] = Array.from(this.components.values());
         for(let i = 0; i < componentsArray.length; i++) {
             let componentInstance = componentsArray[i].getEntityInstance();
-            if(componentInstance instanceof Class) {
+            const componentId = componentsArray[i].getId();           
+            if(componentInstance instanceof Class) {   
                 if (componentsArray[i].getScope() === Scope.PROTOTYPE) {
                     return _.cloneDeep(componentInstance);
                 }
-                return componentInstance;
+                return componentInstance;          
             } else if(i === componentsArray.length - 1) {
                 throw new ComponentNotFoundError('undefined');
             }
         }
-    }
+    }    
 }
 
 export default DecoratorContext

@@ -7,8 +7,6 @@ import {
     PropertyValidationError
 } from "../../validation-module/validation-module";
 import {LOGGER} from "../../utils/logger";
-import ComponentNotFoundError from "../errors/ComponentNotFoundError";
-const _ = require('lodash');
 const jsonfile = require('jsonfile');
 
 
@@ -168,7 +166,7 @@ class MetadataContext extends Context {
                 const properties = this.getPropertiesFromConfiguration(comp, entityClass);
                 properties.forEach((prop) => {
                     if (prop['reference']) {
-                        const injectedComponent = this.getComponentEntityInstance(prop['reference']);
+                        const injectedComponent = this.getComponentEntityInstanceById(prop['reference']);
                         component.getEntityInstance()[prop['name']] = injectedComponent;
                     }
                 });
@@ -211,22 +209,7 @@ class MetadataContext extends Context {
         this.setBasicPropertiesToComponents(configComponents);
         this.setReferencesToComponents(configComponents);
     }
-
-    /**
-     * Function that retrieves component's instance by unique identifier
-     * @returns component's entity instance
-     * @param componentId unique identifier of the component
-     */
-    public getComponentEntityInstance(componentId: string): any {
-        let component = this.components.get(componentId);
-        if (!component) {
-            throw new ComponentNotFoundError(componentId);
-        }
-        if (component.getScope() === Scope.PROTOTYPE) {
-            return _.cloneDeep(component.getEntityInstance());
-        }
-        return component.getEntityInstance();
-    }
+    
 }
 
 export default MetadataContext
