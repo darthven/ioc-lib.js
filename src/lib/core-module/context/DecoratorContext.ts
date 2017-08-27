@@ -2,6 +2,8 @@ import {Context} from "../core-module"
 import {default as Component, Scope} from "./Component";
 const _ = require('lodash');
 import ComponentNotFoundError from "../errors/ComponentNotFoundError";
+import ComponentLifecycle from "./ComponentLifecycle";
+import {LOGGER} from "../../utils/logger";
 
 /**
  * Class that responds for creation and management process of the components,
@@ -25,6 +27,7 @@ class DecoratorContext extends Context {
         if(configs && configs.length > 0) {
             this.configs = configs;
             this.registerComponentsInContext();
+            LOGGER.info('[DecoratorContext]: Context was initialized');
         }
     }
 
@@ -39,8 +42,12 @@ class DecoratorContext extends Context {
             });
             values.forEach((value) => {
                 if(value) {
-                    const component = value.call(this);
+                    const component: Component = value.call(this)['component'];
+                    const lifecycle: ComponentLifecycle = value.call(this)['lifecycle'];
+                    this.contextLifecycle.getComponentLifecycles().set(component.getId(), lifecycle);
+                    lifecycle.callPreInitMethod();
                     this.components.set(component['id'], component);
+                    lifecycle.callPostInitMethod();
                 }
             });
         });
@@ -55,7 +62,6 @@ class DecoratorContext extends Context {
         const componentsArray: Component[] = Array.from(this.components.values());
         for(let i = 0; i < componentsArray.length; i++) {
             let componentInstance = componentsArray[i].getEntityInstance();
-            const componentId = componentsArray[i].getId();           
             if(componentInstance instanceof Class) {   
                 if (componentsArray[i].getScope() === Scope.PROTOTYPE) {
                     return _.cloneDeep(componentInstance);
@@ -65,7 +71,7 @@ class DecoratorContext extends Context {
                 throw new ComponentNotFoundError('undefined');
             }
         }
-    }    
+    }
 }
 
 export default DecoratorContext

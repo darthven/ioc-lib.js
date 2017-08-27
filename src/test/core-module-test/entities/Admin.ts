@@ -1,4 +1,5 @@
 import User from './User'
+import {preInit, postInit, preDestroy, postDestroy} from "../../../lib/core-module/context/decorators"
 
 export default class Admin {
 
@@ -44,21 +45,23 @@ export default class Admin {
     public bye(): void {
         console.log('Bye from Admin');
     };
+
+    @preInit
     public preInitAdmin(): void {
         console.log("BEFORE Init admin");
     };
+
+    @postInit
     public postInitAdmin(): void {
         console.log("AFTER Init admin");
     };
-    public beforeSettingPropertiesForAdmin(): void {
-        console.log("BEFORE Properties were set admin");
-    };
-    public afterSettingPropertiesForAdmin(): void {
-        console.log("AFTER Properties were set admin");
-    };
+
+    @preDestroy
     public preDestroyAdmin(): void {
         console.log("BEFORE Destroy admin");
     };
+
+    @postDestroy
     public postDestroyAdmin(): void {
         console.log("AFTER Destroy admin");
     };

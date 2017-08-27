@@ -1,3 +1,5 @@
+import {preInit, preDestroy} from "../../../lib/core-module/context/decorators"
+
 export default class User {
 
     private _name: string;
@@ -14,15 +16,16 @@ export default class User {
         this._name = value;
     }
 
+    @preInit
     public initUser(): void {
         console.log("BEFORE Init user");
     };
-    public setPropertiesForUser(): void {
-        console.log("AFTER Properties were set user");
-    };
+
+    @preDestroy
     public destroyUser(): void {
         console.log("BEFORE Destroy user");
     };
+
     public hello(): void {
         console.log('Hello from User');
     };

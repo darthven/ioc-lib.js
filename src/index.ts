@@ -1,1 +1,2 @@
-export {MetadataContext, DecoratorContext} from "./lib/core-module/core-module"
+export {MetadataContext, DecoratorContext, component,
+    preInit, postInit, preDestroy, postDestroy} from "./lib/core-module/core-module"

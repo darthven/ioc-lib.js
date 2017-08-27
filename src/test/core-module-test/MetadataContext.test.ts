@@ -6,6 +6,7 @@ import * as assert from 'assert'
 describe('MetadataContext', () => {
     const configs = [__dirname + "/config/context.json"];
     const context = new MetadataContext(configs);
+    context.registerShutdownHook();
     describe('#getComponentEntityInstance(componentId: string)', () => {
         const ADMIN_ID: string = "adminId";
         const USER_ID: string = "userId";

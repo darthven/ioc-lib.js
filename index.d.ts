@@ -48,7 +48,7 @@ declare class Context {
 
     getComponents(): Map<string, Component>;
 
-    getComponentEntityInstance(componentId: string): any;
+    getComponentEntityInstanceById(componentId: string): any;
 
     registerShutdownHook(): void;
 }
@@ -57,16 +57,26 @@ declare class Context {
 
 export declare class MetadataContext extends Context {
 
-    constructor(configs?: string[]);
-
     configs: string[];
 
-    updateContext();
-
+    constructor(configs?: string[]);
 }
 
 export declare class DecoratorContext extends Context {
 
-    //TODO fill it after creating real class
+    configs: any[];
 
+    constructor(configs?: any[]);
+
+    getComponentEntityInstanceByClass(Class: any): any;
 }
+
+export declare function component(configs: any[]): Function;
+
+export declare function preInit(target: Object, key: string): PropertyDescriptor;
+
+export declare function postInit(target: Object, key: string): PropertyDescriptor;
+
+export declare function preDestroy(target: Object, key: string): PropertyDescriptor;
+
+export declare function postDestroy(target: Object, key: string): PropertyDescriptor;

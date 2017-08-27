@@ -51,7 +51,7 @@ abstract class Context {
      * @param {string} componentId unique identifier of the component
      * @returns {boolean}
      */
-    private removeComponentFromContext(componentId: string): boolean {
+    protected removeComponentFromContext(componentId: string): boolean {
         return this.components.delete(componentId);
     }
 
@@ -59,7 +59,7 @@ abstract class Context {
      * Function that removes all components from application context,
      * calls destroy-methods before their deletion and finally closes it
      */
-    private close(): void {
+    protected close(): void {
         LOGGER.info('[Context]: Closing current context...');
         this.components.forEach((component) => {
             const lifecycle = this.contextLifecycle.getComponentLifecycles().get(component.getId());
@@ -87,7 +87,7 @@ abstract class Context {
     /**
      * Function that retrieves component's instance by unique identifier
      * @returns component's entity instance
-     * @param Class class instance
+     * @param componentId unique identifier of the component
      */
     public getComponentEntityInstanceById(componentId: string): any {
         const component = this.components.get(componentId);
