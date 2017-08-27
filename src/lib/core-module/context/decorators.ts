@@ -1,5 +1,4 @@
 import {default as Component} from "./Component";
-import DecoratorContext from "./DecoratorContext"
 
 /**
  * Decorator that responds for wrapping functions

@@ -1,6 +1,5 @@
 import Admin from '../entities/Admin'
 import User from '../entities/User'
-import {default as Component, Scope} from "../../../lib/core-module/context/Component";
 import {component} from "../../../lib/core-module/context/decorators";
 
 
