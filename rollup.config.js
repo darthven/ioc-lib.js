@@ -31,6 +31,6 @@ export default {
                 join_vars: true,
                 drop_console: true
             }
-        })
+        }),
     ]
 }

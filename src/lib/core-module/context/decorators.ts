@@ -26,7 +26,7 @@ interface ComponentDescriptor {
  * @returns {(target:Function, key:string)=>any} function that is wrapping of
  * native function of the current class/module
  */
-export function component(componentDescriptor: Object): Function {
+export function component(componentDescriptor?: Object): Function {
     return (target: Function, key: string): any => {
         const getEntityInstance: Function = target[key];
         const getComponentDescriptor = (): ComponentDescriptor => {

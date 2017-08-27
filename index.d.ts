@@ -71,7 +71,7 @@ export declare class DecoratorContext extends Context {
     getComponentEntityInstanceByClass(Class: any): any;
 }
 
-export declare function component(configs: any[]): Function;
+export declare function component(componentDescriptor?: Object): Function;
 
 export declare function preInit(target: Object, key: string): PropertyDescriptor;
 

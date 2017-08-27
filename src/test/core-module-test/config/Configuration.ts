@@ -5,24 +5,20 @@ import {component} from "../../../lib/core-module/context/decorators";
 
 export default class Configuration {
 
-    @component({                 
-        lifecycle: {}
-    })   
+    @component({})
     public getAdminComponent(): Admin {
         return new Admin("darthven", 21, this.getUserComponent());
     }
 
     @component({
-        id: "emptyUser",      
-        lifecycle: {}
+        id: "emptyUser"
     })
     public getEmptyUserComponent(): User {
         return new User();
     }
 
     @component({
-        id: "userWithName",      
-        lifecycle: {}
+        id: "userWithName"
     })
     public getUserComponent(): User {
         return new User("testUser3");
