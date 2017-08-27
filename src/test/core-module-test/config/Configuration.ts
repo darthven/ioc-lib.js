@@ -9,7 +9,7 @@ export default class Configuration {
     @component({                 
         lifecycle: {}
     })   
-    public getAdminComponent(): any {        
+    public getAdminComponent(): Admin {
         return new Admin("darthven", 21, this.getUserComponent());
     }
 
@@ -17,7 +17,7 @@ export default class Configuration {
         id: "emptyUser",      
         lifecycle: {}
     })
-    public getEmptyUserComponent(): any {
+    public getEmptyUserComponent(): User {
         return new User();
     }
 
@@ -25,7 +25,7 @@ export default class Configuration {
         id: "userWithName",      
         lifecycle: {}
     })
-    public getUserComponent(): any {
+    public getUserComponent(): User {
         return new User("testUser3");
     }
 }
