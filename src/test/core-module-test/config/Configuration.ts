@@ -10,7 +10,7 @@ export default class Configuration {
         lifecycle: {}
     })   
     public getAdminComponent(): any {        
-        return new Admin("darthven", 21, this.getUserComponent().getEntityInstance());
+        return new Admin("darthven", 21, this.getUserComponent());
     }
 
     @component({

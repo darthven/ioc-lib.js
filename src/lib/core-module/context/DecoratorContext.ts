@@ -31,7 +31,7 @@ class DecoratorContext extends Context {
     /**
      * Function that registers components in the application context
      */
-    public registerComponentsInContext(): void {
+    protected registerComponentsInContext(): void {
         this.configs.forEach((config) => {
             const prototype = config['prototype'];
             const values = Object.keys(prototype).map(function(key) {
@@ -39,7 +39,7 @@ class DecoratorContext extends Context {
             });
             values.forEach((value) => {
                 if(value) {
-                    const component = value.call();                    
+                    const component = value.call(this);
                     this.components.set(component['id'], component);
                 }
             });

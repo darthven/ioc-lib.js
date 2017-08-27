@@ -204,7 +204,7 @@ class MetadataContext extends Context {
     /**
      * Function that registers components in the application context
      */
-    public registerComponentsInContext(): void {
+    protected registerComponentsInContext(): void {
         let configComponents = this.getConfigComponents();
         this.setBasicPropertiesToComponents(configComponents);
         this.setReferencesToComponents(configComponents);

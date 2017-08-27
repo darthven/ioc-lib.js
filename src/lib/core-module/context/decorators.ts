@@ -11,22 +11,32 @@ import DecoratorContext from "./DecoratorContext"
  * @returns {(target:Function, key:string)=>any} function that is wrapping of
  * native function of the current class/module
  */
-export function component(componentDescriptor: Object) : Function {   
+export function component(componentDescriptor: Object): Function {
     return (target: Function, key: string): any => {
         const getEntityInstance: Function = target[key];
+
+
         const getComponentInstance = () => {
-            const generateComponentId: Function = () => {
-                return Math.random().toString(36).substring(2, 7);
-            };
+            const entityInstance = getEntityInstance.call(target);
+            Object.keys(entityInstance).forEach((key) => {
+                if(entityInstance[key] instanceof Component) {
+                    entityInstance[key] = entityInstance[key].getEntityInstance();
+                }
+            });
             let componentId: string = componentDescriptor["id"] || generateComponentId();
             const component: Component = new Component(componentId,
                 componentDescriptor['name'], componentDescriptor['classPath'], componentDescriptor['scope']);
-            component.setEntityInstance(getEntityInstance.call(target));
+            component.setEntityInstance(entityInstance);
+            console.log(component);
             return component;
         };
         Object.defineProperty(target, key, {
-            value: getComponentInstance            
+            value: getComponentInstance
         });
         return Object.getOwnPropertyDescriptor(target, key);
     }
 }
+
+const generateComponentId: Function = () => {
+    return Math.random().toString(36).substring(2, 7);
+};
