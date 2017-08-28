@@ -186,15 +186,18 @@ class CustomConfiguration {
 ```
 As you can see, there are different usages of the component decorator. Some of them
 has unique identifier parameter that will allow you to retrieve them from the context by
-the "id" you have defined. Also, you can specify the scope of the component, its name 
+the "id" you have defined.
+ 
+Also, you can specify the scope of the component, its name 
 and path to the class it is based on, but notice that "name" and "classPath" parameters are not
 necessary as they will not affect the application context.
  
 If there are no paremeters defined, you can retrieve components by its class/module name from 
 the context (see API documentation below), but be sure that there is only one type of this component
-can exist in the context. If you have several definitions of the same type (see Beta component), you
-must set the unique id-parameter and retrieve these components directly via this identifier. 
+can exist in the context. 
 
+If you have several definitions of the same type (see Beta component), you must set the unique id-parameter 
+and retrieve these components directly via this identifier. 
 
 If you need to inject one component to another:
 ```typescript
